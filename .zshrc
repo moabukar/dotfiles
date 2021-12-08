@@ -43,6 +43,16 @@ if which go >/dev/null; then
   echo $PATH | grep -q $GOROOT/bin || export PATH=$GOROOT/bin:$PATH
 fi
 
+# Homebrew
+if command -v brew >/dev/null; then
+  BREWSBIN=/usr/local/sbin
+  BREWBIN=/usr/local/bin
+  echo $PATH | grep -q $BREWSBIN || export PATH=$BREWSBIN:$PATH
+  echo $PATH | grep -q $BREWBIN || export PATH=$BREWBIN:$PATH
+fi
+
+### ALIASES
+
 # Kubernetes
 alias k='kubectl'
 alias kg='kubectl get'
