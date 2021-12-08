@@ -33,3 +33,12 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 ‘source /dev/fd/14’
+
+# Go
+if which go >/dev/null; then
+  export GOPATH=$(go env GOPATH)
+  export GOROOT=$(go env GOROOT)
+  export GOBIN=$GOPATH/bin
+  echo $PATH | grep -q $GOPATH/bin || export PATH=$GOPATH/bin:$PATH
+  echo $PATH | grep -q $GOROOT/bin || export PATH=$GOROOT/bin:$PATH
+fi
