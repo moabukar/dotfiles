@@ -1,0 +1,6 @@
+{
+    "stackOrchestrator": "swarm",
+    "credsStore": "osxkeychain",
+    "experimental": "disabled",
+    "auths": {}
+}
