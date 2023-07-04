@@ -12,6 +12,7 @@ alias dexec='docker exec -it'
 
 # Terraform
 
+alias tfmt='terraform fmt --recursive'
 alias tf='terraform'
 alias tfa='terraform apply'
 alias tfd='terraform destroy'
