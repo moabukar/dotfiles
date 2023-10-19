@@ -101,3 +101,9 @@ alias gsh='git stash'
 alias gsha='git stash apply'
 alias gsph='git stash pop'
 alias gsl='git stash list'
+
+# convenience
+
+alias cd..='cd ..'
+alias cd...='cd ../..'
+alias ls='ls --color'
