@@ -51,6 +51,13 @@ if command -v brew >/dev/null; then
   echo $PATH | grep -q $BREWBIN || export PATH=$BREWBIN:$PATH
 fi
 
+# Load custom functions
+if [[ -f "$HOME/workspace/dotfiles/zsh_functions.inc" ]]; then
+	source "$HOME/workspace/dotfiles/zsh_functions.inc"
+else
+	echo >&2 "WARNING: can't load shell functions"
+fi
+
 ### ALIASES
 
 # K8s
@@ -64,6 +71,26 @@ alias kgd='kubectl get deployments'
 alias kns='kubens'
 alias kcx='kubectx'
 alias wkgp='watch kubectl get pod'
+alias kdp='kubectl describe pod'
+alias krh='kubectl run --help | more'
+alias ugh='kubectl get --help | more'
+alias c='clear'
+alias kd='kubectl describe pod'
+alias ke='kubectl explain'
+alias kf='kubectl create -f'
+alias kg='kubectl get pods --show-labels'
+alias kr='kubectl replace -f'
+alias kh='kubectl --help | more'
+alias krh='kubectl run --help | more'
+alias ks='kubectl get namespaces'
+alias l='ls -lrt'
+alias ll='vi ls -rt | tail -1'
+alias kga='k get pod --all-namespaces'
+alias kgaa='kubectl get all --show-labels'
+
+# Allow kubectl completion to use alias
+complete -F __start_kubectl k
+
 
 
 # Git
