@@ -151,3 +151,9 @@ alias dip='docker image prune -a'
 alias brew='arch -x86_64 brew'
 ## Brew install shortcut (used for macOS Sonoma)
 alias binstall='arch -x86_64 brew install'
+
+# Root location for learning & playground
+alias learn='cd ~/Documents/Learning'
+
+## Change `team_name` to when new company is joined
+alias team_name='cd ~/Documents/team_name'
