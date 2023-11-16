@@ -58,6 +58,8 @@ else
 	echo >&2 "WARNING: can't load shell functions"
 fi
 
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+
 ### ALIASES
 
 # K8s
@@ -91,9 +93,15 @@ alias kgaa='kubectl get all --show-labels'
 # Allow kubectl completion to use alias
 complete -F __start_kubectl k
 
+## Terraform
+alias tfmt='terraform fmt --recursive'
+alias tf='terraform'
+alias tfi='terraform init'
+alias tfp='terraform plan'
+alias tfa='terraform apply'
 
+## Git
 
-# Git
 alias gs='git status'
 alias ga='git add'
 alias gb='git branch'
@@ -128,3 +136,18 @@ alias gsh='git stash'
 alias gsha='git stash apply'
 alias gsph='git stash pop'
 alias gsl='git stash list'
+
+# AWS
+alias aws-who='aws sts get-caller-identity'
+
+
+## Docker
+alias dc='docker-compose'
+
+alias drm='docker rm -f $(docker ps -a -q)'
+alias dip='docker image prune -a'
+
+## Brew (when Brew bugs out on macOS)
+alias brew='arch -x86_64 brew'
+## Brew install shortcut (used for macOS Sonoma)
+alias binstall='arch -x86_64 brew install'
