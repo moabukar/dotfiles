@@ -188,6 +188,9 @@ alias h='history'
 alias p='ps aux'
 alias t='tail -f'
 alias r='source ~/.zshrc'
+alias home="cd $HOME"
+alias d="docker"
+alias k="kubectl"
 
 # Logging and monitoring
 
@@ -203,3 +206,16 @@ alias ipl='ip addr show'
 alias ipt='iptables'
 alias pscan='nmap -sn'
 alias lsof='lsof -i'
+
+plugins=(
+  docker
+  docker-compose
+  git
+  golang
+  kubectl
+  macos 
+  rust 
+  terraform
+  tmux
+  zsh-syntax-highlighting
+)
