@@ -157,3 +157,49 @@ alias learn='cd ~/Documents/Learning'
 
 ## Change `team_name` to when new company is joined
 alias team_name='cd ~/Documents/team_name'
+
+
+# Docker
+
+alias d='docker'
+alias di='docker images'
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias drm='docker rm'
+alias drmi='docker rmi'
+alias dlogs='docker logs'
+alias dexec='docker exec -it'
+
+# Ansible
+
+alias a='ansible'
+alias ap='ansible-playbook'
+alias av='ansible-vault'
+alias ag='ansible-galaxy'
+alias ainv='ansible-inventory'
+alias al='ansible-lint'
+
+# General
+
+alias c='clear'
+alias e='exit'
+alias vi='vim'
+alias h='history'
+alias p='ps aux'
+alias t='tail -f'
+alias r='source ~/.zshrc'
+
+# Logging and monitoring
+
+alias l='less'
+alias tlog='tail -f /var/log/syslog'
+alias j='journalctl -xe'
+alias topcpu='ps aux --sort=-%cpu | head'
+alias topmem='ps aux --sort=-%mem | head'\
+
+# Networking
+
+alias ipl='ip addr show'
+alias ipt='iptables'
+alias pscan='nmap -sn'
+alias lsof='lsof -i'
