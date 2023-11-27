@@ -26,6 +26,11 @@ Install oh-my-zsh: https://github.com/robbyrussell/oh-my-zsh
 
 - Install homebrew: https://brew.sh/
 
+
+### Powerlevel10k
+
+- Run `p10k configure` to install the recommended font
+
 ### Manual installs
 
 - ...
