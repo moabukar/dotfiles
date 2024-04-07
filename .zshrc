@@ -60,6 +60,23 @@ fi
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 
+### Custom AWS funcs
+
+function ec2lookup {
+  cmd="aws --profile $1 ec2 describe-instances --filters \"Name=tag:Name,Values=$2\" --query 'Reservations[].Instances[].[InstanceId,PrivateIpAddress,State.Name,ImageId,join(\`,\`,Tags[?Key==\`Name\`].Value)]' --output ${3:-text}"
+  if [ $# -eq 4 ]
+  then
+    echo "Running $cmd"
+  fi
+  eval $cmd
+}
+
+## list AWS roles ##
+function aws-roles-available {
+    aws iam list-roles --query 'Roles[*].[Arn,RoleName]' --output table  | grep -i "`aws sts get-caller-identity | jq '.Arn' | cut -d '/' -f 2 | cut -d '_' -f 2`Admin\|\/`aws sts get-caller-identity | jq '.Arn' | cut -d '/' -f 2 | cut -d '_' -f 2`\/"
+}
+
+
 ### ALIASES
 
 # K8s
