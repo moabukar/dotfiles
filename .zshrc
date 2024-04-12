@@ -79,6 +79,18 @@ function aws-roles-available {
 
 ### ALIASES
 
+## General Linux
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
+alias .6='cd ../../../../../..'
+alias c='clear'
+alias csrgen='openssl req -out CSR.csr -new -newkey rsa:4096 -nodes -keyout privatekey.key'
+alias myip='curl http://ipecho.net/plain; echo'
+
 # K8s
 alias k='kubectl'
 alias kg='kubectl get'
@@ -106,6 +118,12 @@ alias l='ls -lrt'
 alias ll='vi ls -rt | tail -1'
 alias kga='k get pod --all-namespaces'
 alias kgaa='kubectl get all --show-labels'
+alias kgev='kubectl get events --sort-by=‘.metadata.creationTimestamp’'
+alias kdda='kubectl delete deployments --all --all-namespaces'
+
+#Helm
+alias hdda='helm list --all-namespaces -q | while read -r release; do helm uninstall "$release" --namespace "$(helm list --all-namespaces | grep "$release" | awk '{print $2}')" ; done'
+
 
 # Allow kubectl completion to use alias
 complete -F __start_kubectl k
