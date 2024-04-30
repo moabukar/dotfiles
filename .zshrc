@@ -156,6 +156,8 @@ alias learn='cd ~/Documents/Learning'
 
 alias atlas='cd ~/Documents/Atlas'
 
+alias gmd='go mod tidy'
+
 ## Git
 
 alias gs='git status'
@@ -239,6 +241,32 @@ alias ipl='ip addr show'
 alias ipt='iptables'
 alias pscan='nmap -sn'
 alias lsof='lsof -i'
+
+# Dev tools
+
+alias run-redis='docker run --rm -d --name  redis -p 127.0.0.1:6379:6379 redis'
+alias rl='npm run local'
+
+## Functions
+
+BASE_DIR=$HOME/docker
+DEFAULT_ROOT_PWD=mypassword
+
+function d_mysql_run() {
+    docker run --rm --name mysql5.7-docker -d \
+    -p 127.0.0.1:3306:3306 \
+    -v $BASE_DIR/mysql5.7:/var/lib/mysql \
+    -e MYSQL_ROOT_PASSWORD=$DEFAULT_ROOT_PWD \
+    mysql:5.7
+}
+
+function start_psql_container() {
+    docker run --name posgres12 -d \
+    -e POSTGRES_PASSWORD=$DEFAULT_ROOT_PWD \
+    -e POSTGRES_USER=root \
+    -p 5432:5432 \
+    postgres:12-alpine
+}
 
 plugins=(
   docker
