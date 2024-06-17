@@ -100,9 +100,8 @@ alias csrgen='openssl req -out CSR.csr -new -newkey rsa:4096 -nodes -keyout priv
 alias myip='curl http://ipecho.net/plain; echo'
 alias disk='df -h'
 alias mem='free -m'
-alias psaux='ps aux | grep'
+alias ps='ps aux'
 alias hist='history | tail -n 100'
-
 
 
 # K8s
@@ -131,6 +130,13 @@ alias kgaa='kubectl get all --show-labels'
 alias kgev='kubectl get events --sort-by='.metadata.creationTimestamp''
 alias kdda='kubectl delete deployments --all --all-namespaces'
 alias ksys='kubectl config view'
+
+## Argo
+
+# alias getargoip='kubectl get svc argocd-server -n argocd -o jsonpath='{.spec.clusterIP}''
+
+alias argoip="kubectl get svc argocd-server -n argocd -o jsonpath='{.spec.clusterIP}'"
+alias argopass="kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath='{.data.password}' | base64 --decode"
 
 # Helm
 alias hdda='helm list --all-namespaces -q | while read -r release; do helm uninstall "$release" --namespace "$(helm list --all-namespaces | grep "$release" | awk '{print $2}')" ; done'
