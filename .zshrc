@@ -89,6 +89,7 @@ function aws-roles-available {
 ### ALIASES
 
 # General Linux
+alias ls="eza --icons=always"
 alias ..='cd ..'
 alias ...='cd ../..'
 alias .3='cd ../../..'
@@ -100,18 +101,23 @@ alias csrgen='openssl req -out CSR.csr -new -newkey rsa:4096 -nodes -keyout priv
 alias myip='curl http://ipecho.net/plain; echo'
 alias disk='df -h'
 alias mem='free -m'
-alias ps='ps aux'
+alias psaux='ps aux | grep'
 alias hist='history | tail -n 100'
+
 
 
 # K8s
 alias k='kubectl'
+alias kx='kubectx'
 alias kg='kubectl get'
 alias ke='kubectl edit'
 alias kd='kubectl describe'
 alias kdd='kubectl delete'
 alias kgp='kubectl get pods'
 alias kgd='kubectl get deployments'
+alias kgs='kubectl get service'
+alias kgsec='kubectl get secret -o yaml'
+alias kseca='kubectl get secret --all-namespaces'
 alias kns='kubens'
 alias kcx='kubectx'
 alias wkgp='watch kubectl get pod'
@@ -130,10 +136,26 @@ alias kgaa='kubectl get all --show-labels'
 alias kgev='kubectl get events --sort-by='.metadata.creationTimestamp''
 alias kdda='kubectl delete deployments --all --all-namespaces'
 alias ksys='kubectl config view'
+alias kexec='kubectl exec -it'
+alias kgsvc='kubectl get svc -o wide'
+alias kgn='kubectl get no -o wide'
+alias kpf='kubectl port-forward'
+alias kd='kubectl describe'
+alias krr='kubectl rollout restart'
+alias ksysgpo='kubectl --namespace=kube-system get pods'
+alias ksysdpo='kubectl --namespace=kube-system describe pods'
+alias ksysgpow='kubectl --namespace=kube-system get pods --watch'
+alias kgall='kubectl get --all-namespaces'
+alias podrange="kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'"
+alias rd="kubectx rancher-desktop"
+alias dd="kubectx docker-desktop"
 
-## Argo
 
-# alias getargoip='kubectl get svc argocd-server -n argocd -o jsonpath='{.spec.clusterIP}''
+
+
+alias do="--dry-run=client -o yaml"
+
+alias now="--force --grace-period=0"
 
 alias argoip="kubectl get svc argocd-server -n argocd -o jsonpath='{.spec.clusterIP}'"
 alias argopass="kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath='{.data.password}' | base64 --decode"
@@ -185,7 +207,9 @@ alias reload='source ~/.zshrc'
 alias aws-who='aws sts get-caller-identity'
 
 # Git
+alias gi='git init'
 alias gs='git status'
+alias gcl='git clone'
 alias ga='git add'
 alias gb='git branch'
 alias gco='git checkout'
@@ -198,7 +222,9 @@ alias gps='git push'
 
 # Brew (when Brew bugs out on macOS)
 alias brew='arch -x86_64 brew'
-alias binstall='arch -x86_64 brew install'
+#alias binstall='arch -x86_64 brew install'
+alias binstall='arch -arm64 brew install'
+
 
 # Root location for learning & playground
 alias learn='cd ~/Documents/Learning'
@@ -241,6 +267,7 @@ alias lsof='lsof -i'
 # Dev tools
 alias run-redis='docker run --rm -d --name  redis -p 127.0.0.1:6379:6379 redis'
 alias run-nginx='docker run --rm -d --name nginx -p 127.0.0.1:8080:80 nginx'
+alias run-apache='docker run --rm -d --name apache -p 127.0.0.1:8082:80 apache'
 alias run-mysql='docker run --rm -d --name mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -p 127.0.0.1:3306:3306 mysql:5.7'
 alias run-postgres='docker run --rm -d --name postgres -e POSTGRES_PASSWORD=root -e POSTGRES_DB=testdb -p 127.0.0.1:5432:5432 postgres'
 alias run-mongo='docker run --rm -d --name mongo -p 127.0.0.1:27017:27017 mongo'
@@ -271,6 +298,15 @@ DEFAULT_ROOT_PWD=mypassword
 #     -p 5432:5432 \
 #     postgres:12-alpine
 # }
+
+# kexec() {
+#   if [ -z "$1" ]; then
+#     echo "Usage: kexec <pod_name> [-- <additional_kubectl_exec_args>]"
+#     return 1
+#   fi
+#   kubectl exec -it "$@"
+# }
+
 
 # Zsh plugins
 # plugins=(
