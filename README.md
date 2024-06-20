@@ -31,10 +31,6 @@ Install oh-my-zsh: https://github.com/robbyrussell/oh-my-zsh
 
 - Run `p10k configure` to install the recommended font
 
-### Manual installs
-
-- ...
-
 ### Install via homebrew
 
 - `brew bundle --global`
@@ -44,7 +40,7 @@ Install oh-my-zsh: https://github.com/robbyrussell/oh-my-zsh
 
 - Magnet
 - Clipy
-- 
 
 ### Git config
 
+- TBC
