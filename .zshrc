@@ -129,6 +129,7 @@ alias kg='kubectl get pods --show-labels'
 alias kr='kubectl replace -f'
 alias kh='kubectl --help | more'
 alias kns='kubectl get namespaces'
+alias kcm='kubectl get configmaps'
 alias l='ls -lrt'
 alias ll='ls -rt | tail -1'
 alias kga='k get pod --all-namespaces'
@@ -147,6 +148,7 @@ alias ksysdpo='kubectl --namespace=kube-system describe pods'
 alias ksysgpow='kubectl --namespace=kube-system get pods --watch'
 alias kgall='kubectl get --all-namespaces'
 alias podrange="kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'"
+alias nodeips='k get nodes -o custom-columns=NODE:.metadata.name,POD_CIDR:.spec.podCIDR'
 alias rd="kubectx rancher-desktop"
 alias dd="kubectx docker-desktop"
 
@@ -229,8 +231,8 @@ alias binstall='arch -arm64 brew install'
 # Root location for learning & playground
 alias learn='cd ~/Documents/Learning'
 
-## Change `team_name` to when new company is joined
-alias team_name='cd ~/Documents/team_name'
+## Change `team_name` to when new company is joined (or wherever your work dir is located)
+alias platform='cd ~/Documents/Platform'
 
 
 # Ansible aliases
@@ -249,6 +251,8 @@ alias p='ps aux'
 alias t='tail -f'
 alias r='source ~/.zshrc'
 alias home="cd $HOME"
+
+alias zt='zerotier-cli'
 
 # Logging and monitoring
 alias l='less'
