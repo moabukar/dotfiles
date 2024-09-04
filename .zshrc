@@ -20,7 +20,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Kubernetes alias
-alias k=kubectl
+alias k=kubecolor
+alias kubectl="kubecolor"
 # complete -F __start_kubectl k
 [[ /opt/homebrew/bin/kubectl ]] && source <(kubectl completion zsh)
 
@@ -107,7 +108,7 @@ alias hist='history | tail -n 100'
 
 
 # K8s
-alias k='kubectl'
+# alias k='kubectl' ## alias above already
 alias kx='kubectx'
 alias kg='kubectl get'
 alias ke='kubectl edit'
@@ -151,7 +152,9 @@ alias podrange="kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'"
 alias nodeips='k get nodes -o custom-columns=NODE:.metadata.name,POD_CIDR:.spec.podCIDR'
 alias rd="kubectx rancher-desktop"
 alias dd="kubectx docker-desktop"
+export do="--dry-run=client -o yaml"
 
+# export d="--dry-run=client"
 
 
 
@@ -187,6 +190,7 @@ alias tfve='terraform version'
 alias tfva='terraform validate'
 alias tfa!='terraform apply --auto-approve'
 alias tfd!='terraform destroy --auto-approve'
+alias tgfmt='terragrunt hclfmt'
 
 # Docker
 alias d='docker'
@@ -201,6 +205,7 @@ alias dexec='docker exec -it'
 alias drm='docker rm -f $(docker ps -a -q)'
 alias dip='docker image prune -a'
 alias dprune='docker system prune -f'
+alias dnp='docker network prune -f'
 alias traefik-start='traefik --configfile=./static.yml'
 alias reload='source ~/.zshrc'
 
