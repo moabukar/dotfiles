@@ -16,7 +16,6 @@
 - Show date in menu bar
 - Remove unnecessary icons from menu bar
 - Show path bar in Finder
-  
 
 ### Shell
 
