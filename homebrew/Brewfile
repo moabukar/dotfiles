@@ -75,6 +75,8 @@ brew 'shfmt'
 brew 'ncdu'
 brew 'dust'
 brew 'z'
+brew 'kind'
+brew 'multipass'
 
 # Containers and Kubernetes
 brew 'kubernetes-cli'
@@ -90,6 +92,7 @@ brew 'cfssl'
 brew 'ko'
 brew 'dive'
 brew 'crane'
+brew 'gpg'
 
 # Version Control and Signing
 brew 'gnupg'

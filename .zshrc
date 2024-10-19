@@ -20,10 +20,10 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Kubernetes alias
-alias k=kubecolor
-alias kubectl="kubecolor"
-# complete -F __start_kubectl k
-[[ /opt/homebrew/bin/kubectl ]] && source <(kubectl completion zsh)
+# alias k=kubecolor
+# alias kubectl="kubecolor"
+# # complete -F __start_kubectl k
+# [[ /opt/homebrew/bin/kubectl ]] && source <(kubectl completion zsh)
 
 # Homebrew initialization
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -60,7 +60,7 @@ else
 fi
 
 # Source Powerlevel10k theme
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+# source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 ### Custom AWS functions
 
@@ -331,7 +331,7 @@ DEFAULT_ROOT_PWD=mypassword
 #   zsh-syntax-highlighting
 # )
 
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+# source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # # Source the Zsh completion
 # autoload -U compinit
