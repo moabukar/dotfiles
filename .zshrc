@@ -1,39 +1,59 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n] confirmations, etc.) must go above this block; everything else may go below.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Colorls alias
-if [ -x "$(command -v colorls)" ]; then
-    alias ls="colorls"
-    alias la="colorls -al"
-fi
-
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
-# Set name of the theme to load --- if set to "random", it will load a random theme each time oh-my-zsh is loaded, in which case, to know which specific one was loaded, run: echo $RANDOM_THEME
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+export PATH=$PATH:/opt/homebrew/bin
+
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time Oh My Zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+plugins=(git)
 
-# Kubernetes alias
-# alias k=kubecolor
-# alias kubectl="kubecolor"
-# # complete -F __start_kubectl k
-# [[ /opt/homebrew/bin/kubectl ]] && source <(kubectl completion zsh)
+source $ZSH/oh-my-zsh.sh
 
-# Homebrew initialization
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# User configuration
 
-# pyenv initialization (uncomment if using pyenv)
-# export PYENV_ROOT="$HOME/.pyenv"
-# export PATH="$PYENV_ROOT/bin:$PATH"
-# if command -v pyenv 1>/dev/null 2>&1; then
-#   eval "$(pyenv init -)"
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='nvim'
 # fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch $(uname -m)"
+
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Go environment setup
 if which go >/dev/null; then
@@ -105,10 +125,21 @@ alias mem='free -m'
 alias psaux='ps aux | grep'
 alias hist='history | tail -n 100'
 
-
-
 # K8s
-# alias k='kubectl' ## alias above already
+
+# Kubernetes alias
+# alias k=kubecolor
+# alias kubectl="kubecolor"
+complete -F __start_kubectl k
+[[ /opt/homebrew/bin/kubectl ]] && source <(kubectl completion zsh)
+source <(kubectl completion zsh)
+autoload -Uz compinit
+compinit
+
+alias gitcron='sh /Users/mohameda/Documents/learning/github-cron/scripts/github_cron.sh'
+
+
+alias k='kubectl' ## alias above already
 alias kx='kubectx'
 alias kg='kubectl get'
 alias ke='kubectl edit'
@@ -194,7 +225,7 @@ alias tgfmt='terragrunt hclfmt'
 
 # Docker
 alias d='docker'
-alias dc='docker-compose'
+alias dc='docker compose'
 alias dcl='docker container ls'
 alias di='docker image ls'
 alias de='docker exec -it'
@@ -202,7 +233,8 @@ alias dpsa='docker ps -a'
 alias dps='docker ps'
 alias dlogs='docker logs'
 alias dexec='docker exec -it'
-alias drm='docker rm -f $(docker ps -a -q)'
+# alias drm='docker rm -f $(docker ps -a -q)'
+alias drm='docker ps -a -q | xargs -r docker rm -f'
 alias dip='docker image prune -a'
 alias dprune='docker system prune -f'
 alias dnp='docker network prune -f'
@@ -231,6 +263,7 @@ alias gps='git push'
 alias brew='arch -x86_64 brew'
 #alias binstall='arch -x86_64 brew install'
 alias binstall='arch -arm64 brew install'
+alias brew='arch -arm64 brew'
 
 
 # Root location for learning & playground
@@ -259,6 +292,10 @@ alias home="cd $HOME"
 
 alias zt='zerotier-cli'
 
+## Vault
+export VAULT_ADDR='http://127.0.0.1:8200'
+alias vault-start="vault server -dev"
+
 # Logging and monitoring
 alias l='less'
 alias tlog='tail -f /var/log/syslog'
@@ -272,6 +309,13 @@ alias ipl='ip addr show'
 alias ipt='iptables'
 alias pscan='nmap -sn'
 alias lsof='lsof -i'
+
+## multipass
+alias mp='multipass'
+alias mpl='multipass list'
+alias mpd='multipass delete --all'
+alias mpp='multipass purge'
+alias mps='multipass shell'
 
 # Dev tools
 alias run-redis='docker run --rm -d --name  redis -p 127.0.0.1:6379:6379 redis'
@@ -287,56 +331,29 @@ alias run-grafana='docker run --rm -d --name grafana -p 127.0.0.1:3000:3000 graf
 alias run-prometheus='docker run --rm -d --name prometheus -p 127.0.0.1:9090:9090 prom/prometheus'
 alias run-jenkins='docker run --rm -d --name jenkins -p 127.0.0.1:8080:8080 -p 127.0.0.1:50000:50000 jenkins/jenkins:lts'
 alias rl='npm run local'
+alias kind-init='kind create cluster --name kind-cluster --config <(cat <<EOF
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+- role: worker
+- role: worker
+EOF
+)'
+alias kind-delete='kind delete cluster --name kind-cluster'
+
 
 ## Docker functions
 BASE_DIR=$HOME/docker
 DEFAULT_ROOT_PWD=mypassword
-
-# function d_mysql_run() {
-#     docker run --rm --name mysql5.7-docker -d \
-#     -p 127.0.0.1:3306:3306 \
-#     -v $BASE_DIR/mysql5.7:/var/lib/mysql \
-#     -e MYSQL_ROOT_PASSWORD=$DEFAULT_ROOT_PWD \
-#     mysql:5.7
-# }
-
-# function start_psql_container() {
-#     docker run --name posgres12 -d \
-#     -e POSTGRES_PASSWORD=$DEFAULT_ROOT_PWD \
-#     -e POSTGRES_USER=root \
-#     -p 5432:5432 \
-#     postgres:12-alpine
-# }
-
-# kexec() {
-#   if [ -z "$1" ]; then
-#     echo "Usage: kexec <pod_name> [-- <additional_kubectl_exec_args>]"
-#     return 1
-#   fi
-#   kubectl exec -it "$@"
-# }
-
-
-# Zsh plugins
-# plugins=(
-#   docker
-#   docker-compose
-#   git
-#   golang
-#   kubectl
-#   macos 
-#   rust 
-#   terraform
-#   tmux
-#   zsh-syntax-highlighting
-# )
-
-# source ~/powerlevel10k/powerlevel10k.zsh-theme
-
-# # Source the Zsh completion
-# autoload -U compinit
-# compinit
-
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/mohameda/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+# Created by `pipx` on 2024-11-18 17:31:36
+export PATH="$PATH:/Users/mohameda/.local/bin"
+
+function gitpushup() {
+  current_branch=$(git symbolic-ref --short HEAD)
+  git push --set-upstream origin "$current_branch"
+}
