@@ -1,11 +1,11 @@
 # Dotfiles & macOS Setup
 
-This repo automates your macOS setup for DevOps work. It symlinks dotfiles, installs essential apps via Homebrew, and sets up your shell (oh-my-zsh & powerlevel10k) along with OS defaults.
+This repo automates my macOS setup for DevOps work. It symlinks dotfiles, installs essential apps via Homebrew, sets up your shell (oh-my-zsh & powerlevel10k) and aliases along with OS defaults.
 
 ## Prerequisites
 
-- A new macOS machine (Catalina+)
-- Xcode Command Line Tools installed (if not, the script will prompt)
+- A new macOS machine. 
+- Xcode Command Line Tools installed (if not, script will prompt)
 
 ## Quick Start
 
@@ -58,7 +58,6 @@ This will:
     └── settings.json # VSCode settings
 ```
 
+## TODO
 
-## Final Notes
-
-Feel free to extend or adjust the scripts as your needs evolve. This repo is built to get you running fast and to keep your environment consistent.
+- Automate it further. 
