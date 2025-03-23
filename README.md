@@ -1,4 +1,4 @@
-# Dotfiles & macOS Setup
+# Dotfiles & Setup (macOS edition)
 
 This repo automates my macOS setup for DevOps work. It symlinks dotfiles, installs essential apps via Homebrew, sets up your shell (oh-my-zsh & powerlevel10k) and aliases along with OS defaults.
 
