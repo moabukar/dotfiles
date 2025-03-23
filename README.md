@@ -1,41 +1,64 @@
-# My dotfile configs & macOS setup
+# Dotfiles & macOS Setup
 
-## Dotfiles
+This repo automates your macOS setup for DevOps work. It symlinks dotfiles, installs essential apps via Homebrew, and sets up your shell (oh-my-zsh & powerlevel10k) along with OS defaults.
 
-- [General](./general/aliases.zsh)
-- [DevOps related dotfiles](./devops/aliases.zsh)
-- [Git Aliases](./git/aliases.zsh)
-- [ZSH related aliases](./zsh/aliases.zsh)
+## Prerequisites
 
-## macOS Setup
+- A new macOS machine (Catalina+)
+- Xcode Command Line Tools installed (if not, the script will prompt)
 
-### First things
+## Quick Start
 
-- [Chrome](https://www.google.com/chrome/)
-- [Homebrew](https://brew.sh/)
-- [iTerm2](https://iterm2.com/)
-- [Magnet](https://magnet.crowdcafe.com/)
-- [Clipy](https://clipy-app.com/)
-- [NordVPN](https://nordvpn.com/download/mac/)
-- [flux](https://justgetflux.com/)
-- [Notion](https://www.notion.so/)
-- [Outlook](https://apps.apple.com/us/app/microsoft-outlook/id985367838?mt=12)
-- [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/)
+```bash
+./setup.sh
+```
 
-### OS settings
+This will:
 
-- Invert scrolling
-- Show battery percentage
-- Show date in menu bar
-- Remove unnecessary icons from menu bar
-- Show path bar in Finder
+- Install Homebrew (if missing)
+- Symlink your dotfiles (e.g. .zshrc, aliases)
+- Install Homebrew apps using `brew bundle --global` (see `homebrew/Brewfile`)
+- Configure macOS defaults (`scripts/defaults.sh`)
+- Install oh-my-zsh & powerlevel10k
+
+## Customization
+
+- **Dotfiles:** Modify files in `general/`, `devops/`, etc.
+- **Homebrew:** Update `homebrew/Brewfile` to change your packages.
+- **OS Defaults:** Adjust settings in `scripts/defaults.sh`.
+- **Symlinks:** Update `linkdotfiles.sh` (or `scripts/link.sh`) if needed.
+
+## Repo Structure
+
+```bash
+├── LICENSE # MIT License
+├── Makefile # (Optional) for running targets
+├── README.md # Home README
+├── git
+│   └── aliases.zsh # Git aliases
+├── homebrew
+│   ├── Brewfile # Homebrew packages
+│   ├── install.sh # Homebrew install script
+│   └── path.zsh # Homebrew path script
+├── linkdotfiles.sh # Dotfile symlinker
+├── p10k # Powerlevel10k config
+├── scripts
+│   ├── asdf.sh # asdf install script
+│   ├── brew.sh # Homebrew install script
+│   ├── code.sh # VSCode install script
+│   ├── defaults.sh # macOS defaults
+│   ├── init.sh # Initial setup script
+│   ├── link.sh # Dotfile symlinker
+│   └── util.sh # Utility functions
+├── setup.sh # Bootstrap script
+├── ssh_config # SSH config
+├── useful-commands.md # Useful commands
+└── vscode
+    ├── extensions # VSCode extensions
+    └── settings.json # VSCode settings
+```
 
 
-### Install via homebrew
+## Final Notes
 
-- `brew bundle --global`
-
-
-### TODO
-
-- [ ] Install `<tool>`
+Feel free to extend or adjust the scripts as your needs evolve. This repo is built to get you running fast and to keep your environment consistent.
