@@ -27,6 +27,18 @@ This will:
 - **OS Defaults:** Adjust settings in `scripts/defaults.sh`.
 - **Symlinks:** Update `linkdotfiles.sh` (or `scripts/link.sh`) if needed.
 
+## Manual Steps
+
+There's always things that you can't fully automate or it's better to do manually. Here are some things I prefer to do manually:
+
+- Login to GitHub & add ssh keys.
+  - `ssh-keygen` to generate a new key. 
+  - `cat ~/.ssh/id_rsa.pub | pbcopy` to copy the key to clipboard & copy it to [GitHub](https://github.com/settings/ssh/new).
+  - Now, try to clone your repos via SSH and see if it works.
+- Clean up the mac dock & make the size smaller. 
+- Setup VPN (im using [NordVPN](https://nordvpn.com/)) and login etc. Alongside with the NordPass.
+- Setup Magnet shortcuts
+
 ## Repo Structure
 
 ```bash
