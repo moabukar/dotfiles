@@ -12,6 +12,8 @@ fi
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$PATH:/opt/homebrew/bin
 
+# autoload -U bashcompinit
+# bashcompinit
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
@@ -235,8 +237,8 @@ alias dlogs='docker logs'
 alias dexec='docker exec -it'
 # alias drm='docker rm -f $(docker ps -a -q)'
 alias drm='docker ps -a -q | xargs -r docker rm -f'
-alias dip='docker image prune -a'
-alias dprune='docker system prune -f'
+alias dip='docker image prune -af'
+alias dprune='docker system prune -af'
 alias dnp='docker network prune -f'
 alias traefik-start='traefik --configfile=./static.yml'
 alias reload='source ~/.zshrc'
@@ -356,4 +358,12 @@ export PATH="$PATH:/Users/mohameda/.local/bin"
 function gitpushup() {
   current_branch=$(git symbolic-ref --short HEAD)
   git push --set-upstream origin "$current_branch"
-}
+}export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+
+
+export PATH=$PATH:/Applications/UTM.app/Contents/MacOS/
+
+export NVM_DIR=~/.nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

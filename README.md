@@ -9,6 +9,19 @@
 
 ## macOS Setup
 
+### First things
+
+- [Chrome](https://www.google.com/chrome/)
+- [Homebrew](https://brew.sh/)
+- [iTerm2](https://iterm2.com/)
+- [Magnet](https://magnet.crowdcafe.com/)
+- [Clipy](https://clipy-app.com/)
+- [NordVPN](https://nordvpn.com/download/mac/)
+- [flux](https://justgetflux.com/)
+- [Notion](https://www.notion.so/)
+- [Outlook](https://apps.apple.com/us/app/microsoft-outlook/id985367838?mt=12)
+- [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/)
+
 ### OS settings
 
 - Invert scrolling
@@ -17,29 +30,12 @@
 - Remove unnecessary icons from menu bar
 - Show path bar in Finder
 
-### Shell
-
-Install oh-my-zsh: https://github.com/robbyrussell/oh-my-zsh
-
-### Package manager
-
-- Install homebrew: https://brew.sh/
-
-
-### Powerlevel10k
-
-- Run `p10k configure` to install the recommended font
 
 ### Install via homebrew
 
 - `brew bundle --global`
 
 
-### Post install configs
+### TODO
 
-- Magnet
-- Clipy
-
-### Git config
-
-- TBC
+- [ ] Install `<tool>`
