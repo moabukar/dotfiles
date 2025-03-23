@@ -23,7 +23,6 @@ This will:
 
 ## Customization
 
-- **Dotfiles:** Modify files in `general/`, `devops/`, etc.
 - **Homebrew:** Update `homebrew/Brewfile` to change your packages.
 - **OS Defaults:** Adjust settings in `scripts/defaults.sh`.
 - **Symlinks:** Update `linkdotfiles.sh` (or `scripts/link.sh`) if needed.

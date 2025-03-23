@@ -39,11 +39,14 @@ Thumbs.db
 #############
 .hg/*
 
-# SSH stuff #
-#############
+# SSH & Secrets #
+################
 id_rsa
 mac
 passwords.txt
 */old_keys/*
 *.key
 *.ppk
+**.env
+**.pem
+**.p12
