@@ -1,369 +1,802 @@
+# ~/.zshrc - Principal DevOps Engineer Configuration
+# =================================================
+# Created: $(date)
+# Purpose: Comprehensive shell environment for DevOps workflows
+# =================================================
+
+# =================================================
+# POWERLEVEL10K INSTANT PROMPT
+# =================================================
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+# =================================================
+# ENVIRONMENT VARIABLES
+# =================================================
 
-# Path to your Oh My Zsh installation.
+# Locale and language
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# Default editors
+export EDITOR='vim'
+export VISUAL='vim'
+
+# Architecture flags
+export ARCHFLAGS="-arch $(uname -m)"
+
+# History configuration
+export HISTFILE=~/.zsh_history
+export HISTSIZE=50000
+export SAVEHIST=50000
+
+# Development directories
+export WORKSPACE="$HOME/workspace"
+export LEARNING_DIR="$HOME/Documents/Learning"
+export PLATFORM_DIR="$HOME/Documents/Platform"
+
+# Tool-specific configurations
+export VAULT_ADDR='http://127.0.0.1:8200'
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+
+# =================================================
+# PATH CONFIGURATION
+# =================================================
+
+# Initialize PATH with system defaults
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+# Homebrew paths (macOS)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # Apple Silicon
+  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+  # Intel
+  export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+fi
+
+# User local paths
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+
+# Rancher Desktop
+export PATH="$HOME/.rd/bin:$PATH"
+
+# UTM (if using)
+export PATH="/Applications/UTM.app/Contents/MacOS:$PATH"
+
+# =================================================
+# OH MY ZSH CONFIGURATION
+# =================================================
+
+# Path to Oh My Zsh installation
 export ZSH="$HOME/.oh-my-zsh"
-export PATH=$PATH:/opt/homebrew/bin
 
-# autoload -U bashcompinit
-# bashcompinit
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# Theme configuration
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-plugins=(git)
+# Plugin configuration
+plugins=(
+  git
+  docker
+  docker-compose
+  kubectl
+  terraform
+  aws
+  helm
+  ansible
+  node
+  npm
+  yarn
+  z
+  colored-man-pages
+  command-not-found
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
 
-source $ZSH/oh-my-zsh.sh
+# Oh My Zsh settings
+DISABLE_AUTO_UPDATE="false"
+DISABLE_UPDATE_PROMPT="false"
+UPDATE_ZSH_DAYS=7
+DISABLE_MAGIC_FUNCTIONS="false"
+DISABLE_LS_COLORS="false"
+DISABLE_AUTO_TITLE="false"
+ENABLE_CORRECTION="true"
+COMPLETION_WAITING_DOTS="true"
+DISABLE_UNTRACKED_FILES_DIRTY="false"
 
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
-
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Go environment setup
-if which go >/dev/null; then
-  export GOPATH=$(go env GOPATH)
-  export GOROOT=$(go env GOROOT)
-  export GOBIN=$GOPATH/bin
-  echo $PATH | grep -q $GOPATH/bin || export PATH=$GOPATH/bin:$PATH
-  echo $PATH | grep -q $GOROOT/bin || export PATH=$GOROOT/bin:$PATH
-fi
-
-# Homebrew PATH setup
-if command -v brew >/dev/null; then
-  BREWSBIN=/usr/local/sbin
-  BREWBIN=/usr/local/bin
-  echo $PATH | grep -q $BREWSBIN || export PATH=$BREWSBIN:$PATH
-  echo $PATH | grep -q $BREWBIN || export PATH=$BREWBIN:$PATH
-fi
-
-# Load custom functions
-if [[ -f "$HOME/workspace/dotfiles/zsh_functions.inc" ]]; then
-    source "$HOME/workspace/dotfiles/zsh_functions.inc"
+# Load Oh My Zsh (with error handling)
+if [[ -f "$ZSH/oh-my-zsh.sh" ]]; then
+  source "$ZSH/oh-my-zsh.sh"
 else
-    echo >&2 "WARNING: can't load shell functions"
+  echo "⚠️  Oh My Zsh not found. Install with:"
+  echo "sh -c \"\$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\""
 fi
 
-# Source Powerlevel10k theme
-# source ~/powerlevel10k/powerlevel10k.zsh-theme
+# =================================================
+# COMPLETION SYSTEM
+# =================================================
 
-### Custom AWS functions
-
-function ec2lookup {
-  cmd="aws --profile $1 ec2 describe-instances --filters \"Name=tag:Name,Values=$2\" --query 'Reservations[].Instances[].[InstanceId,PrivateIpAddress,State.Name,ImageId,join(\`,\`,Tags[?Key==\`Name\`].Value)]' --output ${3:-text}"
-  if [ $# -eq 4 ]; then
-    echo "Running $cmd"
-  fi
-  eval $cmd
-}
-
-function ec2lookup2() {
-    if [ "$#" -lt 2 ]; then
-        echo "Usage: ec2lookup <profile> <tag-value> [output-format]"
-        return 1
-    fi
-    local profile=$1
-    local tag_value=$2
-    local output_format=${3:-text}
-    aws --profile "$profile" ec2 describe-instances --filters "Name=tag:Name,Values=$tag_value" --query 'Reservations[].Instances[].[InstanceId,PrivateIpAddress,State.Name,ImageId,join(`,`,Tags[?Key==`Name`].Value)]' --output "$output_format"
-}
-
-function aws-roles-available {
-  aws iam list-roles --query 'Roles[*].[Arn,RoleName]' --output table | grep -i "$(aws sts get-caller-identity | jq '.Arn' | cut -d '/' -f 2 | cut -d '_' -f 2)Admin\|\/$(aws sts get-caller-identity | jq '.Arn' | cut -d '/' -f 2 | cut -d '_' -f 2)\/"
-}
-
-### ALIASES
-
-# General Linux
-alias ls="eza --icons=always"
-alias ..='cd ..'
-alias ...='cd ../..'
-alias .3='cd ../../..'
-alias .4='cd ../../../..'
-alias .5='cd ../../../../..'
-alias .6='cd ../../../../../..'
-alias c='clear'
-alias csrgen='openssl req -out CSR.csr -new -newkey rsa:4096 -nodes -keyout privatekey.key'
-alias myip='curl http://ipecho.net/plain; echo'
-alias disk='df -h'
-alias mem='free -m'
-alias psaux='ps aux | grep'
-alias hist='history | tail -n 100'
-
-# K8s
-
-# Kubernetes alias
-# alias k=kubecolor
-# alias kubectl="kubecolor"
-complete -F __start_kubectl k
-[[ /opt/homebrew/bin/kubectl ]] && source <(kubectl completion zsh)
-source <(kubectl completion zsh)
+# Enable completion system
 autoload -Uz compinit
 compinit
 
-alias gitcron='sh /Users/mohameda/Documents/learning/github-cron/scripts/github_cron.sh'
+# Completion options
+setopt COMPLETE_IN_WORD
+setopt ALWAYS_TO_END
+setopt PATH_DIRS
+setopt AUTO_MENU
+setopt AUTO_LIST
+setopt AUTO_PARAM_SLASH
+setopt EXTENDED_GLOB
 
+# Case insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 
-alias k='kubectl' ## alias above already
-alias kx='kubectx'
-alias kg='kubectl get'
-alias ke='kubectl edit'
-alias kd='kubectl describe'
-alias kdd='kubectl delete'
-alias kgp='kubectl get pods'
-alias kgd='kubectl get deployments'
-alias kgs='kubectl get service'
-alias kgsec='kubectl get secret -o yaml'
-alias kseca='kubectl get secret --all-namespaces'
-alias kns='kubens'
-alias kcx='kubectx'
-alias wkgp='watch kubectl get pod'
-alias kdp='kubectl describe pod'
-alias krh='kubectl run --help | more'
-alias ugh='kubectl get --help | more'
-alias kf='kubectl create -f'
-alias kg='kubectl get pods --show-labels'
-alias kr='kubectl replace -f'
-alias kh='kubectl --help | more'
-alias kns='kubectl get namespaces'
-alias kcm='kubectl get configmaps'
-alias l='ls -lrt'
-alias ll='ls -rt | tail -1'
-alias kga='k get pod --all-namespaces'
-alias kgaa='kubectl get all --show-labels'
-alias kgev='kubectl get events --sort-by='.metadata.creationTimestamp''
-alias kdda='kubectl delete deployments --all --all-namespaces'
-alias ksys='kubectl config view'
-alias kexec='kubectl exec -it'
-alias kgsvc='kubectl get svc -o wide'
-alias kgn='kubectl get no -o wide'
-alias kpf='kubectl port-forward'
-alias kd='kubectl describe'
-alias krr='kubectl rollout restart'
-alias ksysgpo='kubectl --namespace=kube-system get pods'
-alias ksysdpo='kubectl --namespace=kube-system describe pods'
-alias ksysgpow='kubectl --namespace=kube-system get pods --watch'
-alias kgall='kubectl get --all-namespaces'
-alias podrange="kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'"
-alias nodeips='k get nodes -o custom-columns=NODE:.metadata.name,POD_CIDR:.spec.podCIDR'
-alias rd="kubectx rancher-desktop"
-alias dd="kubectx docker-desktop"
-export do="--dry-run=client -o yaml"
+# Completion colors
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
-# export d="--dry-run=client"
+# =================================================
+# HISTORY CONFIGURATION
+# =================================================
 
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_BEEP
+setopt SHARE_HISTORY
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
 
+# =================================================
+# TOOL-SPECIFIC ENVIRONMENT SETUP
+# =================================================
 
-alias do="--dry-run=client -o yaml"
+setup_nvm() {
+  export NVM_DIR="$HOME/.nvm"
+  if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+    source "$NVM_DIR/nvm.sh"
+  fi
+  if [[ -s "$NVM_DIR/bash_completion" ]]; then
+    source "$NVM_DIR/bash_completion"
+  fi
+}
 
-alias now="--force --grace-period=0"
+setup_go() {
+  if command -v go >/dev/null 2>&1; then
+    export GOPATH="$(go env GOPATH)"
+    export GOROOT="$(go env GOROOT)"
+    export GOBIN="$GOPATH/bin"
+    export PATH="$GOBIN:$GOROOT/bin:$PATH"
+  fi
+}
 
-alias argoip="kubectl get svc argocd-server -n argocd -o jsonpath='{.spec.clusterIP}'"
-alias argopass="kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath='{.data.password}' | base64 --decode"
+setup_python() {
+  # pyenv
+  if command -v pyenv >/dev/null 2>&1; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+  fi
+  
+  # pipx
+  if [[ -d "$HOME/.local/bin" ]]; then
+    export PATH="$HOME/.local/bin:$PATH"
+  fi
+}
 
-# Helm
-alias hdda='helm list --all-namespaces -q | while read -r release; do helm uninstall "$release" --namespace "$(helm list --all-namespaces | grep "$release" | awk '{print $2}')" ; done'
-alias hlsns='helm ls --all-namespaces'
-alias h='helm'
-alias hin='helm install'
-alias hup='helm upgrade'
-alias hdel='helm delete'
-alias hlst='helm list'
-alias hrepo='helm repo'
-alias hrepoupd='helm repo update'
-alias hdepupd='helm dependency update'
+# Kubernetes tools
+setup_kubernetes() {
+  # kubectl completion
+  if command -v kubectl >/dev/null 2>&1; then
+    source <(kubectl completion zsh)
+    complete -F __start_kubectl k
+  fi
+  
+  # helm completion
+  if command -v helm >/dev/null 2>&1; then
+    source <(helm completion zsh)
+  fi
+  
+  # kubectx and kubens completion
+  if [[ -d "/opt/homebrew/share/zsh/site-functions" ]]; then
+    fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+  fi
+}
 
+setup_gcloud() {
+  local gcloud_path="$HOME/google-cloud-sdk"
+  if [[ -f "$gcloud_path/path.zsh.inc" ]]; then
+    source "$gcloud_path/path.zsh.inc"
+  fi
+  if [[ -f "$gcloud_path/completion.zsh.inc" ]]; then
+    source "$gcloud_path/completion.zsh.inc"
+  fi
+}
 
-# Terraform
-alias tfmt='terraform fmt --recursive'
-alias tf='terraform'
-alias tfi='terraform init'
-alias tfp='terraform plan'
-alias tfa='terraform apply'
-alias tfinv='terraform state list'
-alias tfd='terraform destroy'
-alias tfve='terraform version'
-alias tfva='terraform validate'
-alias tfa!='terraform apply --auto-approve'
-alias tfd!='terraform destroy --auto-approve'
-alias tgfmt='terragrunt hclfmt'
+setup_aws() {
+  if command -v aws_completer >/dev/null 2>&1; then
+    complete -C '/usr/local/bin/aws_completer' aws
+  fi
+}
 
-# Docker
-alias d='docker'
-alias dc='docker compose'
-alias dcl='docker container ls'
-alias di='docker image ls'
-alias de='docker exec -it'
-alias dpsa='docker ps -a'
-alias dps='docker ps'
-alias dlogs='docker logs'
-alias dexec='docker exec -it'
-# alias drm='docker rm -f $(docker ps -a -q)'
-alias drm='docker ps -a -q | xargs -r docker rm -f'
-alias dip='docker image prune -af'
-alias dprune='docker system prune -af'
-alias dnp='docker network prune -f'
-alias traefik-start='traefik --configfile=./static.yml'
+setup_docker() {
+  # Docker completion
+  if [[ -f "/Applications/Docker.app/Contents/Resources/etc/docker.zsh-completion" ]]; then
+    source "/Applications/Docker.app/Contents/Resources/etc/docker.zsh-completion"
+  fi
+  
+  # Docker Compose completion
+  if [[ -f "/Applications/Docker.app/Contents/Resources/etc/docker-compose.zsh-completion" ]]; then
+    source "/Applications/Docker.app/Contents/Resources/etc/docker-compose.zsh-completion"
+  fi
+}
+
+# Initialize all environments
+setup_nvm
+setup_go
+setup_python
+setup_kubernetes
+setup_gcloud
+setup_aws
+setup_docker
+
+# =================================================
+# CUSTOM FUNCTIONS
+# =================================================
+
+# System information
+sysinfo() {
+  echo "🖥️  System Information"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "OS: $(uname -s) $(uname -r)"
+  echo "Shell: $SHELL"
+  echo "User: $(whoami)"
+  echo "Hostname: $(hostname)"
+  echo "Uptime: $(uptime | sed 's/.*up \([^,]*\),.*/\1/')"
+  if command -v free >/dev/null 2>&1; then
+    echo "Memory: $(free -h | awk '/^Mem:/ {print $3 "/" $2}')"
+  fi
+  echo "Disk Usage: $(df -h / | tail -1 | awk '{print $3 "/" $2 " (" $5 ")"}')"
+  echo "Load Average: $(uptime | awk -F'load average:' '{print $2}' | sed 's/^[ \t]*//')"
+}
+
+# Enhanced file search
+ff() {
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: ff <pattern> [directory]"
+    return 1
+  fi
+  local dir="${2:-.}"
+  find "$dir" -type f -name "*$1*" 2>/dev/null | head -20
+}
+
+# Enhanced directory search
+fd() {
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: fd <pattern> [directory]"
+    return 1
+  fi
+  local dir="${2:-.}"
+  find "$dir" -type d -name "*$1*" 2>/dev/null | head -20
+}
+
+# Git utilities
+gitpushup() {
+  local current_branch
+  current_branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+  if [[ -n "$current_branch" ]]; then
+    echo "🚀 Pushing $current_branch and setting upstream..."
+    git push --set-upstream origin "$current_branch"
+  else
+    echo "❌ Not in a git repository or no current branch"
+    return 1
+  fi
+}
+
+git_status_all() {
+  for dir in */; do
+    if [[ -d "$dir/.git" ]]; then
+      echo "📁 $dir"
+      cd "$dir"
+      git status --porcelain
+      cd ..
+      echo
+    fi
+  done
+}
+
+# aws utils
+awsprofile() {
+  if [[ $# -eq 0 ]]; then
+    echo "Current AWS Profile: ${AWS_PROFILE:-default}"
+    echo "Available profiles:"
+    aws configure list-profiles 2>/dev/null || echo "No profiles found"
+  else
+    export AWS_PROFILE="$1"
+    echo "✅ AWS Profile set to: $1"
+  fi
+}
+
+awswhoami() {
+  echo "🔍 Current AWS Identity:"
+  aws sts get-caller-identity 2>/dev/null || echo "❌ Not authenticated or AWS CLI not configured"
+}
+
+ec2-instances() {
+  local profile="${1:-default}"
+  echo "🖥️  EC2 Instances (Profile: $profile):"
+  aws --profile "$profile" ec2 describe-instances \
+    --query 'Reservations[].Instances[].[InstanceId,InstanceType,State.Name,Tags[?Key==`Name`].Value|[0]]' \
+    --output table 2>/dev/null || echo "❌ Failed to fetch instances"
+}
+
+# k8s utils
+k8s-ctx() {
+  if command -v kubectx >/dev/null 2>&1; then
+    kubectx
+  else
+    kubectl config get-contexts
+  fi
+}
+
+k8s-ns() {
+  if command -v kubens >/dev/null 2>&1; then
+    kubens
+  else
+    kubectl get namespaces
+  fi
+}
+
+k8s-pods-all() {
+  echo "🐳 All Pods Across Namespaces:"
+  kubectl get pods --all-namespaces -o wide
+}
+
+k8s-events() {
+  echo "📋 Recent Kubernetes Events:"
+  kubectl get events --sort-by='.lastTimestamp' | tail -20
+}
+
+# docker utils
+docker-cleanup() {
+  read "?🧹 This will remove all stopped containers, unused networks, images, and build cache. Continue? (y/N) " confirm
+  if [[ "$confirm" =~ ^[Yy]$ ]]; then
+    echo "🗑️  Cleaning up Docker..."
+    docker system prune -af
+    docker volume prune -f
+    echo "✅ Docker cleanup complete"
+  else
+    echo "❌ Cleanup cancelled"
+  fi
+}
+
+docker-stats() {
+  echo "📊 Docker System Usage:"
+  docker system df
+  echo "\n🐳 Running Containers:"
+  docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+}
+
+# dev utils
+httpserve() {
+  local port="${1:-8000}"
+  echo "🌐 Starting HTTP server on port $port..."
+  if command -v python3 >/dev/null 2>&1; then
+    python3 -m http.server "$port"
+  elif command -v python >/dev/null 2>&1; then
+    python -m SimpleHTTPServer "$port"
+  else
+    echo "❌ Python not found"
+    return 1
+  fi
+}
+
+# tf utils
+tf-clean() {
+  echo "🧹 Cleaning Terraform cache..."
+  find . -type d -name ".terraform" -exec rm -rf {} + 2>/dev/null
+  find . -type f -name ".terraform.lock.hcl" -delete 2>/dev/null
+  find . -type f -name "terraform.tfstate.backup" -delete 2>/dev/null
+  echo "✅ Terraform cache cleaned"
+}
+
+tg-clean() {
+  echo "🧹 Cleaning Terragrunt cache..."
+  find . -type d -name ".terragrunt-cache" -exec rm -rf {} + 2>/dev/null
+  echo "✅ Terragrunt cache cleaned"
+}
+
+# quick service starters
+run-redis() {
+  docker run --rm -d --name redis -p 127.0.0.1:6379:6379 redis:alpine
+  echo "✅ Redis started on localhost:6379"
+}
+
+run-postgres() {
+  docker run --rm -d --name postgres \
+    -e POSTGRES_PASSWORD=password \
+    -e POSTGRES_DB=testdb \
+    -p 127.0.0.1:5432:5432 postgres:15-alpine
+  echo "✅ PostgreSQL started on localhost:5432 (user: postgres, password: password, db: testdb)"
+}
+
+run-mysql() {
+  docker run --rm -d --name mysql \
+    -e MYSQL_ROOT_PASSWORD=password \
+    -e MYSQL_DATABASE=testdb \
+    -p 127.0.0.1:3306:3306 mysql:8.0
+  echo "✅ MySQL started on localhost:3306 (user: root, password: password, db: testdb)"
+}
+
+# load custom functions from external file
+load_custom_functions() {
+  local custom_functions="$HOME/.zsh_functions"
+  if [[ -f "$custom_functions" ]]; then
+    source "$custom_functions"
+    echo "✅ Custom functions loaded from $custom_functions"
+  fi
+}
+
+load_custom_functions
+
+# =================================================
+# ALIASES - NAVIGATION & BASIC
+# =================================================
+
+# nav
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ~='cd ~'
+alias -- -='cd -'
+
+# basics
+alias c='clear'
+alias h='history'
+alias j='jobs -l'
+alias path='echo -e ${PATH//:/\\n}'
+alias now='date +"%T"'
+alias nowtime=now
+alias nowdate='date +"%d-%m-%Y"'
 alias reload='source ~/.zshrc'
 
+# Enhanced ls (use eza if available, otherwise ls)
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza --color=always --group-directories-first'
+  alias ll='eza -la --color=always --group-directories-first'
+  alias l='eza -l --color=always --group-directories-first'
+  alias la='eza -a --color=always --group-directories-first'
+  alias lt='eza -aT --color=always --group-directories-first'
+else
+  alias ll='ls -alF'
+  alias la='ls -A'
+  alias l='ls -CF'
+fi
 
-# AWS
-alias aws-who='aws sts get-caller-identity'
+# Enhanced cat (use bat if available)
+if command -v bat >/dev/null 2>&1; then
+  alias cat='bat --style=auto'
+  alias catn='cat --style=plain'
+fi
 
-# Git
+# FileOps
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -iv'
+alias mkdir='mkdir -pv'
+
+# SysOps
+alias df='df -H'
+alias du='du -ch'
+alias free='free -mt'
+alias ps='ps auxf'
+alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
+alias myip='curl -s http://ipecho.net/plain; echo'
+alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -'
+
+# NetOps
+alias ping='ping -c 5'
+alias ports='netstat -tuln'
+alias listening='lsof -i -P | grep LISTEN'
+
+# =================================================
+# ALIASES - GIT
+# =================================================
+
+alias g='git'
 alias gi='git init'
 alias gs='git status'
-alias gcl='git clone'
+alias gss='git status --short'
 alias ga='git add'
-alias gb='git branch'
-alias gco='git checkout'
-alias gcob='git checkout -b'
+alias gaa='git add --all'
+alias gc='git commit'
 alias gcm='git commit -m'
-alias gcam='git commit -am'
-alias gl='git log'
+alias gca='git commit --amend'
+alias gcane='git commit --amend --no-edit'
+alias gb='git branch'
+alias gba='git branch -a'
+alias gbd='git branch -d'
+alias gbD='git branch -D'
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias gcmain='git checkout main'
+alias gcd='git checkout develop'
+alias gl='git log --oneline -10'
+alias gll='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
 alias gp='git pull'
 alias gps='git push'
+alias gpso='git push origin'
+alias gpsf='git push --force-with-lease'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gst='git stash'
+alias gstp='git stash pop'
+alias gstl='git stash list'
+alias gr='git reset'
+alias grh='git reset --hard'
+alias grs='git reset --soft'
+alias gm='git merge'
+alias grb='git rebase'
+alias grbi='git rebase -i'
 
-# Brew (when Brew bugs out on macOS)
-alias brew='arch -x86_64 brew'
-#alias binstall='arch -x86_64 brew install'
-alias binstall='arch -arm64 brew install'
-alias brew='arch -arm64 brew'
+# =================================================
+# ALIASES - KUBERNETES
+# =================================================
 
+alias k='kubectl'
+alias kaf='kubectl apply -f'
+alias kdf='kubectl delete -f'
 
-# Root location for learning & playground
-alias learn='cd ~/Documents/Learning'
+# Get resources
+alias kg='kubectl get'
+alias kga='kubectl get all'
+alias kgaa='kubectl get all --all-namespaces'
+alias kgp='kubectl get pods'
+alias kgpa='kubectl get pods --all-namespaces'
+alias kgs='kubectl get services'
+alias kgsa='kubectl get services --all-namespaces'
+alias kgd='kubectl get deployments'
+alias kgda='kubectl get deployments --all-namespaces'
+alias kgi='kubectl get ingress'
+alias kgia='kubectl get ingress --all-namespaces'
+alias kgn='kubectl get nodes'
+alias kgns='kubectl get namespaces'
+alias kgsec='kubectl get secrets'
+alias kgcm='kubectl get configmaps'
 
-## Change `team_name` to when new company is joined (or wherever your work dir is located)
-alias platform='cd ~/Documents/Platform'
+# Describe resources
+alias kd='kubectl describe'
+alias kdp='kubectl describe pod'
+alias kds='kubectl describe service'
+alias kdd='kubectl describe deployment'
+alias kdn='kubectl describe node'
 
+# Edit resources
+alias ke='kubectl edit'
+alias kep='kubectl edit pod'
+alias kes='kubectl edit service'
+alias ked='kubectl edit deployment'
 
-# Ansible aliases
+# Delete resources
+alias kdel='kubectl delete'
+alias kdelp='kubectl delete pod'
+alias kdels='kubectl delete service'
+alias kdeld='kubectl delete deployment'
+
+# Logs and exec
+alias kl='kubectl logs'
+alias klf='kubectl logs -f'
+alias kexec='kubectl exec -it'
+alias kpf='kubectl port-forward'
+
+# Contexts and namespaces
+if command -v kubectx >/dev/null 2>&1; then
+  alias kx='kubectx'
+  alias kxc='kubectx -c'
+  alias kxp='kubectx -'
+fi
+
+if command -v kubens >/dev/null 2>&1; then
+  alias kns='kubens'
+  alias knsc='kubens -c'
+  alias knsp='kubens -'
+fi
+
+# Useful shortcuts
+alias kwatch='watch kubectl get pods'
+alias kevents='kubectl get events --sort-by=.metadata.creationTimestamp'
+alias ktop='kubectl top nodes && echo && kubectl top pods'
+
+# Quick contexts (adjust to your setup)
+alias kdev='kubectl config use-context development'
+alias kstg='kubectl config use-context staging'
+alias kprd='kubectl config use-context production'
+
+# =================================================
+# ALIASES - DOCKER
+# =================================================
+
+alias d='docker'
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias di='docker images'
+alias dip='docker image prune -f'
+alias dvp='docker volume prune -f'
+alias dnp='docker network prune -f'
+alias dsp='docker system prune -f'
+alias dexec='docker exec -it'
+alias dlogs='docker logs'
+alias dlogsf='docker logs -f'
+alias dstop='docker stop'
+alias dstart='docker start'
+alias drestart='docker restart'
+alias drm='docker rm'
+alias drmi='docker rmi'
+alias dbuild='docker build'
+alias drun='docker run'
+
+# Docker Compose
+alias dc='docker compose'
+alias dcu='docker compose up'
+alias dcud='docker compose up -d'
+alias dcd='docker compose down'
+alias dcb='docker compose build'
+alias dcl='docker compose logs'
+alias dclf='docker compose logs -f'
+alias dcp='docker compose ps'
+alias dcr='docker compose restart'
+alias dce='docker compose exec'
+
+# =================================================
+# ALIASES - TERRAFORM & TERRAGRUNT
+# =================================================
+
+# Terraform
+alias tf='terraform'
+alias tfi='terraform init'
+alias tfu='terraform init -upgrade'
+alias tfp='terraform plan'
+alias tfa='terraform apply'
+alias tfd='terraform destroy'
+alias tfs='terraform show'
+alias tfv='terraform validate'
+alias tff='terraform fmt'
+alias tfr='terraform fmt -recursive'
+alias tfo='terraform output'
+alias tfw='terraform workspace'
+alias tfws='terraform workspace show'
+alias tfwl='terraform workspace list'
+alias tfsl='terraform state list'
+alias tfss='terraform state show'
+
+# Terragrunt
+alias tg='terragrunt'
+alias tgi='terragrunt init'
+alias tgp='terragrunt plan'
+alias tga='terragrunt apply'
+alias tgd='terragrunt destroy'
+alias tgf='terragrunt fmt'
+alias tgv='terragrunt validate'
+alias tgo='terragrunt output'
+
+# Terragrunt run-all
+alias tgrai='terragrunt run-all init'
+alias tgrap='terragrunt run-all plan'
+alias tgraa='terragrunt run-all apply'
+alias tgrad='terragrunt run-all destroy'
+alias tgrav='terragrunt run-all validate'
+
+# =================================================
+# ALIASES - AWS
+# =================================================
+
+alias awsp='awsprofile'
+alias awsw='awswhoami'
+
+# Common AWS commands
+alias ec2='aws ec2'
+alias s3='aws s3'
+alias iam='aws iam'
+alias cf='aws cloudformation'
+alias logs='aws logs'
+alias ssm='aws ssm'
+
+# =================================================
+# ALIASES - HELM
+# =================================================
+
+alias h='helm'
+alias hi='helm install'
+alias hu='helm upgrade'
+alias hd='helm delete'
+alias hl='helm list'
+alias hla='helm list --all-namespaces'
+alias hs='helm search'
+alias hsr='helm search repo'
+alias hr='helm repo'
+alias hra='helm repo add'
+alias hru='helm repo update'
+alias hrl='helm repo list'
+alias hv='helm version'
+alias hh='helm history'
+
+# =================================================
+# ALIASES - ANSIBLE
+# =================================================
+
 alias a='ansible'
 alias ap='ansible-playbook'
 alias av='ansible-vault'
 alias ag='ansible-galaxy'
-alias ainv='ansible-inventory'
-alias al='ansible-lint'
+alias ai='ansible-inventory'
+alias ac='ansible-config'
+alias ad='ansible-doc'
 
-# General aliases
-alias e='exit'
-alias vi='vim'
-alias h='history'
-alias p='ps aux'
-alias t='tail -f'
-alias r='source ~/.zshrc'
-alias home="cd $HOME"
+# =================================================
+# ALIASES - PRODUCTIVITY
+# =================================================
 
-alias zt='zerotier-cli'
+# Directory shortcuts
+alias workspace='cd $WORKSPACE'
+alias learn='cd $LEARNING_DIR'
+alias platform='cd $PLATFORM_DIR'
+alias downloads='cd ~/Downloads'
+alias documents='cd ~/Documents'
+alias desktop='cd ~/Desktop'
 
-## Vault
-export VAULT_ADDR='http://127.0.0.1:8200'
-alias vault-start="vault server -dev"
+# Quick editing
+alias zshrc='$EDITOR ~/.zshrc'
+alias zshreload='source ~/.zshrc'
+alias vimrc='$EDITOR ~/.vimrc'
+alias gitconfig='$EDITOR ~/.gitconfig'
 
-# Logging and monitoring
-alias l='less'
-alias tlog='tail -f /var/log/syslog'
-alias j='journalctl -xe'
-alias topcpu='ps aux --sort=-%cpu | head'
-alias topmem='ps aux --sort=-%mem | head'
+# Utilities
+alias weather='curl -s "wttr.in?format=3"'
+alias moon='curl -s "wttr.in/Moon"'
+alias serve='httpserve'
+alias uuid='uuidgen | tr "[:upper:]" "[:lower:]"'
+alias timestamp='date +%s'
+alias json='python3 -m json.tool'
 
-# Networking
-alias getip='curl http://checkip.amazonaws.com/'
-alias ipl='ip addr show'
-alias ipt='iptables'
-alias pscan='nmap -sn'
-alias lsof='lsof -i'
+# =================================================
+# EXPORTS FOR KUBECTL
+# =================================================
 
-## multipass
-alias mp='multipass'
-alias mpl='multipass list'
-alias mpd='multipass delete --all'
-alias mpp='multipass purge'
-alias mps='multipass shell'
+export do="--dry-run=client -o yaml"
+export now="--force --grace-period=0"
 
-# Dev tools
-alias run-redis='docker run --rm -d --name  redis -p 127.0.0.1:6379:6379 redis'
-alias run-nginx='docker run --rm -d --name nginx -p 127.0.0.1:8080:80 nginx'
-alias run-apache='docker run --rm -d --name apache -p 127.0.0.1:8082:80 apache'
-alias run-mysql='docker run --rm -d --name mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -p 127.0.0.1:3306:3306 mysql:5.7'
-alias run-postgres='docker run --rm -d --name postgres -e POSTGRES_PASSWORD=root -e POSTGRES_DB=testdb -p 127.0.0.1:5432:5432 postgres'
-alias run-mongo='docker run --rm -d --name mongo -p 127.0.0.1:27017:27017 mongo'
-alias run-rabbitmq='docker run --rm -d --name rabbitmq -p 127.0.0.1:5672:5672 -p 127.0.0.1:15672:15672 rabbitmq:3-management'
-alias run-elasticsearch='docker run --rm -d --name elasticsearch -p 127.0.0.1:9200:9200 -e "discovery.type=single-node" elasticsearch:7.10.1'
-alias run-kibana='docker run --rm -d --name kibana -p 127.0.0.1:5601:5601 kibana:7.10.1'
-alias run-grafana='docker run --rm -d --name grafana -p 127.0.0.1:3000:3000 grafana/grafana'
-alias run-prometheus='docker run --rm -d --name prometheus -p 127.0.0.1:9090:9090 prom/prometheus'
-alias run-jenkins='docker run --rm -d --name jenkins -p 127.0.0.1:8080:8080 -p 127.0.0.1:50000:50000 jenkins/jenkins:lts'
-alias rl='npm run local'
-alias kind-init='kind create cluster --name kind-cluster --config <(cat <<EOF
-kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-nodes:
-- role: control-plane
-- role: worker
-- role: worker
-EOF
-)'
-alias kind-delete='kind delete cluster --name kind-cluster'
+# =================================================
+# POWERLEVEL10K CONFIGURATION
+# =================================================
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-## Docker functions
-BASE_DIR=$HOME/docker
-DEFAULT_ROOT_PWD=mypassword
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/mohameda/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+# =================================================
+# FINAL SETUP & WELCOME MESSAGE
+# =================================================
 
-# Created by `pipx` on 2024-11-18 17:31:36
-export PATH="$PATH:/Users/mohameda/.local/bin"
+# Create necessary directories
+[[ ! -d "$WORKSPACE" ]] && mkdir -p "$WORKSPACE"
+[[ ! -d "$LEARNING_DIR" ]] && mkdir -p "$LEARNING_DIR"
+[[ ! -d "$PLATFORM_DIR" ]] && mkdir -p "$PLATFORM_DIR"
 
-function gitpushup() {
-  current_branch=$(git symbolic-ref --short HEAD)
-  git push --set-upstream origin "$current_branch"
-}export PATH="/usr/local/bin:$PATH"
-export PATH="/usr/local/bin:$PATH"
-
-
-export PATH=$PATH:/Applications/UTM.app/Contents/MacOS/
-
-export NVM_DIR=~/.nvm
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# welcome message
+echo "🚀 Engineer Shell Environment Loaded!"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "💡 Type 'sysinfo' for system information"
+echo "🔧 Type 'k8s-ctx' to see Kubernetes contexts"
+echo "☁️  Type 'awswhoami' to check AWS identity"
+echo "📝 Edit this config with 'zshrc'"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

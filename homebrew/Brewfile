@@ -52,6 +52,8 @@ brew 'yq'
 brew 'zsh'
 brew 'kind'
 brew 'multipass'
+brew 'vault'
+brew 'terragrunt'
 
 # Desktop Software
 cask 'clipy'
