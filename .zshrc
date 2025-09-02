@@ -387,6 +387,23 @@ docker-stats() {
   docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
 }
 
+# multipass utils
+multipass-status() {
+  echo "🖥️  Multipass VM Status:"
+  multipass list
+}
+
+multipass-cleanup() {
+  read "?🧹 This will purge all deleted instances and recover disk space. Continue? (y/N) " confirm
+  if [[ "$confirm" =~ ^[Yy]$ ]]; then
+    echo "🗑️  Purging deleted instances..."
+    multipass purge
+    echo "✅ Multipass cleanup complete"
+  else
+    echo "❌ Cleanup cancelled"
+  fi
+}
+
 # dev utils
 httpserve() {
   local port="${1:-8000}"
@@ -529,7 +546,7 @@ alias gba='git branch -a'
 alias gbd='git branch -d'
 alias gbD='git branch -D'
 alias gco='git checkout'
-alias gcb='git checkout -b'
+alias gcob='git checkout -b'
 alias gcmain='git checkout main'
 alias gcd='git checkout develop'
 alias gl='git log --oneline -10'
@@ -659,6 +676,28 @@ alias dcr='docker compose restart'
 alias dce='docker compose exec'
 
 # =================================================
+# ALIASES - MULTIPASS
+# =================================================
+
+alias mp='multipass'
+alias mpls='multipass list'
+alias mps='multipass start'
+alias mpst='multipass stop'
+alias mpr='multipass restart'
+alias mpd='multipass delete'
+alias mpp='multipass purge'
+alias mpi='multipass info'
+alias mpe='multipass exec'
+alias mpsh='multipass shell'
+alias mpt='multipass transfer'
+alias mpm='multipass mount'
+alias mpu='multipass umount'
+alias mpf='multipass find'
+alias mpla='multipass launch'
+alias mpstatus='multipass-status'
+alias mpclean='multipass-cleanup'
+
+# =================================================
 # ALIASES - TERRAFORM & TERRAGRUNT
 # =================================================
 
@@ -672,7 +711,7 @@ alias tfd='terraform destroy'
 alias tfs='terraform show'
 alias tfv='terraform validate'
 alias tff='terraform fmt'
-alias tfr='terraform fmt -recursive'
+alias tfmt='terraform fmt -recursive'
 alias tfo='terraform output'
 alias tfw='terraform workspace'
 alias tfws='terraform workspace show'
@@ -769,6 +808,8 @@ alias uuid='uuidgen | tr "[:upper:]" "[:lower:]"'
 alias timestamp='date +%s'
 alias json='python3 -m json.tool'
 
+# alias devops-ip='docker pull moabukar/devops-interview-prep:latest >/dev/null 2>&1 && docker run --platform linux/arm64 -it --rm moabukar/devops-interview-prep'
+
 # =================================================
 # EXPORTS FOR KUBECTL
 # =================================================
@@ -798,5 +839,10 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo "💡 Type 'sysinfo' for system information"
 echo "🔧 Type 'k8s-ctx' to see Kubernetes contexts"
 echo "☁️  Type 'awswhoami' to check AWS identity"
+echo "🖥️  Type 'mpstatus' for Multipass VMs"
 echo "📝 Edit this config with 'zshrc'"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+### Testing
+
+alias devops-dash='clear && echo "🚀 DevOps Dashboard" && echo "===================" && echo "📊 System:" && sysinfo && echo -e "\n☁️  AWS:" && awswhoami && echo -e "\n🐳 Docker:" && docker ps --format "table {{.Names}}\t{{.Status}}" && echo -e "\n🎯 Kubernetes:" && kubectl config current-context 2>/dev/null || echo "Not connected" && echo -e "\n🖥️  Multipass:" && multipass list 2>/dev/null || echo "Not available"'
