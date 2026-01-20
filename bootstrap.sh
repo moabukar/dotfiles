@@ -126,6 +126,17 @@ main() {
         info "Skipping macOS defaults in CI mode"
     fi
 
+    # Dock configuration
+    if [[ -z "$CI" ]] && [[ -z "$NONINTERACTIVE" ]]; then
+        read -p "Configure Dock with your preferred apps? (y/N) " -n 1 -r
+        echo ""
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            "$DOTFILES_DIR/scripts/dock.sh"
+        fi
+    else
+        info "Skipping Dock configuration in CI mode"
+    fi
+
     # VS Code
     if command -v code &>/dev/null; then
         if [[ -z "$CI" ]] && [[ -z "$NONINTERACTIVE" ]]; then
