@@ -83,7 +83,6 @@ brew "tilt"
 # ----------------------------------------------------------------------------
 # Container Tools
 # ----------------------------------------------------------------------------
-brew "docker-machine-driver-hyperkit"
 brew "dive"                 # Explore Docker image layers
 brew "crane"                # Container registry tool
 
@@ -117,7 +116,6 @@ brew "vim"
 brew "postgresql@14"
 brew "libssh"
 brew "fzf"                  # Fuzzy finder
-brew "grv"                  # Git repository viewer
 brew "ripgrep"              # Fast grep alternative
 brew "fd"                   # Fast find alternative
 brew "direnv"               # Directory-based env vars
@@ -139,7 +137,6 @@ brew "watch"
 brew "openssl"
 brew "openssh"
 brew "protobuf"
-brew "prototool"
 
 # ----------------------------------------------------------------------------
 # Security & Encryption
@@ -151,15 +148,11 @@ cask "keybase"
 # ----------------------------------------------------------------------------
 # Desktop Applications
 # ----------------------------------------------------------------------------
-cask "clipy"                # Clipboard manager
-cask "vimac"                # Keyboard-driven UI
-cask "rectangle"            # Window management (alternative to Magnet)
+cask "rectangle"            # Window management
 cask "google-chrome"
 cask "firefox"
 cask "slack"
 cask "discord"
-cask "zoom"
-cask "flux"                 # Blue light filter
 cask "coconutbattery"       # Battery health monitor
 
 # ----------------------------------------------------------------------------

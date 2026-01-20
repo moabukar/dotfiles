@@ -66,8 +66,13 @@ main() {
     # Install packages
     info "Installing packages from Brewfile (this takes 10-30 min)..."
     if [ -f "$DOTFILES_DIR/Brewfile" ]; then
-        brew bundle --file="$DOTFILES_DIR/Brewfile" || warn "Some packages failed"
-        success "Packages installed"
+        info "Running: brew bundle --file=$DOTFILES_DIR/Brewfile --no-lock --verbose"
+        if brew bundle --file="$DOTFILES_DIR/Brewfile" --no-lock --verbose; then
+            success "All packages from Brewfile installed"
+        else
+            error "Some packages failed to install from Brewfile"
+            warn "Continuing anyway..."
+        fi
     fi
 
     # Oh My Zsh
