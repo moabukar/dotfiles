@@ -15,12 +15,9 @@ print_info "Adding apps to Dock..."
 
 # Core macOS apps
 dockutil --add "/System/Applications/Launchpad.app" --no-restart
-dockutil --add "/Applications/Obsidian.app" --no-restart 2>/dev/null || true
 dockutil --add "/Applications/Discord.app" --no-restart 2>/dev/null || true
 dockutil --add "/Applications/Google Chrome.app" --no-restart 2>/dev/null || true
-dockutil --add "/Applications/Figma.app" --no-restart 2>/dev/null || true
 dockutil --add "/Applications/Notion.app" --no-restart 2>/dev/null || true
-dockutil --add "/Applications/Raycast.app" --no-restart 2>/dev/null || true
 dockutil --add "/System/Applications/System Settings.app" --no-restart
 dockutil --add "/Applications/WhatsApp.app" --no-restart 2>/dev/null || true
 dockutil --add "/System/Applications/Messages.app" --no-restart
@@ -28,6 +25,7 @@ dockutil --add "/Applications/Microsoft Teams.app" --no-restart 2>/dev/null || t
 dockutil --add "/Applications/zoom.us.app" --no-restart 2>/dev/null || true
 
 # Development apps
+dockutil --add "/Applications/OrbStack.app" --no-restart 2>/dev/null || true
 dockutil --add "/Applications/Visual Studio Code.app" --no-restart 2>/dev/null || true
 dockutil --add "/Applications/Cursor.app" --no-restart 2>/dev/null || true
 dockutil --add "/Applications/iTerm.app" --no-restart 2>/dev/null || true
