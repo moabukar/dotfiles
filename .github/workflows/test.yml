@@ -1,0 +1,128 @@
+name: Test Dotfiles Setup
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  test-macos:
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: dotfiles
+
+      - name: Set up dotfiles directory
+        run: |
+          mkdir -p ~/.dotfiles
+          cp -r dotfiles/* ~/.dotfiles/
+          cp -r dotfiles/.??* ~/.dotfiles/ 2>/dev/null || true
+
+      - name: Run bootstrap script
+        env:
+          CI: true
+          NONINTERACTIVE: true
+        run: |
+          cd ~/.dotfiles
+          ./bootstrap.sh
+
+      - name: Verify Homebrew installation
+        run: |
+          brew --version
+          echo "Homebrew installed successfully"
+
+      - name: Verify key packages installed
+        run: |
+          which git
+          which kubectl
+          which terraform
+          which helm
+          which docker
+          which node
+          which python3
+          echo "Core packages verified"
+
+      - name: Verify Oh My Zsh installation
+        run: |
+          test -d ~/.oh-my-zsh
+          echo "Oh My Zsh installed"
+
+      - name: Verify Powerlevel10k installation
+        run: |
+          test -d ~/.oh-my-zsh/custom/themes/powerlevel10k
+          echo "Powerlevel10k installed"
+
+      - name: Verify zsh plugins installed
+        run: |
+          test -d ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+          test -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+          echo "Zsh plugins installed"
+
+      - name: Verify config files linked
+        run: |
+          test -L ~/.zshrc || test -f ~/.zshrc
+          test -L ~/.gitconfig || test -f ~/.gitconfig
+          test -L ~/.vimrc || test -f ~/.vimrc
+          test -L ~/.tmux.conf || test -f ~/.tmux.conf
+          echo "Config files linked"
+
+      - name: Verify aliases.sh is sourced
+        run: |
+          zsh -c 'source ~/.zshrc && command -v mkcd'
+          zsh -c 'source ~/.zshrc && command -v kln'
+          zsh -c 'source ~/.zshrc && command -v gcap'
+          echo "Custom aliases loaded"
+
+      - name: Test custom functions
+        run: |
+          zsh -c 'source ~/.zshrc && type aliases'
+          echo "Aliases function works"
+
+      - name: Verify Git configuration
+        run: |
+          git config --global user.name || echo "Git name not set (expected in CI)"
+          git config --global user.email || echo "Git email not set (expected in CI)"
+          echo "Git config checked"
+
+      - name: Verify VS Code extensions list exists
+        run: |
+          test -f ~/.dotfiles/config/vscode/extensions
+          echo "VS Code extensions list exists"
+
+      - name: Test kubectl command
+        run: |
+          kubectl version --client
+          echo "kubectl works"
+
+      - name: Test terraform command
+        run: |
+          terraform version
+          echo "Terraform works"
+
+      - name: Test helm command
+        run: |
+          helm version
+          echo "Helm works"
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "================================"
+          echo "All tests passed successfully!"
+          echo "================================"
+          echo ""
+          echo "Verified:"
+          echo "  - Homebrew installation"
+          echo "  - Core packages (git, kubectl, terraform, helm, docker, node)"
+          echo "  - Oh My Zsh + Powerlevel10k"
+          echo "  - Zsh plugins"
+          echo "  - Config file linking"
+          echo "  - Custom aliases and functions"
+          echo "  - Tool versions"
+          echo ""
+          echo "Dotfiles setup is working correctly!"
