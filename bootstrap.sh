@@ -23,11 +23,16 @@ main() {
     echo "===================="
     echo ""
     
-    read -p "Continue? (y/N) " -n 1 -r
-    echo ""
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        warn "Aborted"
-        exit 1
+    # Skip prompts in CI or non-interactive mode
+    if [[ -z "$CI" ]] && [[ -z "$NONINTERACTIVE" ]]; then
+        read -p "Continue? (y/N) " -n 1 -r
+        echo ""
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            warn "Aborted"
+            exit 1
+        fi
+    else
+        info "Running in non-interactive mode"
     fi
 
     # Xcode CLI Tools
@@ -99,29 +104,43 @@ main() {
     "$DOTFILES_DIR/scripts/link.sh"
 
     # macOS defaults
-    read -p "Apply macOS defaults? (y/N) " -n 1 -r
-    echo ""
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        "$DOTFILES_DIR/scripts/defaults.sh"
+    if [[ -z "$CI" ]] && [[ -z "$NONINTERACTIVE" ]]; then
+        read -p "Apply macOS defaults? (y/N) " -n 1 -r
+        echo ""
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            "$DOTFILES_DIR/scripts/defaults.sh"
+        fi
+    else
+        info "Skipping macOS defaults in CI mode"
     fi
 
     # VS Code
     if command -v code &>/dev/null; then
-        read -p "Setup VS Code? (y/N) " -n 1 -r
-        echo ""
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            "$DOTFILES_DIR/scripts/code.sh"
+        if [[ -z "$CI" ]] && [[ -z "$NONINTERACTIVE" ]]; then
+            read -p "Setup VS Code? (y/N) " -n 1 -r
+            echo ""
+            if [[ $REPLY =~ ^[Yy]$ ]]; then
+                "$DOTFILES_DIR/scripts/code.sh"
+            fi
+        else
+            info "Skipping VS Code setup in CI mode"
         fi
     fi
 
     # Git config
     if [ ! -f "$HOME/.gitconfig" ] || ! grep -q "name" "$HOME/.gitconfig" 2>/dev/null; then
-        info "Git configuration..."
-        read -p "Git name: " git_name
-        read -p "Git email: " git_email
-        git config --global user.name "$git_name"
-        git config --global user.email "$git_email"
-        success "Git configured"
+        if [[ -z "$CI" ]] && [[ -z "$NONINTERACTIVE" ]]; then
+            info "Git configuration..."
+            read -p "Git name: " git_name
+            read -p "Git email: " git_email
+            git config --global user.name "$git_name"
+            git config --global user.email "$git_email"
+            success "Git configured"
+        else
+            info "Skipping Git user config in CI mode"
+            git config --global user.name "CI Test User" || true
+            git config --global user.email "ci@test.local" || true
+        fi
     fi
 
     echo ""

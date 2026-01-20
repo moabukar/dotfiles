@@ -1,5 +1,7 @@
 # Dotfiles
 
+[![Test Dotfiles Setup](https://github.com/moabukar/dotfiles/actions/workflows/test.yml/badge.svg)](https://github.com/moabukar/dotfiles/actions/workflows/test.yml)
+
 macOS development environment automation.
 
 ## New Mac Setup
@@ -121,7 +123,17 @@ brew bundle --file=Brewfile
 
 ## Testing
 
-See `TESTING.md` for Parallels VM testing.
+### Automated CI Testing
+Every push runs the complete setup on macOS runners via GitHub Actions:
+- Installs all packages
+- Verifies tool installations
+- Tests config linking
+- Validates custom functions
+
+Check the Actions tab for test results.
+
+### Manual Testing
+See `TESTING.md` for Parallels VM testing steps.
 
 ## License
 
