@@ -40,9 +40,7 @@ brew "python@3.9"
 brew "python3"
 brew "go"
 brew "rust"
-brew "perl"
 cask "visual-studio-code"
-cask "goland"
 
 # ----------------------------------------------------------------------------
 # Version Managers
@@ -99,7 +97,6 @@ brew "traefik"              # Reverse proxy
 # ----------------------------------------------------------------------------
 # DevOps & Cloud Tools
 # ----------------------------------------------------------------------------
-brew "jfrog-cli"
 brew "jq"                   # JSON processor
 brew "yq"                   # YAML processor
 brew "task"                 # Task runner
