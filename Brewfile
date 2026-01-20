@@ -70,6 +70,9 @@ brew "minikube"
 brew "skaffold"
 brew "kustomize"
 brew "tilt"
+brew "k9s"                  # Terminal UI for Kubernetes
+brew "stern"                # Multi-pod log tailing
+brew "kubetail"             # Tail logs from multiple pods
 
 # ----------------------------------------------------------------------------
 # Container Tools
@@ -80,6 +83,8 @@ brew "crane"                # Container registry tool
 # ----------------------------------------------------------------------------
 # Cloud & Virtualization Tools
 # ----------------------------------------------------------------------------
+brew "awscli"               # AWS CLI
+brew "azure-cli"            # Azure CLI
 brew "localstack"           # AWS local testing
 brew "lima"                 # Linux virtual machines
 brew "qemu"                 # Generic virtualization
@@ -94,6 +99,13 @@ brew "task"                 # Task runner
 brew "opa"                  # Open Policy Agent
 brew "cfssl"                # CloudFlare SSL
 brew "ko"                   # Kubernetes image builder
+brew "act"                  # Run GitHub Actions locally
+
+# ----------------------------------------------------------------------------
+# Security & Scanning
+# ----------------------------------------------------------------------------
+brew "trivy"                # Container/IaC vulnerability scanner
+brew "tfsec"                # Terraform security scanner
 
 # ----------------------------------------------------------------------------
 # System Tools & CLI Utilities
@@ -102,8 +114,6 @@ brew "make"
 brew "tree"
 brew "wget"
 brew "vim"
-brew "postgresql"
-brew "libssh"
 brew "fzf"                  # Fuzzy finder
 brew "ripgrep"              # Fast grep alternative
 brew "fd"                   # Fast find alternative
@@ -111,6 +121,34 @@ brew "direnv"               # Directory-based env vars
 brew "bats"                 # Bash testing framework
 brew "tlrc"                 # Simplified man pages (tldr replacement)
 brew "shellcheck"           # Shell script linter
+
+# ----------------------------------------------------------------------------
+# "Better" CLI Tools
+# ----------------------------------------------------------------------------
+brew "bat"                  # Better cat with syntax highlighting
+brew "eza"                  # Better ls
+brew "btop"                 # Better top
+brew "dust"                 # Better du
+brew "procs"                # Better ps
+brew "httpie"               # Better curl
+brew "mtr"                  # Better traceroute
+brew "hey"                  # HTTP load testing
+
+# ----------------------------------------------------------------------------
+# Git Tools
+# ----------------------------------------------------------------------------
+brew "lazygit"              # Terminal UI for git
+brew "tig"                  # Git repository browser
+brew "git-lfs"              # Large file support
+brew "diff-so-fancy"        # Better git diff
+
+# ----------------------------------------------------------------------------
+# Database Tools
+# ----------------------------------------------------------------------------
+brew "postgresql"
+brew "mysql-client"
+brew "redis"
+brew "libssh"
 brew "telnet"
 brew "coreutils"
 brew "findutils"

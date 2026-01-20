@@ -1017,6 +1017,43 @@ export now="--force --grace-period=0"
 [[ ! -d "$LEARNING_DIR" ]] && mkdir -p "$LEARNING_DIR"
 [[ ! -d "$PLATFORM_DIR" ]] && mkdir -p "$PLATFORM_DIR"
 
+# ============================================================================
+# Better CLI Tools
+# ============================================================================
+alias cat='bat --paging=never'
+alias ls='eza --icons'
+alias ll='eza -la --icons'
+alias lt='eza --tree --icons'
+alias top='btop'
+alias du='dust'
+alias ps='procs'
+alias curl='http'
+
+# ============================================================================
+# Git Enhancements
+# ============================================================================
+alias lg='lazygit'
+alias gd='git diff | diff-so-fancy | less -R'
+
+# ============================================================================
+# Security & Scanning
+# ============================================================================
+alias tf-scan='tfsec .'
+alias container-scan='trivy image'
+alias iac-scan='trivy config .'
+
+# ============================================================================
+# Kubernetes Enhancements
+# ============================================================================
+alias k9='k9s'
+alias klogs='stern'
+alias ktail='kubetail'
+
+# ============================================================================
+# Load Testing
+# ============================================================================
+alias loadtest='hey -z 10s -c 50'
+
 # welcome message
 echo "Engineer Shell Environment Loaded"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
