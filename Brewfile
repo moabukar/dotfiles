@@ -32,11 +32,8 @@ cask "iterm2"
 # ----------------------------------------------------------------------------
 brew "git"
 brew "gh"                    # GitHub CLI
-brew "gitsign"              # Signing commits
 brew "node"
 brew "ruby"
-brew "python@3.10"
-brew "python@3.9"
 brew "python3"
 brew "go"
 brew "rust"
@@ -70,7 +67,6 @@ brew "kubernetes-cli"
 brew "kubectx"
 brew "kube-ps1"
 brew "krew"
-brew "kubeseal"
 brew "helm"
 brew "k3d"
 brew "kind"
@@ -121,8 +117,6 @@ brew "bats"                 # Bash testing framework
 brew "tldr"                 # Simplified man pages
 brew "shellcheck"           # Shell script linter
 brew "telnet"
-brew "proctools"
-brew "pstree"
 brew "coreutils"
 brew "findutils"
 brew "grep"
@@ -141,7 +135,6 @@ brew "protobuf"
 # ----------------------------------------------------------------------------
 brew "gnupg"
 brew "gpg"
-cask "keybase"
 
 # ----------------------------------------------------------------------------
 # Desktop Applications
@@ -151,7 +144,6 @@ cask "google-chrome"
 cask "firefox"
 cask "slack"
 cask "discord"
-cask "coconutbattery"       # Battery health monitor
 
 # ----------------------------------------------------------------------------
 # Fonts (for Powerlevel10k)

@@ -37,23 +37,7 @@ dbash() {
     docker exec -it "$1" /bin/bash
 }
 
-# Terraform - Plan with output
-tfpo() {
-    terraform plan -out="${1:-tfplan}"
-}
-
-tfap() {
-    terraform apply "${1:-tfplan}"
-}
-
-# Terraform - Targeted operations
-tfpt() {
-    terraform plan -target="$1"
-}
-
-tfat() {
-    terraform apply -target="$1"
-}
+# Note: Terraform aliases are in .zshrc and Oh My Zsh terraform plugin
 
 # AWS - Formatted outputs
 awswho() {
@@ -176,12 +160,6 @@ aliases() {
     echo "Docker:"
     echo "  dsh <container>    - shell into container"
     echo "  dbash <container>  - bash into container"
-    echo ""
-    echo "Terraform:"
-    echo "  tfpo [file]        - plan with output"
-    echo "  tfap [file]        - apply from plan"
-    echo "  tfpt <target>      - targeted plan"
-    echo "  tfat <target>      - targeted apply"
     echo ""
     echo "AWS:"
     echo "  awswho             - get caller identity"
