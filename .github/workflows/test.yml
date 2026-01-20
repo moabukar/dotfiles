@@ -23,6 +23,14 @@ jobs:
           cp -r dotfiles/* ~/.dotfiles/
           cp -r dotfiles/.??* ~/.dotfiles/ 2>/dev/null || true
 
+      - name: Verify Brewfile exists and is valid
+        run: |
+          cd ~/.dotfiles
+          ls -lah Brewfile
+          echo ""
+          echo "=== Brewfile content (first 30 lines) ==="
+          head -30 Brewfile
+          
       - name: Run bootstrap script
         env:
           CI: true
@@ -31,7 +39,7 @@ jobs:
           cd ~/.dotfiles
           ./bootstrap.sh
           
-      - name: Verify Homebrew PATH
+      - name: Check brew bundle results
         run: |
           echo "Current PATH: $PATH"
           echo ""
@@ -39,11 +47,16 @@ jobs:
           which brew
           brew --version
           echo ""
-          echo "Installed packages:"
-          brew list --formula | head -20
+          echo "=== All Installed Formulas ==="
+          brew list --formula || echo "No formulas installed"
           echo ""
-          echo "Installed casks:"
-          brew list --cask | head -10 || echo "No casks installed"
+          echo "=== All Installed Casks ==="
+          brew list --cask || echo "No casks installed"
+          echo ""
+          echo "=== Checking specific packages ==="
+          brew list kubernetes-cli 2>/dev/null && echo "✓ kubernetes-cli installed" || echo "✗ kubernetes-cli NOT installed"
+          brew list terraform 2>/dev/null && echo "✓ terraform installed" || echo "✗ terraform NOT installed"
+          brew list helm 2>/dev/null && echo "✓ helm installed" || echo "✗ helm NOT installed"
 
       - name: Verify Homebrew installation
         run: |
