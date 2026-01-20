@@ -34,6 +34,7 @@ brew "python3"
 brew "go"
 brew "rust"
 cask "visual-studio-code"
+cask "cursor"               # AI-powered code editor
 
 # ----------------------------------------------------------------------------
 # Version Managers
