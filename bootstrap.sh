@@ -66,8 +66,8 @@ main() {
     # Install packages
     info "Installing packages from Brewfile (this takes 10-30 min)..."
     if [ -f "$DOTFILES_DIR/Brewfile" ]; then
-        info "Running: brew bundle --file=$DOTFILES_DIR/Brewfile --no-lock --verbose"
-        if brew bundle --file="$DOTFILES_DIR/Brewfile" --no-lock --verbose; then
+        info "Running: brew bundle --file=$DOTFILES_DIR/Brewfile"
+        if brew bundle --file="$DOTFILES_DIR/Brewfile" --verbose; then
             success "All packages from Brewfile installed"
         else
             error "Some packages failed to install from Brewfile"
