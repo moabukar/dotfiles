@@ -1027,13 +1027,20 @@ alias lt='eza --tree --icons'
 alias top='btop'
 alias du='dust'
 alias ps='procs'
-alias curl='http'
+alias dig='doggo'
+alias cd='z'                # Use zoxide for smarter cd
+
+# Initialize zoxide (smarter cd)
+eval "$(zoxide init zsh)"
 
 # ============================================================================
 # Git Enhancements
 # ============================================================================
 alias lg='lazygit'
-alias gd='git diff | diff-so-fancy | less -R'
+alias gd='delta'            # Better git diff
+
+# Configure delta as git pager
+export GIT_PAGER='delta'
 
 # ============================================================================
 # Security & Scanning
@@ -1041,6 +1048,15 @@ alias gd='git diff | diff-so-fancy | less -R'
 alias tf-scan='tfsec .'
 alias container-scan='trivy image'
 alias iac-scan='trivy config .'
+alias checkov-scan='checkov -d .'
+alias sign-image='cosign sign'
+alias verify-image='cosign verify'
+
+# SOPS helper - edit encrypted file
+alias sops-edit='sops'
+
+# Generate local SSL cert
+alias mkcert-local='mkcert localhost 127.0.0.1 ::1'
 
 # ============================================================================
 # Kubernetes Enhancements
@@ -1049,10 +1065,28 @@ alias k9='k9s'
 alias klogs='stern'
 alias ktail='kubetail'
 
+# Service Mesh
+alias istio='istioctl'
+alias linkerd='linkerd'
+
+# JSON viewers
+alias jl='jless'
+alias jv='jnv'
+
+# Markdown viewer
+alias md='glow'
+
 # ============================================================================
-# Load Testing
+# Load Testing & Performance
 # ============================================================================
 alias loadtest='hey -z 10s -c 50'
+alias k6-run='k6 run'
+alias wrk-test='wrk -t12 -c400 -d30s'
+alias vegeta-attack='echo "GET http://localhost:8080" | vegeta attack -duration=10s | vegeta report'
+
+# gRPC testing
+alias grpc-list='grpcurl -plaintext'
+alias grpc-call='grpcurl -plaintext -d'
 
 # welcome message
 echo "Engineer Shell Environment Loaded"

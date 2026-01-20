@@ -1,12 +1,10 @@
 # Files to ignore when creating symlinks
 .git
 .gitignore
-.gitconfig
-.gitignore_global
 README.md
 LICENSE
 bootstrap.sh
 Brewfile
 config
 scripts
-images
+docs
