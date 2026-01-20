@@ -25,8 +25,8 @@ defaults write com.apple.dock tilesize -int 36
 # Disable animation at application launch
 defaults write com.apple.dock launchanim -bool false
 
-# Automatically hide and show the Dock
-defaults write com.apple.dock autohide -bool true
+# Keep Dock visible (don't auto-hide)
+defaults write com.apple.dock autohide -bool false
 
 # Show indicators for open applications
 defaults write com.apple.dock show-process-indicators -bool true
