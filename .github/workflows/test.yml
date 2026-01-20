@@ -42,10 +42,14 @@ jobs:
           which kubectl
           which terraform
           which helm
-          which docker
           which node
           which python3
           echo "Core packages verified"
+          
+      - name: Verify Docker (optional)
+        continue-on-error: true
+        run: |
+          which docker || echo "Docker not available (expected on macOS runners)"
 
       - name: Verify Oh My Zsh installation
         run: |
