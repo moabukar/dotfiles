@@ -12,6 +12,7 @@ tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
+tap "hashicorp/tap"
 
 # ----------------------------------------------------------------------------
 # Shell & Terminal
@@ -61,7 +62,7 @@ brew "gotests"
 # ----------------------------------------------------------------------------
 brew "terraform"
 brew "terragrunt"
-brew "vault"
+brew "hashicorp/tap/vault"
 brew "hadolint"             # Dockerfile linter
 
 # ----------------------------------------------------------------------------
@@ -160,67 +161,5 @@ cask "coconutbattery"       # Battery health monitor
 # ----------------------------------------------------------------------------
 cask "font-meslo-lg-nerd-font"
 
-# ----------------------------------------------------------------------------
-# VS Code Extensions
-# ----------------------------------------------------------------------------
-# DevOps & Cloud
-vscode "hashicorp.terraform"
-vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
-vscode "ms-azuretools.vscode-docker"
-vscode "ms-azuretools.vscode-bicep"
-vscode "redhat.vscode-yaml"
-
-# Git & GitHub
-vscode "eamodio.gitlens"
-vscode "GitHub.copilot"
-vscode "GitHub.copilot-chat"
-vscode "GitHub.vscode-pull-request-github"
-vscode "github.vscode-github-actions"
-
-# Programming Languages
-vscode "golang.go"
-vscode "ms-python.python"
-vscode "ms-python.vscode-pylance"
-vscode "ms-python.isort"
-vscode "rust-lang.rust-analyzer"
-vscode "dbaeumer.vscode-eslint"
-vscode "esbenp.prettier-vscode"
-
-# Data & Notebooks
-vscode "ms-toolsai.jupyter"
-vscode "ms-toolsai.jupyter-keymap"
-vscode "ms-toolsai.jupyter-renderers"
-vscode "ms-toolsai.vscode-jupyter-cell-tags"
-vscode "ms-toolsai.vscode-jupyter-slideshow"
-
-# Markdown & Documentation
-vscode "bierner.markdown-mermaid"
-vscode "DavidAnson.vscode-markdownlint"
-vscode "yzhang.markdown-all-in-one"
-vscode "bierner.markdown-preview-github-styles"
-
-# Utilities & UI
-vscode "hediet.vscode-drawio"
-vscode "oderwat.indent-rainbow"
-vscode "PKief.material-icon-theme"
-vscode "vscode-icons-team.vscode-icons"
-vscode "ritwickdey.LiveServer"
-vscode "vscodevim.vim"
-vscode "asvetliakov.vscode-neovim"
-
-# Remote Development
-vscode "ms-vscode-remote.remote-containers"
-vscode "ms-vscode-remote.remote-ssh"
-vscode "ms-vscode-remote.remote-ssh-edit"
-vscode "ms-vscode.remote-explorer"
-vscode "ms-vsliveshare.vsliveshare"
-
-# Other Tools
-vscode "ms-vscode.makefile-tools"
-vscode "JFrog.jfrog-vscode-extension"
-vscode "run-at-scale.terraform-doc-snippets"
-vscode "tilt-dev.tiltfile"
-vscode "tsandall.opa"
-vscode "aaron-bond.better-comments"
-vscode "formulahendry.code-runner"
-vscode "WakaTime.vscode-wakatime"
+# Note: VS Code extensions are installed via scripts/code.sh
+# See config/vscode/extensions for the list
