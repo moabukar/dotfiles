@@ -30,6 +30,20 @@ jobs:
         run: |
           cd ~/.dotfiles
           ./bootstrap.sh
+          
+      - name: Verify Homebrew PATH
+        run: |
+          echo "Current PATH: $PATH"
+          echo ""
+          echo "Homebrew location:"
+          which brew
+          brew --version
+          echo ""
+          echo "Installed packages:"
+          brew list --formula | head -20
+          echo ""
+          echo "Installed casks:"
+          brew list --cask | head -10 || echo "No casks installed"
 
       - name: Verify Homebrew installation
         run: |
@@ -38,18 +52,70 @@ jobs:
 
       - name: Verify key packages installed
         run: |
-          which git
-          which kubectl
-          which terraform
-          which helm
-          which node
-          which python3
-          echo "Core packages verified"
+          # Ensure Homebrew is in PATH
+          eval "$(/opt/homebrew/bin/brew shellenv)" || eval "$(/usr/local/bin/brew shellenv)"
           
-      - name: Verify Docker (optional)
-        continue-on-error: true
-        run: |
-          which docker || echo "Docker not available (expected on macOS runners)"
+          echo "Checking installed packages..."
+          FAILED=0
+          
+          # Check each package individually
+          if command -v git &> /dev/null; then
+            echo "✓ git: $(which git)"
+          else
+            echo "✗ git: NOT FOUND"
+            FAILED=1
+          fi
+          
+          if command -v kubectl &> /dev/null; then
+            echo "✓ kubectl: $(which kubectl)"
+          else
+            echo "✗ kubectl: NOT FOUND"
+            FAILED=1
+          fi
+          
+          if command -v terraform &> /dev/null; then
+            echo "✓ terraform: $(which terraform)"
+          else
+            echo "✗ terraform: NOT FOUND"
+            FAILED=1
+          fi
+          
+          if command -v helm &> /dev/null; then
+            echo "✓ helm: $(which helm)"
+          else
+            echo "✗ helm: NOT FOUND"
+            FAILED=1
+          fi
+          
+          if command -v node &> /dev/null; then
+            echo "✓ node: $(which node)"
+          else
+            echo "✗ node: NOT FOUND"
+            FAILED=1
+          fi
+          
+          if command -v python3 &> /dev/null; then
+            echo "✓ python3: $(which python3)"
+          else
+            echo "✗ python3: NOT FOUND"
+            FAILED=1
+          fi
+          
+          # Docker is optional (not available on macOS runners by default)
+          if command -v docker &> /dev/null; then
+            echo "✓ docker: $(which docker)"
+          else
+            echo "⚠ docker: NOT FOUND (optional, skipping)"
+          fi
+          
+          if [ $FAILED -eq 1 ]; then
+            echo ""
+            echo "Some packages failed to install!"
+            exit 1
+          fi
+          
+          echo ""
+          echo "All core packages verified!"
 
       - name: Verify Oh My Zsh installation
         run: |
@@ -100,16 +166,19 @@ jobs:
 
       - name: Test kubectl command
         run: |
+          eval "$(/opt/homebrew/bin/brew shellenv)" || eval "$(/usr/local/bin/brew shellenv)"
           kubectl version --client
           echo "kubectl works"
 
       - name: Test terraform command
         run: |
+          eval "$(/opt/homebrew/bin/brew shellenv)" || eval "$(/usr/local/bin/brew shellenv)"
           terraform version
           echo "Terraform works"
 
       - name: Test helm command
         run: |
+          eval "$(/opt/homebrew/bin/brew shellenv)" || eval "$(/usr/local/bin/brew shellenv)"
           helm version
           echo "Helm works"
 
