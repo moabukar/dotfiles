@@ -29,7 +29,6 @@ cask "iterm2"
 brew "git"
 brew "gh"                    # GitHub CLI
 brew "node"
-brew "ruby"
 brew "python3"
 brew "go"
 brew "rust"
@@ -40,6 +39,7 @@ cask "cursor"               # AI-powered code editor
 # Version Managers
 # ----------------------------------------------------------------------------
 brew "pyenv"
+brew "tfenv"
 
 # ----------------------------------------------------------------------------
 # Go Tools

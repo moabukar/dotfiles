@@ -4,15 +4,9 @@
 .gitconfig
 .gitignore_global
 README.md
-QUICKSTART.md
 LICENSE
-Makefile
 bootstrap.sh
-setup.sh
 Brewfile
 config
-shell
 scripts
-homebrew
-docs
-p10k
+images
