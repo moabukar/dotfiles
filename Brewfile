@@ -140,6 +140,11 @@ cask "google-chrome"
 cask "firefox"
 cask "slack"
 cask "discord"
+cask "notion"               # Note-taking & productivity
+cask "whatsapp"             # Messaging
+cask "zoom"                 # Video conferencing
+cask "microsoft-teams"      # Team collaboration
+cask "orbstack"             # Fast Docker & Linux on macOS
 
 # ----------------------------------------------------------------------------
 # Fonts (for Powerlevel10k)
