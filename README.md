@@ -2,7 +2,7 @@
 
 [![Test Dotfiles Setup](https://github.com/moabukar/dotfiles/actions/workflows/test.yml/badge.svg)](https://github.com/moabukar/dotfiles/actions/workflows/test.yml)
 
-macOS development environment automation.
+macOS dev env setup automation.
 
 ## New Mac Setup
 
@@ -12,25 +12,28 @@ cd ~/.dotfiles
 ./bootstrap.sh
 ```
 
-That's it. One script, 20-30 minutes.
+Takes roughly 15/20 minutes for setup to complete
 
 ## What Gets Installed
 
 ### Tools & CLIs
-- Homebrew
-- Git, Node, Python, Go, Rust, Ruby
+
+- Homebrew (Core)
+- Git, Node, Python, Go
 - Docker, Kubernetes (kubectl, helm, k9s, kind)
 - Terraform, Terragrunt, Vault
 - AWS CLI, LocalStack
 - VS Code, iTerm2, Chrome
 
 ### Shell Setup
+
 - Oh My Zsh
 - Powerlevel10k theme
 - Syntax highlighting & autosuggestions
 - Custom aliases & functions
 
-### Configs Linked
+### Configs Symlinked
+
 - `.zshrc` - Shell configuration
 - `.gitconfig` - Git settings
 - `.vimrc` - Vim config
@@ -41,21 +44,26 @@ That's it. One script, 20-30 minutes.
 ## After Setup
 
 ### Set iTerm2 Font
+
 iTerm2 → Preferences → Profiles → Text → Font: **MesloLGS NF**
 
 ### Generate SSH Key
+
 ```bash
 ssh-keygen -t ed25519 -C "your_email@example.com"
 cat ~/.ssh/id_ed25519.pub | pbcopy
+
 ```
+
 Add to GitHub: https://github.com/settings/ssh/new
 
 ### Login to GitHub CLI
+
 ```bash
 gh auth login
 ```
 
-## Custom Functions
+## Example Custom Functions
 
 Type `aliases` to see all extras:
 
@@ -104,37 +112,3 @@ brew bundle --file=Brewfile
 - Edit `shell/aliases.sh` for custom functions
 - Edit `Brewfile` for packages
 - Edit configs in `config/` directory
-
-## Structure
-
-```
-.
-├── bootstrap.sh      # Main setup script
-├── Brewfile          # All packages & apps
-├── .zshrc            # Shell configuration
-├── config/           # App configs
-│   ├── git/
-│   ├── vscode/
-│   └── ...
-├── shell/
-│   └── aliases.sh    # Custom functions
-└── scripts/          # Helper scripts
-```
-
-## Testing
-
-### Automated CI Testing
-Every push runs the complete setup on macOS runners via GitHub Actions:
-- Installs all packages
-- Verifies tool installations
-- Tests config linking
-- Validates custom functions
-
-Check the Actions tab for test results.
-
-### Manual Testing
-See `TESTING.md` for Parallels VM testing steps.
-
-## License
-
-MIT
