@@ -20,11 +20,11 @@ function setting_vscode() {
   local vscode_dir="${HOME}/Library/Application Support/Code/User"
 
   # Link settings.json
-  backup_and_link "${root_dir}/vscode/settings.json" "${vscode_dir}" "${backupdir}"
+  backup_and_link "${root_dir}/config/vscode/settings.json" "${vscode_dir}" "${backupdir}"
 
   # Install extensions using the code command
   if [ "$(which code)" != "" ]; then
-    cat < "${root_dir}/vscode/extensions" | while read -r line
+    cat < "${root_dir}/config/vscode/extensions" | while read -r line
     do
       code --install-extension "$line"
     done

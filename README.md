@@ -1,74 +1,128 @@
-# Dotfiles & Setup (macOS edition)
+# Dotfiles
 
-This repo automates my macOS setup for DevOps work. It symlinks dotfiles, installs essential apps via Homebrew, sets up your shell (oh-my-zsh & powerlevel10k) and aliases along with OS defaults.
+macOS development environment automation.
 
-## Prerequisites
-
-- A new macOS machine. 
-- Xcode Command Line Tools installed (if not, script will prompt)
-
-## Quick Start
+## New Mac Setup
 
 ```bash
-./setup.sh
+git clone https://github.com/moabukar/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+./bootstrap.sh
 ```
 
-This will:
+That's it. One script, 20-30 minutes.
 
-- Install Homebrew (if missing)
-- Symlink your dotfiles (e.g. .zshrc, aliases)
-- Install Homebrew apps using `brew bundle --global` (see `homebrew/Brewfile`)
-- Configure macOS defaults (`scripts/defaults.sh`)
-- Install oh-my-zsh & powerlevel10k
+## What Gets Installed
+
+### Tools & CLIs
+- Homebrew
+- Git, Node, Python, Go, Rust, Ruby
+- Docker, Kubernetes (kubectl, helm, k9s, kind)
+- Terraform, Terragrunt, Vault
+- AWS CLI, LocalStack
+- VS Code, iTerm2, Chrome
+
+### Shell Setup
+- Oh My Zsh
+- Powerlevel10k theme
+- Syntax highlighting & autosuggestions
+- Custom aliases & functions
+
+### Configs Linked
+- `.zshrc` - Shell configuration
+- `.gitconfig` - Git settings
+- `.vimrc` - Vim config
+- `.tmux.conf` - tmux config
+- VS Code settings & extensions
+- SSH config
+
+## After Setup
+
+### Set iTerm2 Font
+iTerm2 → Preferences → Profiles → Text → Font: **MesloLGS NF**
+
+### Generate SSH Key
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+cat ~/.ssh/id_ed25519.pub | pbcopy
+```
+Add to GitHub: https://github.com/settings/ssh/new
+
+### Login to GitHub CLI
+```bash
+gh auth login
+```
+
+## Custom Functions
+
+Type `aliases` to see all extras:
+
+```bash
+# Kubernetes
+kln <partial>       # logs by partial pod name
+kexn <partial>      # exec into pod by partial name
+ksecdec <sec> <key> # decode secret
+kdebug              # run debug pod
+
+# Docker
+dsh <container>     # shell into container
+dbash <container>   # bash into container
+
+# Terraform
+tfpo [file]         # plan with output
+tfap [file]         # apply from plan
+
+# AWS
+ec2ls               # list EC2 instances
+eksls               # list EKS clusters
+ecrlogin            # docker login to ECR
+s3tree <bucket>     # show bucket structure
+
+# Utils
+mkcd <dir>          # mkdir and cd
+extract <file>      # extract any archive
+b64e/b64d           # base64 encode/decode
+genpass [len]       # generate password
+killport <port>     # kill process on port
+gcap <msg>          # git add, commit, push
+```
+
+## Updating
+
+```bash
+cd ~/.dotfiles
+git pull
+brew update && brew upgrade
+brew bundle --file=Brewfile
+```
 
 ## Customization
 
-- **Homebrew:** Update `homebrew/Brewfile` to change your packages.
-- **OS Defaults:** Adjust settings in `scripts/defaults.sh`.
-- **Symlinks:** Update `linkdotfiles.sh` (or `scripts/link.sh`) if needed.
+- Edit `.zshrc` for shell config
+- Edit `shell/aliases.sh` for custom functions
+- Edit `Brewfile` for packages
+- Edit configs in `config/` directory
 
-## Manual Steps
+## Structure
 
-There's always things that you can't fully automate or it's better to do manually. Here are some things I prefer to do manually:
-
-- Login to GitHub & add ssh keys.
-  - `ssh-keygen` to generate a new key. 
-  - `cat ~/.ssh/id_rsa.pub | pbcopy` to copy the key to clipboard & copy it to [GitHub](https://github.com/settings/ssh/new).
-  - Now, try to clone your repos via SSH and see if it works.
-- Clean up the mac dock & make the size smaller. 
-- Setup VPN (im using [NordVPN](https://nordvpn.com/)) and login etc. Alongside with the NordPass.
-- Setup Magnet shortcuts
-
-## Repo Structure
-
-```bash
-├── LICENSE # MIT License
-├── Makefile # (Optional) for running targets
-├── README.md # Home README
-├── git
-│   └── aliases.zsh # Git aliases
-├── homebrew
-│   ├── Brewfile # Homebrew packages
-│   ├── install.sh # Homebrew install script
-│   └── path.zsh # Homebrew path script
-├── linkdotfiles.sh # Dotfile symlinker
-├── p10k # Powerlevel10k config
-├── scripts
-│   ├── asdf.sh # asdf install script
-│   ├── brew.sh # Homebrew install script
-│   ├── code.sh # VSCode install script
-│   ├── defaults.sh # macOS defaults
-│   ├── init.sh # Initial setup script
-│   ├── link.sh # Dotfile symlinker
-│   └── util.sh # Utility functions
-├── setup.sh # Bootstrap script
-├── ssh_config # SSH config
-├── useful-commands.md # Useful commands
-└── vscode
-    ├── extensions # VSCode extensions
-    └── settings.json # VSCode settings
+```
+.
+├── bootstrap.sh      # Main setup script
+├── Brewfile          # All packages & apps
+├── .zshrc            # Shell configuration
+├── config/           # App configs
+│   ├── git/
+│   ├── vscode/
+│   └── ...
+├── shell/
+│   └── aliases.sh    # Custom functions
+└── scripts/          # Helper scripts
 ```
 
-## TODO
+## Testing
 
-- Automate it further. 
+See `TESTING.md` for Parallels VM testing.
+
+## License
+
+MIT

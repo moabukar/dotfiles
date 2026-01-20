@@ -825,6 +825,13 @@ export now="--force --grace-period=0"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # =================================================
+# ADDITIONAL CUSTOM FUNCTIONS
+# =================================================
+
+# Source additional DevOps utilities from dotfiles
+[[ -f "$HOME/.dotfiles/shell/aliases.sh" ]] && source "$HOME/.dotfiles/shell/aliases.sh"
+
+# =================================================
 # FINAL SETUP & WELCOME MESSAGE
 # =================================================
 
@@ -834,13 +841,14 @@ export now="--force --grace-period=0"
 [[ ! -d "$PLATFORM_DIR" ]] && mkdir -p "$PLATFORM_DIR"
 
 # welcome message
-echo "🚀 Engineer Shell Environment Loaded!"
+echo "Engineer Shell Environment Loaded"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "💡 Type 'sysinfo' for system information"
-echo "🔧 Type 'k8s-ctx' to see Kubernetes contexts"
-echo "☁️  Type 'awswhoami' to check AWS identity"
-echo "🖥️  Type 'mpstatus' for Multipass VMs"
-echo "📝 Edit this config with 'zshrc'"
+echo "Type 'sysinfo' for system information"
+echo "Type 'k8s-ctx' to see Kubernetes contexts"
+echo "Type 'awswhoami' to check AWS identity"
+echo "Type 'mpstatus' for Multipass VMs"
+echo "Type 'aliases' to see custom functions"
+echo "Edit config with 'zshrc'"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
 ### Testing

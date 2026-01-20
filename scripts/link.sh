@@ -66,6 +66,57 @@ function link_to_homedir() {
         # Create a symbolic link to the home directory as is otherwise
         backup_and_link "$f" "$HOME" "$backupdir"
     done
+    
+    # Link Git config
+    if [ -f "$dotfiles_dir/config/git/.gitconfig" ]; then
+        backup_and_link "$dotfiles_dir/config/git/.gitconfig" "$HOME" "$backupdir"
+        print_success "Git config linked"
+    fi
+    
+    if [ -f "$dotfiles_dir/config/git/.gitignore_global" ]; then
+        backup_and_link "$dotfiles_dir/config/git/.gitignore_global" "$HOME" "$backupdir"
+        print_success "Global gitignore linked"
+    fi
+    
+    # Link Vim config
+    if [ -f "$dotfiles_dir/config/vim/.vimrc" ]; then
+        backup_and_link "$dotfiles_dir/config/vim/.vimrc" "$HOME" "$backupdir"
+        print_success "Vim config linked"
+    fi
+    
+    # Link tmux config
+    if [ -f "$dotfiles_dir/config/tmux/.tmux.conf" ]; then
+        backup_and_link "$dotfiles_dir/config/tmux/.tmux.conf" "$HOME" "$backupdir"
+        print_success "tmux config linked"
+    fi
+    
+    # Link Docker config
+    if [ -f "$dotfiles_dir/config/docker/.dockerconfig.json" ]; then
+        backup_and_link "$dotfiles_dir/config/docker/.dockerconfig.json" "$HOME" "$backupdir"
+        print_success "Docker config linked"
+    fi
+    
+    # Link kubectl aliases
+    if [ -f "$dotfiles_dir/config/kubectl/.kubectl_aliases" ]; then
+        backup_and_link "$dotfiles_dir/config/kubectl/.kubectl_aliases" "$HOME" "$backupdir"
+        print_success "kubectl aliases linked"
+    fi
+    
+    # Link SSH config
+    if [ -f "$dotfiles_dir/config/ssh_config" ]; then
+        mkdir -p "$HOME/.ssh"
+        if [ -f "$HOME/.ssh/config" ]; then
+            cp "$HOME/.ssh/config" "$backupdir/ssh_config.backup"
+        fi
+        ln -sf "$dotfiles_dir/config/ssh_config" "$HOME/.ssh/config"
+        print_success "SSH config linked"
+    fi
+    
+    # Link Powerlevel10k config if it exists
+    if [ -f "$dotfiles_dir/p10k/.p10k.zsh" ]; then
+        ln -sf "$dotfiles_dir/p10k/.p10k.zsh" "$HOME/.p10k.zsh"
+        print_success "Powerlevel10k config linked"
+    fi
 }
 
 link_to_homedir
