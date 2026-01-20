@@ -14,7 +14,6 @@ dockutil --remove all --no-restart
 print_info "Adding apps to Dock..."
 
 # Core macOS apps
-dockutil --add "/System/Applications/Launchpad.app" --no-restart
 dockutil --add "/Applications/Discord.app" --no-restart 2>/dev/null || true
 dockutil --add "/Applications/Google Chrome.app" --no-restart 2>/dev/null || true
 dockutil --add "/Applications/Notion.app" --no-restart 2>/dev/null || true
