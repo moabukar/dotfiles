@@ -18,12 +18,29 @@ Takes roughly 15/20 minutes for setup to complete.
 
 ### Tools
 
-- Homebrew
-- Git, Node, Python, Go
-- Docker tools (OrbStack, dive, crane)
-- Kubernetes (kubectl, helm, k9s, kubectx, kind)
+**Languages & Runtimes**
+- Node, Python, Go, Rust
+
+**Kubernetes**
+- kubectl, helm, k9s, kubectx, stern, kubetail
+- k3d, kind, minikube, skaffold, kustomize, tilt
+
+**Infrastructure**
 - OpenTofu (Terraform alternative), Terragrunt, Vault
-- AWS tools, LocalStack
+- AWS CLI, Azure CLI, LocalStack
+
+**Containers**
+- OrbStack, dive, crane, trivy (scanner)
+
+**Security**
+- trivy (container/IaC scanner), tfsec (Terraform scanner)
+
+**Better CLI**
+- bat (cat), eza (ls), btop (top), httpie (curl)
+- lazygit, ripgrep, fzf, fd, dust, procs
+
+**Testing**
+- act (GitHub Actions local), hey (load testing)
 
 ### Apps
 
