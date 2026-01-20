@@ -45,6 +45,7 @@ id_rsa
 mac
 passwords.txt
 */old_keys/*
+.env
 *.key
 *.ppk
 **.env

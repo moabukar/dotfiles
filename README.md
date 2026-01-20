@@ -4,6 +4,8 @@
 
 macOS dev env setup automation.
 
+Context: Whenever you change jobs or switch to a new machine, it can be a headache to setup your dev environment for full efficiency. This repo aims to automate the setup process for a consistent and efficient dev environment.
+
 ## New Mac Setup
 
 ```bash
@@ -12,7 +14,7 @@ cd ~/.dotfiles
 ./bootstrap.sh
 ```
 
-Takes roughly 15/20 minutes for setup to complete. 
+Takes roughly 15 minutes for setup to complete.
 
 ## What Gets Installed
 
@@ -51,11 +53,13 @@ Takes roughly 15/20 minutes for setup to complete.
 - WhatsApp, Teams, Zoom
 - Rectangle (window management)
 
-### Shell
+### Shell & Editor
 
 - Oh My Zsh + Powerlevel10k
 - 100+ DevOps aliases (Git, Docker, K8s, AWS, etc.)
-- Custom functions
+- Custom functions for DevOps workflows
+- Vim config with DevOps-friendly settings
+- Tmux config for terminal multiplexing
 
 ### Automatic Configuration
 
@@ -63,7 +67,7 @@ Takes roughly 15/20 minutes for setup to complete.
 - Trackpad: bottom-right corner = right-click
 - Disabled natural scrolling (traditional scroll)
 - Tap to click enabled
-- All configs linked (.zshrc, .gitconfig, .vimrc, .tmux.conf)
+- All configs symlinked (.zshrc, .gitconfig, .vimrc, .tmux.conf)
 - VS Code settings & extensions
 
 ## Post-Setup (2 minutes)
@@ -116,30 +120,12 @@ killport <port>     # kill process on port
 gcap <msg>          # git add, commit, push
 ```
 
-## Customisation
+## Guides & Productivity Kit
 
-```bash
-# Edit shell & aliases
-vi ~/.zshrc
+- `docs/VIM_GUIDE.md` - Complete Vim tutorial for DevOps engineers
+- `docs/TMUX_GUIDE.md` - Tmux from basics to advanced workflows
+- `DEVOPS_PRODUCTIVITY.md` - Shell workflows, Git tricks, K8s productivity, AWS patterns, secrets management, browser extensions, and more
 
-# Edit dock apps
-vi ~/.dotfiles/scripts/dock.sh
-
-# Edit macOS settings
-vi ~/.dotfiles/scripts/defaults.sh
-
-# Add/remove packages
-vi ~/.dotfiles/Brewfile
-```
-
-## Updating
-
-```bash
-cd ~/.dotfiles
-git pull
-brew update && brew upgrade
-brew bundle --file=Brewfile
-```
 
 ## Run Scripts Individually
 
