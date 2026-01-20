@@ -12,75 +12,77 @@ cd ~/.dotfiles
 ./bootstrap.sh
 ```
 
-Takes roughly 15/20 minutes for setup to complete
+Takes roughly 15/20 minutes for setup to complete. 
 
 ## What Gets Installed
 
-### Tools & CLIs
+### Tools
 
-- Homebrew (Core)
+- Homebrew
 - Git, Node, Python, Go
-- Docker, Kubernetes (kubectl, helm, k9s, kind)
-- Terraform, Terragrunt, Vault
-- AWS CLI, LocalStack
-- VS Code, iTerm2, Chrome
+- Docker tools (OrbStack, dive, crane)
+- Kubernetes (kubectl, helm, k9s, kubectx, kind)
+- OpenTofu (Terraform alternative), Terragrunt, Vault
+- AWS tools, LocalStack
 
-### Shell Setup
+### Apps
 
-- Oh My Zsh
-- Powerlevel10k theme
-- Syntax highlighting & autosuggestions
-- Custom aliases & functions
+- Cursor, VS Code
+- Chrome, Firefox
+- iTerm2
+- Notion, Slack, Discord
+- WhatsApp, Teams, Zoom
+- Rectangle (window management)
 
-### Configs Symlinked
+### Shell
 
-- `.zshrc` - Shell configuration
-- `.gitconfig` - Git settings
-- `.vimrc` - Vim config
-- `.tmux.conf` - tmux config
+- Oh My Zsh + Powerlevel10k
+- 100+ DevOps aliases (Git, Docker, K8s, AWS, etc.)
+- Custom functions
+
+### Automatic Configuration
+
+- Small, fixed dock with your preferred apps
+- Trackpad: bottom-right corner = right-click
+- Disabled natural scrolling (traditional scroll)
+- Tap to click enabled
+- All configs linked (.zshrc, .gitconfig, .vimrc, .tmux.conf)
 - VS Code settings & extensions
-- SSH config
 
-## After Setup
+## Post-Setup (2 minutes)
 
-### Set iTerm2 Font
-
-iTerm2 → Preferences → Profiles → Text → Font: **MesloLGS NF**
-
-### Generate SSH Key
+### SSH Key
 
 ```bash
 ssh-keygen -t ed25519 -C "your_email@example.com"
 cat ~/.ssh/id_ed25519.pub | pbcopy
-
 ```
-
 Add to GitHub: https://github.com/settings/ssh/new
 
-### Login to GitHub CLI
+### iTerm2 Font
+
+Set font to **MesloLGS NF** in: iTerm2 → Preferences → Profiles → Text
+
+### GitHub CLI
 
 ```bash
 gh auth login
 ```
 
-## Example Custom Functions
+## Custom Functions
 
 Type `aliases` to see all extras:
 
 ```bash
 # Kubernetes
 kln <partial>       # logs by partial pod name
-kexn <partial>      # exec into pod by partial name
+kexn <partial>      # exec into pod
 ksecdec <sec> <key> # decode secret
 kdebug              # run debug pod
 
 # Docker
 dsh <container>     # shell into container
 dbash <container>   # bash into container
-
-# Terraform
-tfpo [file]         # plan with output
-tfap [file]         # apply from plan
 
 # AWS
 ec2ls               # list EC2 instances
@@ -97,6 +99,22 @@ killport <port>     # kill process on port
 gcap <msg>          # git add, commit, push
 ```
 
+## Customisation
+
+```bash
+# Edit shell & aliases
+vi ~/.zshrc
+
+# Edit dock apps
+vi ~/.dotfiles/scripts/dock.sh
+
+# Edit macOS settings
+vi ~/.dotfiles/scripts/defaults.sh
+
+# Add/remove packages
+vi ~/.dotfiles/Brewfile
+```
+
 ## Updating
 
 ```bash
@@ -106,9 +124,15 @@ brew update && brew upgrade
 brew bundle --file=Brewfile
 ```
 
-## Customization
+## Run Scripts Individually
 
-- Edit `.zshrc` for shell config
-- Edit `shell/aliases.sh` for custom functions
-- Edit `Brewfile` for packages
-- Edit configs in `config/` directory
+```bash
+# Reconfigure dock
+~/.dotfiles/scripts/dock.sh
+
+# Reapply macOS defaults
+~/.dotfiles/scripts/defaults.sh
+
+# Reinstall VS Code extensions
+~/.dotfiles/scripts/code.sh
+```
