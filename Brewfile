@@ -50,7 +50,7 @@ brew "gotests"
 # ----------------------------------------------------------------------------
 # Infrastructure as Code
 # ----------------------------------------------------------------------------
-brew "terraform"
+brew "opentofu"             # Open source Terraform alternative
 brew "terragrunt"
 brew "hashicorp/tap/vault"
 brew "hadolint"             # Dockerfile linter
@@ -80,7 +80,6 @@ brew "crane"                # Container registry tool
 # Cloud & Virtualization Tools
 # ----------------------------------------------------------------------------
 brew "localstack"           # AWS local testing
-brew "multipass"            # Ubuntu VMs
 brew "lima"                 # Linux virtual machines
 brew "qemu"                 # Generic virtualization
 brew "traefik"              # Reverse proxy
@@ -102,14 +101,14 @@ brew "make"
 brew "tree"
 brew "wget"
 brew "vim"
-brew "postgresql@14"
+brew "postgresql"
 brew "libssh"
 brew "fzf"                  # Fuzzy finder
 brew "ripgrep"              # Fast grep alternative
 brew "fd"                   # Fast find alternative
 brew "direnv"               # Directory-based env vars
 brew "bats"                 # Bash testing framework
-brew "tldr"                 # Simplified man pages
+brew "tlrc"                 # Simplified man pages (tldr replacement)
 brew "shellcheck"           # Shell script linter
 brew "telnet"
 brew "coreutils"

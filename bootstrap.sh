@@ -63,6 +63,13 @@ main() {
         brew update
     fi
 
+    # Clean up tfenv if it exists (conflicts with direct terraform install)
+    if brew list tfenv &>/dev/null; then
+        info "Removing tfenv (conflicts with OpenTofu)..."
+        brew unlink tfenv 2>/dev/null || true
+        brew uninstall tfenv 2>/dev/null || true
+    fi
+    
     # Install packages
     info "Installing packages from Brewfile (this takes 10-30 min)..."
     if [ -f "$DOTFILES_DIR/Brewfile" ]; then
