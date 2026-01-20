@@ -124,6 +124,7 @@ brew "watch"
 brew "openssl"
 brew "openssh"
 brew "protobuf"
+brew "dockutil"             # Manage macOS Dock
 
 # ----------------------------------------------------------------------------
 # Security & Encryption
