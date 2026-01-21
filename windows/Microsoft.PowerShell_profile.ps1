@@ -8,8 +8,13 @@ if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
 # PSReadLine configuration
 if (Get-Module -ListAvailable -Name PSReadLine) {
     Import-Module PSReadLine
-    Set-PSReadLineOption -PredictionSource History
-    Set-PSReadLineOption -PredictionViewStyle ListView
+    try {
+        # These features require VT support and may not work in CI
+        Set-PSReadLineOption -PredictionSource History -ErrorAction Stop
+        Set-PSReadLineOption -PredictionViewStyle ListView -ErrorAction Stop
+    } catch {
+        # Silently skip prediction features in non-VT environments (CI)
+    }
     Set-PSReadLineOption -EditMode Windows
     Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
     Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
