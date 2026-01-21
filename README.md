@@ -213,14 +213,30 @@ cd ~/.dotfiles/linux
 
 ## Windows Version (WSL2)
 
-See `windows/` directory for Windows 11 + WSL2 setup:
+Full dev-ready Windows setup with WSL2 integration. See `windows/README.md` for details.
 
 ```powershell
+# Run as Administrator
 cd $HOME\.dotfiles\windows
 .\setup.ps1
 ```
 
-Includes Windows tools + full Ubuntu WSL2 environment.
+**Installs:**
+- **Core:** Git (+ Git Bash), VS Code, Cursor, Windows Terminal, PowerShell 7
+- **Languages:** Node.js, Python, Go, Rust, Java
+- **DevOps:** Docker Desktop, kubectl, Helm, Terraform, AWS/Azure/GCloud CLIs
+- **Database & API:** Postman, DBeaver, Insomnia
+- **Communication:** Slack, Teams, Zoom, Notion
+- **Utilities:** 1Password, PowerToys, Everything Search
+- **WSL2:** Ubuntu 22.04 with full Linux dotfiles setup
+- **VS Code Extensions:** Docker, Kubernetes, Terraform, Remote-WSL, Copilot, etc.
+
+**Features:**
+- Automatic WSL2 and Ubuntu installation
+- Git Bash integration in Windows Terminal
+- Developer Mode & long path support enabled
+- Shared configurations between Windows and WSL
+- Full Linux environment via WSL2
 
 ## Roadmap
 

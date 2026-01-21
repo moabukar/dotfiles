@@ -29,10 +29,18 @@
         "startingDirectory": "%USERPROFILE%"
       },
       {
+        "guid": "{00000000-0000-0000-ba54-000000000002}",
+        "name": "Git Bash",
+        "commandline": "%PROGRAMFILES%\\Git\\bin\\bash.exe -i -l",
+        "startingDirectory": "%USERPROFILE%",
+        "icon": "%PROGRAMFILES%\\Git\\mingw64\\share\\git\\git-for-windows.ico",
+        "hidden": false
+      },
+      {
         "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
         "name": "Command Prompt",
         "commandline": "%SystemRoot%\\System32\\cmd.exe",
-        "hidden": false
+        "hidden": true
       }
     ]
   },
