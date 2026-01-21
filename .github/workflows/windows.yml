@@ -1,0 +1,328 @@
+name: Test Windows Setup
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'windows/**'
+      - 'linux/**'
+      - 'config/vim/**'
+      - 'config/tmux/**'
+      - 'config/git/**'
+      - '.zshrc'
+      - 'scripts/link.sh'
+      - 'scripts/util.sh'
+      - '.github/workflows/windows.yml'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'windows/**'
+      - 'linux/**'
+      - 'config/vim/**'
+      - 'config/tmux/**'
+      - 'config/git/**'
+      - '.zshrc'
+      - 'scripts/link.sh'
+      - 'scripts/util.sh'
+      - '.github/workflows/windows.yml'
+  workflow_dispatch:
+    inputs:
+      debug:
+        description: 'Enable debug mode'
+        required: false
+        default: 'false'
+
+jobs:
+  test-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: dotfiles
+
+      - name: Set up dotfiles directory
+        shell: pwsh
+        run: |
+          $dotfilesPath = "$HOME\.dotfiles"
+          if (Test-Path $dotfilesPath) {
+            Remove-Item -Path $dotfilesPath -Recurse -Force
+          }
+          Copy-Item -Path "dotfiles" -Destination $dotfilesPath -Recurse
+
+      - name: Display system info
+        shell: pwsh
+        run: |
+          Write-Host "=== System Information ===" -ForegroundColor Cyan
+          Write-Host "OS: $([System.Environment]::OSVersion.VersionString)"
+          Write-Host "PowerShell: $($PSVersionTable.PSVersion)"
+          Write-Host "User: $env:USERNAME"
+          Write-Host ""
+          Write-Host "=== Available Disk Space ===" -ForegroundColor Cyan
+          Get-PSDrive -PSProvider FileSystem | Where-Object { $_.Used -gt 0 } |
+            Select-Object Name, @{Name="Used(GB)";Expression={[math]::Round($_.Used/1GB,2)}},
+            @{Name="Free(GB)";Expression={[math]::Round($_.Free/1GB,2)}}
+
+      - name: Check PowerShell script syntax
+        shell: pwsh
+        run: |
+          Write-Host "=== Checking PowerShell Script Syntax ===" -ForegroundColor Cyan
+
+          $setupScript = "$HOME\.dotfiles\windows\setup.ps1"
+          $profileScript = "$HOME\.dotfiles\windows\Microsoft.PowerShell_profile.ps1"
+
+          $errors = @()
+
+          Write-Host "Checking setup.ps1..." -ForegroundColor Gray
+          $null = [System.Management.Automation.PSParser]::Tokenize((Get-Content $setupScript -Raw), [ref]$errors)
+          if ($errors.Count -gt 0) {
+            Write-Host "✗ setup.ps1 has syntax errors" -ForegroundColor Red
+            $errors | ForEach-Object { Write-Host $_ -ForegroundColor Red }
+            exit 1
+          } else {
+            Write-Host "✓ setup.ps1 syntax valid" -ForegroundColor Green
+          }
+
+          Write-Host "Checking PowerShell profile..." -ForegroundColor Gray
+          $errors = @()
+          $null = [System.Management.Automation.PSParser]::Tokenize((Get-Content $profileScript -Raw), [ref]$errors)
+          if ($errors.Count -gt 0) {
+            Write-Host "✗ PowerShell profile has syntax errors" -ForegroundColor Red
+            $errors | ForEach-Object { Write-Host $_ -ForegroundColor Red }
+            exit 1
+          } else {
+            Write-Host "✓ PowerShell profile syntax valid" -ForegroundColor Green
+          }
+
+      - name: Test PowerShell profile functions
+        shell: pwsh
+        run: |
+          Write-Host "=== Testing PowerShell Profile Functions ===" -ForegroundColor Cyan
+
+          # Source the profile
+          . "$HOME\.dotfiles\windows\Microsoft.PowerShell_profile.ps1"
+
+          # Test custom functions exist
+          $functions = @('which', 'mkcd', 'sysinfo')
+          foreach ($func in $functions) {
+            if (Get-Command $func -ErrorAction SilentlyContinue) {
+              Write-Host "✓ Function '$func' defined" -ForegroundColor Green
+            } else {
+              Write-Host "✗ Function '$func' not found" -ForegroundColor Red
+              exit 1
+            }
+          }
+
+          # Test aliases
+          $aliases = @('ll', 'gs', 'k')
+          foreach ($alias in $aliases) {
+            if (Get-Alias $alias -ErrorAction SilentlyContinue) {
+              Write-Host "✓ Alias '$alias' defined" -ForegroundColor Green
+            } else {
+              Write-Host "⚠ Alias '$alias' not found (might depend on external tools)" -ForegroundColor Yellow
+            }
+          }
+
+      - name: Verify winget availability
+        shell: pwsh
+        run: |
+          Write-Host "=== Checking winget ===" -ForegroundColor Cyan
+          if (Get-Command winget -ErrorAction SilentlyContinue) {
+            Write-Host "✓ winget available" -ForegroundColor Green
+            winget --version
+          } else {
+            Write-Host "✗ winget not found" -ForegroundColor Red
+            exit 1
+          }
+
+      - name: Test winget package queries (dry-run)
+        shell: pwsh
+        run: |
+          Write-Host "=== Testing winget Package Queries ===" -ForegroundColor Cyan
+
+          $packages = @(
+            'Git.Git',
+            'Microsoft.VisualStudioCode',
+            'Microsoft.PowerShell',
+            'Microsoft.WindowsTerminal',
+            'Docker.DockerDesktop'
+          )
+
+          foreach ($pkg in $packages) {
+            Write-Host "Checking $pkg..." -ForegroundColor Gray
+            $result = winget search --id $pkg --exact 2>&1
+            if ($LASTEXITCODE -eq 0) {
+              Write-Host "✓ $pkg found in winget" -ForegroundColor Green
+            } else {
+              Write-Host "⚠ $pkg not found in winget" -ForegroundColor Yellow
+            }
+          }
+
+      - name: Check WSL availability
+        shell: pwsh
+        run: |
+          Write-Host "=== Checking WSL ===" -ForegroundColor Cyan
+          if (Get-Command wsl -ErrorAction SilentlyContinue) {
+            Write-Host "✓ WSL command available" -ForegroundColor Green
+            wsl --version 2>&1 || Write-Host "WSL may not be fully configured" -ForegroundColor Yellow
+          } else {
+            Write-Host "⚠ WSL not available (expected in CI environment)" -ForegroundColor Yellow
+          }
+
+      - name: Validate Windows Terminal settings JSON
+        shell: pwsh
+        run: |
+          Write-Host "=== Validating Windows Terminal Settings ===" -ForegroundColor Cyan
+
+          $settingsFile = "$HOME\.dotfiles\windows\terminal-settings.json"
+          if (Test-Path $settingsFile) {
+            try {
+              $json = Get-Content $settingsFile -Raw | ConvertFrom-Json
+              Write-Host "✓ terminal-settings.json is valid JSON" -ForegroundColor Green
+
+              # Check for required properties
+              if ($json.profiles) {
+                Write-Host "✓ profiles section exists" -ForegroundColor Green
+              }
+              if ($json.defaultProfile) {
+                Write-Host "✓ defaultProfile is set" -ForegroundColor Green
+              }
+            } catch {
+              Write-Host "✗ terminal-settings.json is invalid: $_" -ForegroundColor Red
+              exit 1
+            }
+          } else {
+            Write-Host "✗ terminal-settings.json not found" -ForegroundColor Red
+            exit 1
+          }
+
+      - name: Test directory navigation functions
+        shell: pwsh
+        run: |
+          Write-Host "=== Testing Directory Navigation ===" -ForegroundColor Cyan
+
+          . "$HOME\.dotfiles\windows\Microsoft.PowerShell_profile.ps1"
+
+          # Test mkcd function
+          $testDir = "test-dir-$(Get-Random)"
+          mkcd $testDir
+          if ((Get-Location).Path -like "*$testDir*") {
+            Write-Host "✓ mkcd function works" -ForegroundColor Green
+            Set-Location ..
+            Remove-Item $testDir -Force
+          } else {
+            Write-Host "✗ mkcd function failed" -ForegroundColor Red
+            exit 1
+          }
+
+          # Test .. navigation
+          $currentPath = Get-Location
+          ..
+          $parentPath = Get-Location
+          if ($parentPath -ne $currentPath) {
+            Write-Host "✓ .. navigation works" -ForegroundColor Green
+          } else {
+            Write-Host "✗ .. navigation failed" -ForegroundColor Red
+            exit 1
+          }
+
+      - name: Verify Linux bootstrap script exists
+        shell: pwsh
+        run: |
+          Write-Host "=== Checking Linux Bootstrap ===" -ForegroundColor Cyan
+
+          $linuxBootstrap = "$HOME\.dotfiles\linux\bootstrap.sh"
+          if (Test-Path $linuxBootstrap) {
+            Write-Host "✓ Linux bootstrap.sh exists" -ForegroundColor Green
+
+            # Check if it's executable (in Linux context)
+            $content = Get-Content $linuxBootstrap -Raw
+            if ($content -match '^#!/bin/bash') {
+              Write-Host "✓ Has proper shebang" -ForegroundColor Green
+            } else {
+              Write-Host "⚠ Missing or incorrect shebang" -ForegroundColor Yellow
+            }
+          } else {
+            Write-Host "✗ Linux bootstrap.sh not found" -ForegroundColor Red
+            exit 1
+          }
+
+      - name: Check shared config files
+        shell: pwsh
+        run: |
+          Write-Host "=== Checking Shared Config Files ===" -ForegroundColor Cyan
+
+          $configs = @(
+            '.zshrc',
+            'config\vim\.vimrc',
+            'config\tmux\.tmux.conf',
+            'config\git\.gitconfig'
+          )
+
+          foreach ($config in $configs) {
+            $path = "$HOME\.dotfiles\$config"
+            if (Test-Path $path) {
+              Write-Host "✓ $config exists" -ForegroundColor Green
+            } else {
+              Write-Host "⚠ $config not found" -ForegroundColor Yellow
+            }
+          }
+
+      - name: Test 'which' function
+        shell: pwsh
+        run: |
+          Write-Host "=== Testing 'which' Function ===" -ForegroundColor Cyan
+
+          . "$HOME\.dotfiles\windows\Microsoft.PowerShell_profile.ps1"
+
+          $result = which pwsh
+          if ($result) {
+            Write-Host "✓ 'which pwsh' returned: $result" -ForegroundColor Green
+          } else {
+            Write-Host "✗ 'which' function failed" -ForegroundColor Red
+            exit 1
+          }
+
+      - name: Verify documentation
+        shell: pwsh
+        run: |
+          Write-Host "=== Checking Documentation ===" -ForegroundColor Cyan
+
+          $readme = "$HOME\.dotfiles\windows\README.md"
+          if (Test-Path $readme) {
+            Write-Host "✓ README.md exists" -ForegroundColor Green
+
+            $content = Get-Content $readme -Raw
+            $requiredSections = @('Quick Start', 'Prerequisites', 'What Gets Installed', 'Post-Setup')
+
+            foreach ($section in $requiredSections) {
+              if ($content -match $section) {
+                Write-Host "✓ Section '$section' found" -ForegroundColor Green
+              } else {
+                Write-Host "⚠ Section '$section' missing" -ForegroundColor Yellow
+              }
+            }
+          } else {
+            Write-Host "✗ README.md not found" -ForegroundColor Red
+            exit 1
+          }
+
+      - name: Final summary
+        shell: pwsh
+        run: |
+          Write-Host ""
+          Write-Host "================================" -ForegroundColor Green
+          Write-Host "✅ Windows setup test completed!" -ForegroundColor Green
+          Write-Host "================================" -ForegroundColor Green
+          Write-Host ""
+          Write-Host "Verified:" -ForegroundColor Cyan
+          Write-Host "  - PowerShell scripts syntax" -ForegroundColor White
+          Write-Host "  - PowerShell profile functions" -ForegroundColor White
+          Write-Host "  - Windows Terminal settings" -ForegroundColor White
+          Write-Host "  - winget package availability" -ForegroundColor White
+          Write-Host "  - Linux bootstrap integration" -ForegroundColor White
+          Write-Host "  - Shared configuration files" -ForegroundColor White
+          Write-Host ""
+          Write-Host "Note: Full WSL2 setup cannot be tested in CI" -ForegroundColor Yellow
+          Write-Host "Manual testing on Windows 11 is recommended" -ForegroundColor Yellow

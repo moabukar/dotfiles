@@ -2,6 +2,7 @@
 
 [![Test macOS Setup](https://github.com/moabukar/dotfiles/actions/workflows/macOS.yml/badge.svg)](https://github.com/moabukar/dotfiles/actions/workflows/macOS.yml)
 [![Test Linux Setup](https://github.com/moabukar/dotfiles/actions/workflows/linux.yml/badge.svg)](https://github.com/moabukar/dotfiles/actions/workflows/linux.yml)
+[![Test Windows Setup](https://github.com/moabukar/dotfiles/actions/workflows/windows.yml/badge.svg)](https://github.com/moabukar/dotfiles/actions/workflows/windows.yml)
 
 macOS dev env setup automation.
 
@@ -210,9 +211,19 @@ cd ~/.dotfiles/linux
 ./bootstrap.sh
 ```
 
-Full DevOps environment for Linux servers and workstations.
+## Windows Version (WSL2)
+
+See `windows/` directory for Windows 11 + WSL2 setup:
+
+```powershell
+cd $HOME\.dotfiles\windows
+.\setup.ps1
+```
+
+Includes Windows tools + full Ubuntu WSL2 environment.
 
 ## Roadmap
 
-- [x] Add support for Linux (Ubuntu/Debian)
-- [ ] Add support for Windows (WSL2)
+- [x] macOS support (Homebrew-based)
+- [x] Linux support (Ubuntu/Debian, apt-based)
+- [x] Windows support (WSL2 + Ubuntu)
