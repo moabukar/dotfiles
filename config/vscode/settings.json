@@ -19,7 +19,7 @@
   "tailwindCSS.experimental.classRegex": [
     "tw\\('([^')]*)",
     "classnames\\(([^)]*)\\)",
-    "'([^']*)'",
+    "'([^']*)'"
   ],
   "prettier.requireConfig": true,
   "editor.quickSuggestions": {
@@ -53,7 +53,7 @@
     {
         "before" : ["<C-r>"],
         "commands" : ["redo"]
-    },
+    }
   ],
   "vim.hlsearch": true,
   "terminal.integrated.defaultProfile.osx": "zsh",
@@ -62,11 +62,11 @@
     "editor.formatOnSave": true
   },
   "[proto3]": {
-    "editor.defaultFormatter": "xaver.clang-format",
+    "editor.defaultFormatter": "xaver.clang-format"
   },
   "code-runner.executorMap": {
     "rust": "cargo run # $fileName",
-    "python": "python3 -u",
+    "python": "python3 -u"
   },
   "code-runner.runInTerminal": true,
   "[rust]": {

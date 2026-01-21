@@ -90,6 +90,15 @@ Set font to **MesloLGS NF** in: iTerm2 → Preferences → Profiles → Text
 gh auth login
 ```
 
+### Pre-commit Hooks (Optional)
+
+```bash
+cd ~/.dotfiles
+pre-commit install
+```
+
+Now git commits will automatically run shellcheck and file validation checks.
+
 ## Custom Functions
 
 Type `aliases` to see all extras:

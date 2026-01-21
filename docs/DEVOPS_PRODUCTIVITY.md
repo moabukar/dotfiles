@@ -67,13 +67,13 @@ Add to `.gitconfig`:
 [alias]
     # Quick amend
     amend = commit --amend --no-edit
-    
+
     # Undo last commit but keep changes
     undo = reset HEAD~1 --soft
-    
+
     # Clean merged branches
     cleanup = "!git branch --merged | grep -v '\\*\\|main\\|master\\|develop' | xargs -n 1 git branch -d"
-    
+
     # Better log
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 
@@ -325,7 +325,7 @@ repos:
       - id: terraform_validate
       - id: terraform_tflint
       - id: terraform_docs
-      
+
   - repo: https://github.com/aquasecurity/tfsec
     rev: v1.28.1
     hooks:
@@ -411,19 +411,19 @@ morning() {
 ```bash
 eod() {
   echo "🌙 End of Day Cleanup"
-  
+
   # Commit any WIP
   echo "Any uncommitted changes?"
   git status -s
-  
+
   # Clean docker
   echo "Cleaning Docker..."
   docker system prune -f
-  
+
   # Clean brew
   echo "Cleaning Homebrew..."
   brew cleanup
-  
+
   # Show tomorrow's calendar (if using 'gcalcli')
   # gcalcli agenda tomorrow
 }

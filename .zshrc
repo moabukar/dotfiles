@@ -187,7 +187,7 @@ setup_python() {
     eval "$(pyenv init --path)"
     eval "$(pyenv init -)"
   fi
-  
+
   # pipx
   if [[ -d "$HOME/.local/bin" ]]; then
     export PATH="$HOME/.local/bin:$PATH"
@@ -201,12 +201,12 @@ setup_kubernetes() {
     source <(kubectl completion zsh)
     complete -F __start_kubectl k
   fi
-  
+
   # helm completion
   if command -v helm >/dev/null 2>&1; then
     source <(helm completion zsh)
   fi
-  
+
   # kubectx and kubens completion
   if [[ -d "/opt/homebrew/share/zsh/site-functions" ]]; then
     fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
@@ -234,7 +234,7 @@ setup_docker() {
   if [[ -f "/Applications/Docker.app/Contents/Resources/etc/docker.zsh-completion" ]]; then
     source "/Applications/Docker.app/Contents/Resources/etc/docker.zsh-completion"
   fi
-  
+
   # Docker Compose completion
   if [[ -f "/Applications/Docker.app/Contents/Resources/etc/docker-compose.zsh-completion" ]]; then
     source "/Applications/Docker.app/Contents/Resources/etc/docker-compose.zsh-completion"

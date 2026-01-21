@@ -22,7 +22,7 @@ main() {
     echo "macOS Dotfiles Setup"
     echo "===================="
     echo ""
-    
+
     # Skip prompts in CI or non-interactive mode
     if [[ -z "$CI" ]] && [[ -z "$NONINTERACTIVE" ]]; then
         read -p "Continue? (y/N) " -n 1 -r
@@ -50,7 +50,7 @@ main() {
     if ! command -v brew &>/dev/null; then
         info "Installing Homebrew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        
+
         # Add to PATH for Apple Silicon
         if [[ $(uname -m) == 'arm64' ]]; then
             echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$HOME/.zprofile"
@@ -69,7 +69,7 @@ main() {
         brew unlink tfenv 2>/dev/null || true
         brew uninstall tfenv 2>/dev/null || true
     fi
-    
+
     # Remove tfenv directories and config
     if [ -d "$HOME/.tfenv" ] || [ -d "$HOME/.config/tfenv" ]; then
         info "Cleaning up tfenv directories..."
@@ -77,7 +77,7 @@ main() {
         rm -rf "$HOME/.config/tfenv" 2>/dev/null || true
         success "tfenv directories removed"
     fi
-    
+
     # Install packages
     info "Installing packages from Brewfile (this takes 10-30 min)..."
     if [ -f "$DOTFILES_DIR/Brewfile" ]; then
@@ -101,7 +101,7 @@ main() {
 
     # Zsh plugins
     ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
-    
+
     if [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]; then
         info "Installing zsh-syntax-highlighting..."
         git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"

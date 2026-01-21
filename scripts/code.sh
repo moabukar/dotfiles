@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $(dirname "${BASH_SOURCE[0]:-$0}")/util.sh
+source "$(dirname "${BASH_SOURCE[0]:-$0}")/util.sh"
 
 function setting_vscode() {
   print_notice "backup old setting.json..."
