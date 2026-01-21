@@ -1,7 +1,7 @@
 # Dotfiles
 
-[![Test macOS Setup](https://github.com/moabukar/dotfiles/actions/workflows/test.yml/badge.svg)](https://github.com/moabukar/dotfiles/actions/workflows/test.yml)
-[![Test Linux Setup](https://github.com/moabukar/dotfiles/actions/workflows/test-linux.yml/badge.svg)](https://github.com/moabukar/dotfiles/actions/workflows/test-linux.yml)
+[![Test macOS Setup](https://github.com/moabukar/dotfiles/actions/workflows/test.yml/badge.svg)](https://github.com/moabukar/dotfiles/actions/workflows/macOS.yml)
+[![Test Linux Setup](https://github.com/moabukar/dotfiles/actions/workflows/test-linux.yml/badge.svg)](https://github.com/moabukar/dotfiles/actions/workflows/linux.yml)
 
 macOS dev env setup automation.
 
