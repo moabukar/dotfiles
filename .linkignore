@@ -1,6 +1,7 @@
 # Files to ignore when creating symlinks
 .git
 .gitignore
+.pre-commit-config.yaml
 README.md
 LICENSE
 bootstrap.sh

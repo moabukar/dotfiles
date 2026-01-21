@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $(dirname "${BASH_SOURCE[0]:-$0}")/util.sh
+source "$(dirname "${BASH_SOURCE[0]:-$0}")/util.sh"
 
 check_macos
 
@@ -30,7 +30,7 @@ dockutil --add "/Applications/Cursor.app" --no-restart 2>/dev/null || true
 dockutil --add "/Applications/iTerm.app" --no-restart 2>/dev/null || true
 
 # Add folders (Downloads, Applications)
-dockutil --add "~/Downloads" --view grid --display folder --no-restart 2>/dev/null || true
+dockutil --add "$HOME/Downloads" --view grid --display folder --no-restart 2>/dev/null || true
 
 # Restart Dock to apply changes
 killall Dock

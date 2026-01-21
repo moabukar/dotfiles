@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $(dirname "${BASH_SOURCE[0]:-$0}")/util.sh
+source "$(dirname "${BASH_SOURCE[0]:-$0}")/util.sh"
 
 function link_to_homedir() {
     # make backup directory
@@ -66,27 +66,27 @@ function link_to_homedir() {
         # Create a symbolic link to the home directory as is otherwise
         backup_and_link "$f" "$HOME" "$backupdir"
     done
-    
+
     # Link configs from config directory
     if [ -f "$dotfiles_dir/config/git/.gitconfig" ]; then
         backup_and_link "$dotfiles_dir/config/git/.gitconfig" "$HOME" "$backupdir"
         print_success "Git config linked"
     fi
-    
+
     if [ -f "$dotfiles_dir/config/git/.gitignore_global" ]; then
         backup_and_link "$dotfiles_dir/config/git/.gitignore_global" "$HOME" "$backupdir"
     fi
-    
+
     if [ -f "$dotfiles_dir/config/vim/.vimrc" ]; then
         backup_and_link "$dotfiles_dir/config/vim/.vimrc" "$HOME" "$backupdir"
         print_success "Vim config linked"
     fi
-    
+
     if [ -f "$dotfiles_dir/config/tmux/.tmux.conf" ]; then
         backup_and_link "$dotfiles_dir/config/tmux/.tmux.conf" "$HOME" "$backupdir"
         print_success "Tmux config linked"
     fi
-    
+
     if [ -f "$dotfiles_dir/config/ssh_config" ]; then
         mkdir -p "$HOME/.ssh"
         if [ -f "$HOME/.ssh/config" ]; then

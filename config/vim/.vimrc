@@ -196,7 +196,7 @@ set statusline+=\ %y
 set statusline+=\ %{&fileencoding}
 set statusline+=\ %p%%
 set statusline+=\ %l:%c
-set statusline+=\ 
+set statusline+=\
 
 " ==============================================================================
 " AUTO COMMANDS
