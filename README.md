@@ -124,7 +124,7 @@ gcap <msg>          # git add, commit, push
 
 - `docs/VIM_GUIDE.md` - Complete Vim tutorial for DevOps engineers
 - `docs/TMUX_GUIDE.md` - Tmux from basics to advanced workflows
-- `DEVOPS_PRODUCTIVITY.md` - Shell workflows, Git tricks, K8s productivity, AWS patterns, secrets management, browser extensions, and more
+- `docs/DEVOPS_PRODUCTIVITY.md` - Shell workflows, Git tricks, K8s productivity, AWS patterns, secrets management, browser extensions, and more
 
 
 ## Run Scripts Individually

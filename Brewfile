@@ -136,7 +136,6 @@ brew "bats"                 # Bash testing framework
 brew "tlrc"                 # Simplified man pages (tldr replacement)
 brew "shellcheck"           # Shell script linter
 brew "yamllint"             # YAML linter
-brew "hadolint"             # Dockerfile linter
 
 # ----------------------------------------------------------------------------
 # "Better" CLI Tools
