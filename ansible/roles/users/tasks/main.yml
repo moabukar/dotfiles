@@ -1,0 +1,33 @@
+---
+- name: Create admin users
+  user:
+    name: "{{ item.username }}"
+    shell: /bin/bash
+    create_home: true
+  loop: "{{ admin_users }}"
+
+- name: Add SSH keys for users
+  authorized_key:
+    user: "{{ item.username }}"
+    key: "{{ item.ssh_key }}"
+    state: present
+  loop: "{{ admin_users }}"
+  when: item.ssh_key is defined
+
+- name: Add users to sudo group
+  user:
+    name: "{{ item.username }}"
+    groups: sudo
+    append: true
+  loop: "{{ admin_users }}"
+  when: item.sudo | default(false)
+
+- name: Configure passwordless sudo
+  lineinfile:
+    path: /etc/sudoers.d/{{ item.username }}
+    line: "{{ item.username }} ALL=(ALL) NOPASSWD:ALL"
+    create: true
+    mode: '0440'
+    validate: 'visudo -cf %s'
+  loop: "{{ admin_users }}"
+  when: item.sudo | default(false)

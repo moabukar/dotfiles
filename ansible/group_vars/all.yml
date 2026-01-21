@@ -1,0 +1,53 @@
+---
+# Global variables for all hosts
+
+# System
+timezone: "UTC"
+swap_size: "2G"
+
+# Users
+admin_users:
+  - username: devops
+    ssh_key: "ssh-ed25519 YOUR_PUBLIC_KEY_HERE"
+    sudo: true
+
+# SSH
+ssh_port: 22
+ssh_password_authentication: false
+ssh_permit_root_login: false
+
+# Firewall (UFW)
+ufw_enabled: true
+ufw_rules:
+  - { port: 22, proto: tcp, rule: allow, comment: "SSH" }
+  - { port: 80, proto: tcp, rule: allow, comment: "HTTP" }
+  - { port: 443, proto: tcp, rule: allow, comment: "HTTPS" }
+  - { port: 6443, proto: tcp, rule: allow, comment: "Kubernetes API" }
+
+# Docker
+docker_version: "latest"
+docker_compose_version: "2.24.0"
+
+# Kubernetes
+kubectl_version: "1.29.0"
+helm_version: "3.13.0"
+
+# Monitoring
+node_exporter_version: "1.7.0"
+promtail_version: "2.9.0"
+loki_url: "http://loki:3100"
+
+# Packages
+essential_packages:
+  - curl
+  - wget
+  - git
+  - vim
+  - htop
+  - net-tools
+  - unzip
+  - jq
+  - tree
+  - ncdu
+  - fail2ban
+  - ufw

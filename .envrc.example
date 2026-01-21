@@ -1,0 +1,41 @@
+# Example .envrc file for direnv
+# Copy this to your project root as .envrc and customize
+
+# Project-specific environment variables
+export PROJECT_NAME="myproject"
+export ENVIRONMENT="development"
+
+# AWS Configuration
+# export AWS_PROFILE=dev
+# export AWS_REGION=us-east-1
+
+# Kubernetes
+# export KUBECONFIG=~/.kube/dev-cluster
+
+# Terraform
+# export TF_VAR_environment=dev
+# export TF_VAR_region=us-east-1
+
+# Database
+# export DATABASE_URL=postgres://localhost/myproject_dev
+# export REDIS_URL=redis://localhost:6379
+
+# API Keys (use 1Password CLI)
+# export API_KEY=$(op read "op://vault/item/field")
+# export GITHUB_TOKEN=$(op read "op://Personal/GitHub Token/credential")
+
+# Language-specific
+# export GOPRIVATE=github.com/yourorg/*
+# export NODE_ENV=development
+# export PYTHONPATH="${PWD}/src:${PYTHONPATH}"
+
+# Path additions
+# PATH_add bin
+# PATH_add scripts
+
+# Load .env file if it exists
+# dotenv_if_exists
+
+# Use specific tool versions
+# use node 18
+# use python 3.11

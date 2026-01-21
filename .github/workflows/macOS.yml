@@ -1,11 +1,30 @@
-name: Test Dotfiles Setup
+name: Test macOS Setup
 
 on:
   push:
     branches: [main, master]
+    paths:
+      - 'bootstrap.sh'
+      - 'Brewfile'
+      - 'scripts/**'
+      - 'config/**'
+      - '.zshrc'
+      - '.github/workflows/test.yml'
   pull_request:
     branches: [main, master]
+    paths:
+      - 'bootstrap.sh'
+      - 'Brewfile'
+      - 'scripts/**'
+      - 'config/**'
+      - '.zshrc'
+      - '.github/workflows/test.yml'
   workflow_dispatch:
+    inputs:
+      debug:
+        description: 'Enable debug mode'
+        required: false
+        default: 'false'
 
 jobs:
   test-macos:

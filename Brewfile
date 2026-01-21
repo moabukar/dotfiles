@@ -26,10 +26,10 @@ cask "iterm2"
 # ----------------------------------------------------------------------------
 # Development Tools & IDEs
 # ----------------------------------------------------------------------------
-brew "git"
+brew "git" # already installed on macOS by default?
 brew "gh"                    # GitHub CLI
 brew "node"
-brew "python3"
+brew "python3" # already installed on macOS by default?
 brew "go"
 brew "rust"
 cask "visual-studio-code"
@@ -88,6 +88,7 @@ brew "crane"                # Container registry tool
 brew "awscli"               # AWS CLI
 brew "azure-cli"            # Azure CLI
 brew "doctl"                # DigitalOcean CLI
+cask "1password-cli"        # 1Password CLI
 brew "localstack"           # AWS local testing
 brew "lima"                 # Linux virtual machines
 brew "qemu"                 # Generic virtualization
@@ -124,7 +125,7 @@ brew "cosign"               # Sign/verify container images
 # ----------------------------------------------------------------------------
 brew "make"
 brew "tree"
-brew "wget"
+# brew "wget" already installed on macOS by default
 brew "vim"
 brew "tmux"                 # Terminal multiplexer
 brew "fzf"                  # Fuzzy finder
@@ -166,11 +167,9 @@ brew "pre-commit"           # Git pre-commit hooks framework
 brew "postgresql"
 brew "mysql-client"
 brew "redis"
-brew "libssh"
 brew "telnet"
 brew "coreutils"
 brew "findutils"
-brew "grep"
 brew "less"
 brew "gawk"
 brew "gnutls"

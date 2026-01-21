@@ -1,18 +1,20 @@
 # ✅ TODO - Next Steps
 
 ### Add More Documentation
-- [ ] Add CONTRIBUTING.md
+
 - [ ] Add examples for common tasks
 - [ ] Add troubleshooting section
 - [ ] Add video walkthrough
 
 ### Enhance Bootstrap Script
+
 - [ ] Add dry-run mode
 - [ ] Add selective installation (skip steps)
 - [ ] Add rollback functionality
 - [ ] Add health check command
 
 ### Add Automation
+
 - [X] GitHub Action to test bootstrap.sh
 - [X] Automatic Brewfile validation
 - [ ] Pre-commit hooks for formatting
@@ -76,5 +78,3 @@ Before using on a production machine:
 ---
 
 **Status:** Ready to use! 🚀
-
-Delete the duplicate directory and you're all set for your next laptop setup.

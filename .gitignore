@@ -1,28 +1,43 @@
-# Old/backup files
-old/
-.backup/
-*.backup
-*.bak
+# Homebrew
+Brewfile.lock.json
 
-# macOS
-.DS_Store
-._*
+# Direnv
+.envrc
+!.envrc.example
 
-# Temporary
-*.tmp
-*.swp
-*~
-
-# Secrets
+# Local config
 .env
+.env.local
+
+# SSH keys
 *.pem
 *.key
-id_rsa*
+id_*
+!id_*.pub
+
+# GPG
+*.asc
+secring.gpg
+pubring.gpg
+
+# Ansible
+*.retry
+ansible/.vault_pass
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
-# Homebrew
-Brewfile.lock.json
-old/
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary
+tmp/
+temp/

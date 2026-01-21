@@ -1,0 +1,10 @@
+---
+all:
+  hosts:
+    test-server:
+      ansible_host: localhost
+      ansible_connection: local
+
+  vars:
+    ansible_user: "{{ lookup('env', 'USER') }}"
+    ansible_python_interpreter: /usr/bin/python3
