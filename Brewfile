@@ -87,7 +87,6 @@ brew "crane"                # Container registry tool
 # ----------------------------------------------------------------------------
 brew "awscli"               # AWS CLI
 brew "azure-cli"            # Azure CLI
-brew "google-cloud-sdk"     # Google Cloud CLI
 brew "doctl"                # DigitalOcean CLI
 brew "localstack"           # AWS local testing
 brew "lima"                 # Linux virtual machines
@@ -209,6 +208,7 @@ cask "whatsapp"             # Messaging
 cask "zoom"                 # Video conferencing
 cask "microsoft-teams"      # Team collaboration
 cask "orbstack"             # Fast Docker & Linux on macOS
+cask "google-cloud-sdk"     # Google Cloud SDK
 
 # ----------------------------------------------------------------------------
 # Fonts (for Powerlevel10k)
