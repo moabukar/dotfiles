@@ -204,6 +204,8 @@ See `ansible/README.md` for details.
 
 ## Linux Version
 
+IMPORTANT NOTE: Not fully tested yet. In progress. You may test it at your own risk.
+
 See `linux/` directory for Ubuntu/Debian setup:
 
 ```bash
@@ -212,6 +214,8 @@ cd ~/.dotfiles/linux
 ```
 
 ## Windows Version (WSL2)
+
+IMPORTANT NOTE: Not fully tested yet. Use at your own risk.
 
 Full dev-ready Windows setup with WSL2 integration. See `windows/README.md` for details.
 
