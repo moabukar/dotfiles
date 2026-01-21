@@ -81,11 +81,16 @@ if [ ! -d "$ZSH_CUSTOM/themes/powerlevel10k" ]; then
     success "Powerlevel10k installed"
 fi
 
-# Change default shell to zsh
-if [ "$SHELL" != "$(which zsh)" ]; then
-    info "Changing default shell to zsh..."
-    chsh -s "$(which zsh)"
-    success "Default shell changed to zsh"
+# Change default shell to zsh (skip in CI)
+if [[ -z "$CI" ]] && [[ -z "$NONINTERACTIVE" ]]; then
+    if [ "$SHELL" != "$(which zsh)" ]; then
+        info "Changing default shell to zsh..."
+        chsh -s "$(which zsh)"
+        success "Default shell changed to zsh"
+    fi
+else
+    info "Skipping shell change (CI/non-interactive mode)"
+    success "Zsh installed (shell change skipped in CI)"
 fi
 
 # Install Docker
