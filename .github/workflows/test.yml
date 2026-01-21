@@ -183,11 +183,13 @@ jobs:
           kubectl version --client
           echo "kubectl works"
 
-      - name: Test terraform command
+      - name: Test OpenTofu command
         run: |
           eval "$(/opt/homebrew/bin/brew shellenv)" || eval "$(/usr/local/bin/brew shellenv)"
-          terraform version
-          echo "Terraform works"
+          # Clean up any tfenv remnants
+          rm -rf ~/.tfenv ~/.config/tfenv 2>/dev/null || true
+          tofu version
+          echo "OpenTofu works"
 
       - name: Test helm command
         run: |

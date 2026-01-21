@@ -63,11 +63,19 @@ main() {
         brew update
     fi
 
-    # Clean up tfenv if it exists (conflicts with direct terraform install)
-    if brew list tfenv &>/dev/null; then
+    # Clean up tfenv completely (conflicts with OpenTofu/Terraform)
+    if brew list tfenv &>/dev/null 2>&1; then
         info "Removing tfenv (conflicts with OpenTofu)..."
         brew unlink tfenv 2>/dev/null || true
         brew uninstall tfenv 2>/dev/null || true
+    fi
+    
+    # Remove tfenv directories and config
+    if [ -d "$HOME/.tfenv" ] || [ -d "$HOME/.config/tfenv" ]; then
+        info "Cleaning up tfenv directories..."
+        rm -rf "$HOME/.tfenv" 2>/dev/null || true
+        rm -rf "$HOME/.config/tfenv" 2>/dev/null || true
+        success "tfenv directories removed"
     fi
     
     # Install packages
