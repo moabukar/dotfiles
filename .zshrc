@@ -1088,6 +1088,48 @@ alias vegeta-attack='echo "GET http://localhost:8080" | vegeta attack -duration=
 alias grpc-list='grpcurl -plaintext'
 alias grpc-call='grpcurl -plaintext -d'
 
+# ============================================================================
+# Help Function
+# ============================================================================
+aliases() {
+  echo "DevOps Custom Functions & Aliases"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+  echo "Kubernetes:"
+  echo "  kln <partial>       - logs by partial pod name"
+  echo "  kexn <partial>      - exec into pod"
+  echo "  ksecdec <sec> <key> - decode secret"
+  echo "  kdebug              - run debug pod"
+  echo "  k9                  - open k9s"
+  echo "  klogs               - stern log tailing"
+  echo ""
+  echo "Docker:"
+  echo "  dsh <container>     - shell into container"
+  echo "  dbash <container>   - bash into container"
+  echo ""
+  echo "AWS:"
+  echo "  awswho              - show AWS identity"
+  echo "  ec2ls               - list EC2 instances"
+  echo "  eksls               - list EKS clusters"
+  echo "  ecrlogin            - docker login to ECR"
+  echo "  s3tree <bucket>     - show bucket structure"
+  echo ""
+  echo "Utils:"
+  echo "  mkcd <dir>          - mkdir and cd"
+  echo "  extract <file>      - extract any archive"
+  echo "  b64e/b64d           - base64 encode/decode"
+  echo "  genpass [len]       - generate password"
+  echo "  killport <port>     - kill process on port"
+  echo "  gcap <msg>          - git add, commit, push"
+  echo ""
+  echo "Security:"
+  echo "  tf-scan             - scan terraform with tfsec"
+  echo "  container-scan      - scan image with trivy"
+  echo "  iac-scan            - scan IaC with trivy"
+  echo ""
+  echo "Type any function name for help"
+}
+
 # welcome message
 echo "Engineer Shell Environment Loaded"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
