@@ -37,21 +37,77 @@ cd ~/.dotfiles/linux
 
 ## What Gets Installed
 
-### Windows (via winget/Chocolatey)
+### Windows Tools (via winget)
 
-- **Terminal:** Windows Terminal
+**Core Development:**
+- **Terminal:** Windows Terminal, PowerShell 7
 - **Editors:** VS Code, Cursor
-- **Tools:** Git for Windows, PowerShell 7
-- **Containers:** Docker Desktop
-- **Browsers:** Chrome, Firefox
-- **Utils:** 7zip, Everything search, Sysinternals
+- **Tools:** Git for Windows (includes Git Bash), PowerShell 7
+
+**Programming Languages & Runtimes:**
+- Node.js (with npm)
+- Python 3.12
+- Go
+- Rust
+- OpenJDK
+
+**Container & Orchestration:**
+- Docker Desktop (with WSL2 backend)
+
+**Cloud CLIs:**
+- AWS CLI
+- Azure CLI
+- Google Cloud SDK
+
+**DevOps & Infrastructure:**
+- Terraform
+- kubectl
+- Helm
+
+**Database & API Tools:**
+- Postman
+- DBeaver
+- Insomnia
+
+**Browsers:**
+- Google Chrome
+- Mozilla Firefox
+
+**Communication & Productivity:**
+- Notion
+- Slack
+- Zoom
+- Microsoft Teams
+
+**Utilities:**
+- 7zip
+- Sysinternals Suite
+- Everything Search
+- 1Password
+- PowerToys
+
+**VS Code Extensions:**
+- Remote - WSL
+- Remote - Containers
+- Docker
+- Terraform
+- Kubernetes
+- YAML
+- Prettier
+- ESLint
+- Python
+- Go
+- Rust Analyzer
+- GitLens
+- GitHub Copilot
 
 ### WSL2 Ubuntu
 
 - Full Linux DevOps environment (see `linux/README.md`)
 - Zsh + Oh My Zsh + Powerlevel10k
-- Docker, Kubernetes tools
-- All CLI tools and languages
+- All CLI tools: kubectl, helm, terraform, docker, awscli, etc.
+- Programming languages: Node.js, Python, Go, Rust
+- Productivity tools: tmux, vim, bat, eza, etc.
 
 ## Windows Terminal Configuration
 
@@ -109,16 +165,39 @@ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git
 
 ## Tips & Tricks
 
+### Using Git Bash
+
+Git for Windows includes Git Bash (a Unix-like shell for Windows):
+
+```bash
+# Open Git Bash from Start Menu or right-click in folder
+# You can run Unix commands natively on Windows:
+ls -la
+grep "pattern" file.txt
+ssh user@host
+```
+
+**Add Git Bash to Windows Terminal:**
+- Already configured in `terminal-settings.json`
+- Access via dropdown or `Ctrl+Shift+3`
+
 ### Access Windows Files from WSL
 
 ```bash
 cd /mnt/c/Users/YourUsername/
+cd /mnt/c/dev  # Your Windows dev folder
 ```
 
 ### Access WSL Files from Windows
 
 ```
 \\wsl$\Ubuntu\home\username
+```
+
+Or in File Explorer address bar:
+
+```
+\\wsl.localhost\Ubuntu\home\username
 ```
 
 ### Open Windows Explorer from WSL
@@ -132,6 +211,7 @@ explorer.exe .
 ```bash
 cmd.exe /c dir
 powershell.exe -Command Get-Process
+code.exe .  # Opens VS Code
 ```
 
 ### Use WSL from PowerShell
@@ -139,7 +219,21 @@ powershell.exe -Command Get-Process
 ```powershell
 wsl ls -la
 wsl --distribution Ubuntu
+wsl bash -c "cd /home/user && ./script.sh"
 ```
+
+### Development Workflow Recommendations
+
+**For best performance:**
+1. Clone repos into WSL filesystem (`~/dev/`) not Windows (`/mnt/c/`)
+2. Use VS Code with Remote-WSL extension
+3. Run Docker commands from WSL (Docker Desktop integrates automatically)
+4. Use Windows Terminal for all terminal work
+
+**Cross-platform considerations:**
+- Line endings: Configure Git to use LF (`core.autocrlf=input`)
+- Paths: Use forward slashes or `path.join()` in code
+- Case sensitivity: WSL is case-sensitive, Windows is not
 
 ## Differences from Native Linux
 

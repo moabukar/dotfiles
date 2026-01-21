@@ -56,7 +56,7 @@ Write-Host "Installing Windows applications..." -ForegroundColor Blue
 Write-Host "Installing development tools..." -ForegroundColor Cyan
 
 $apps = @(
-    @{Name="Git.Git"; Display="Git for Windows"},
+    @{Name="Git.Git"; Display="Git for Windows (includes Git Bash)"},
     @{Name="Microsoft.VisualStudioCode"; Display="VS Code"},
     @{Name="Cursor.Cursor"; Display="Cursor"},
     @{Name="Microsoft.PowerShell"; Display="PowerShell 7"},
@@ -68,21 +68,91 @@ foreach ($app in $apps) {
     winget install --id $app.Name --silent --accept-package-agreements --accept-source-agreements
 }
 
-# Docker Desktop
-Write-Host "Installing Docker Desktop..." -ForegroundColor Cyan
+# Programming Languages & Runtimes
+Write-Host "Installing programming languages..." -ForegroundColor Cyan
+$languages = @(
+    @{Name="OpenJS.NodeJS"; Display="Node.js"},
+    @{Name="Python.Python.3.12"; Display="Python 3.12"},
+    @{Name="GoLang.Go"; Display="Go"},
+    @{Name="Rustlang.Rust.MSVC"; Display="Rust"},
+    @{Name="OpenJDK.JDK"; Display="OpenJDK"}
+)
+
+foreach ($lang in $languages) {
+    Write-Host "  - $($lang.Display)..." -ForegroundColor Gray
+    winget install --id $lang.Name --silent --accept-package-agreements --accept-source-agreements
+}
+
+# Container & Orchestration
+Write-Host "Installing container tools..." -ForegroundColor Cyan
 winget install --id Docker.DockerDesktop --silent --accept-package-agreements --accept-source-agreements
+
+# Cloud CLIs
+Write-Host "Installing cloud CLIs..." -ForegroundColor Cyan
+$cloudTools = @(
+    @{Name="Amazon.AWSCLI"; Display="AWS CLI"},
+    @{Name="Microsoft.AzureCLI"; Display="Azure CLI"},
+    @{Name="Google.CloudSDK"; Display="Google Cloud SDK"}
+)
+
+foreach ($tool in $cloudTools) {
+    Write-Host "  - $($tool.Display)..." -ForegroundColor Gray
+    winget install --id $tool.Name --silent --accept-package-agreements --accept-source-agreements
+}
+
+# DevOps & Infrastructure Tools
+Write-Host "Installing DevOps tools..." -ForegroundColor Cyan
+$devopsTools = @(
+    @{Name="Hashicorp.Terraform"; Display="Terraform"},
+    @{Name="Kubernetes.kubectl"; Display="kubectl"},
+    @{Name="Helm.Helm"; Display="Helm"}
+)
+
+foreach ($tool in $devopsTools) {
+    Write-Host "  - $($tool.Display)..." -ForegroundColor Gray
+    winget install --id $tool.Name --silent --accept-package-agreements --accept-source-agreements
+}
+
+# Database & API Tools
+Write-Host "Installing database & API tools..." -ForegroundColor Cyan
+$dbTools = @(
+    @{Name="Postman.Postman"; Display="Postman"},
+    @{Name="dbeaver.dbeaver"; Display="DBeaver"},
+    @{Name="Insomnia.Insomnia"; Display="Insomnia"}
+)
+
+foreach ($tool in $dbTools) {
+    Write-Host "  - $($tool.Display)..." -ForegroundColor Gray
+    winget install --id $tool.Name --silent --accept-package-agreements --accept-source-agreements
+}
 
 # Browsers
 Write-Host "Installing browsers..." -ForegroundColor Cyan
 winget install --id Google.Chrome --silent --accept-package-agreements --accept-source-agreements
 winget install --id Mozilla.Firefox --silent --accept-package-agreements --accept-source-agreements
 
+# Communication & Productivity
+Write-Host "Installing communication tools..." -ForegroundColor Cyan
+$commTools = @(
+    @{Name="Notion.Notion"; Display="Notion"},
+    @{Name="SlackTechnologies.Slack"; Display="Slack"},
+    @{Name="Zoom.Zoom"; Display="Zoom"},
+    @{Name="Microsoft.Teams"; Display="Microsoft Teams"}
+)
+
+foreach ($tool in $commTools) {
+    Write-Host "  - $($tool.Display)..." -ForegroundColor Gray
+    winget install --id $tool.Name --silent --accept-package-agreements --accept-source-agreements
+}
+
 # Utilities
 Write-Host "Installing utilities..." -ForegroundColor Cyan
 $utils = @(
     @{Name="7zip.7zip"; Display="7zip"},
     @{Name="Microsoft.Sysinternals"; Display="Sysinternals Suite"},
-    @{Name="voidtools.Everything"; Display="Everything Search"}
+    @{Name="voidtools.Everything"; Display="Everything Search"},
+    @{Name="AgileBits.1Password"; Display="1Password"},
+    @{Name="Microsoft.PowerToys"; Display="PowerToys"}
 )
 
 foreach ($util in $utils) {
@@ -126,6 +196,61 @@ if ((Test-Path $terminalSettings) -and (Test-Path $dotfilesTerminalSettings)) {
     Write-Host "Windows Terminal configured (backup created)" -ForegroundColor Green
 }
 
+# Enable Windows Developer Features
+Write-Host ""
+Write-Host "Enabling Windows Developer Features..." -ForegroundColor Blue
+
+# Enable Developer Mode
+Write-Host "Enabling Developer Mode..." -ForegroundColor Cyan
+$regPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
+if (!(Test-Path $regPath)) {
+    New-Item -Path $regPath -Force | Out-Null
+}
+Set-ItemProperty -Path $regPath -Name "AllowDevelopmentWithoutDevLicense" -Value 1 -Type DWord
+
+# Enable long paths
+Write-Host "Enabling long paths..." -ForegroundColor Cyan
+Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -Type DWord
+
+# Configure Git Bash integration in Windows Terminal
+Write-Host "Configuring Git Bash in Windows Terminal..." -ForegroundColor Cyan
+$gitBashPath = "C:\Program Files\Git\bin\bash.exe"
+if (Test-Path $gitBashPath) {
+    Write-Host "Git Bash found at: $gitBashPath" -ForegroundColor Green
+} else {
+    Write-Host "Git Bash not found, it will be available after Git installation completes" -ForegroundColor Yellow
+}
+
+# Install VS Code Extensions
+Write-Host ""
+Write-Host "Installing VS Code extensions..." -ForegroundColor Blue
+$codeCmd = Get-Command code -ErrorAction SilentlyContinue
+if ($codeCmd) {
+    $extensions = @(
+        "ms-vscode-remote.remote-wsl",
+        "ms-vscode-remote.remote-containers",
+        "ms-azuretools.vscode-docker",
+        "hashicorp.terraform",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "redhat.vscode-yaml",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "ms-python.python",
+        "golang.go",
+        "rust-lang.rust-analyzer",
+        "eamodio.gitlens",
+        "github.copilot"
+    )
+
+    foreach ($ext in $extensions) {
+        Write-Host "  - Installing $ext..." -ForegroundColor Gray
+        code --install-extension $ext --force
+    }
+    Write-Host "VS Code extensions installed" -ForegroundColor Green
+} else {
+    Write-Host "VS Code command not found yet. Install extensions manually after restart." -ForegroundColor Yellow
+}
+
 # Setup dotfiles in WSL
 Write-Host ""
 Write-Host "Setting up dotfiles in WSL..." -ForegroundColor Blue
@@ -148,11 +273,30 @@ Write-Host "================================" -ForegroundColor Green
 Write-Host "Setup Complete!" -ForegroundColor Green
 Write-Host "================================" -ForegroundColor Green
 Write-Host ""
-Write-Host "Next steps:" -ForegroundColor Yellow
-Write-Host "1. Restart Windows Terminal" -ForegroundColor White
-Write-Host "2. Open Docker Desktop and enable WSL2 integration" -ForegroundColor White
-Write-Host "3. In WSL, run: code --install-extension ms-vscode-remote.remote-wsl" -ForegroundColor White
-Write-Host "4. Generate SSH key: ssh-keygen -t ed25519" -ForegroundColor White
+Write-Host "Installed:" -ForegroundColor Cyan
+Write-Host "  Core Tools: Git (+ Git Bash), VS Code, Cursor, PowerShell 7, Windows Terminal" -ForegroundColor White
+Write-Host "  Languages: Node.js, Python, Go, Rust, Java" -ForegroundColor White
+Write-Host "  DevOps: Docker, kubectl, Helm, Terraform, AWS CLI, Azure CLI, GCloud SDK" -ForegroundColor White
+Write-Host "  Database: DBeaver, Postman, Insomnia" -ForegroundColor White
+Write-Host "  Communication: Slack, Teams, Zoom, Notion" -ForegroundColor White
+Write-Host "  Utilities: 1Password, PowerToys, 7zip, Everything Search, Sysinternals" -ForegroundColor White
+Write-Host "  WSL2: Ubuntu 22.04 with full dotfiles setup" -ForegroundColor White
 Write-Host ""
-Write-Host "To enter WSL: wsl" -ForegroundColor Cyan
-Write-Host "To open VS Code in WSL: wsl code ." -ForegroundColor Cyan
+Write-Host "Next steps:" -ForegroundColor Yellow
+Write-Host "1. RESTART YOUR COMPUTER to complete all installations" -ForegroundColor White
+Write-Host "2. Open Docker Desktop and enable WSL2 integration (Settings -> Resources -> WSL Integration)" -ForegroundColor White
+Write-Host "3. Generate SSH key: ssh-keygen -t ed25519 -C 'your_email@example.com'" -ForegroundColor White
+Write-Host "4. Configure Git: git config --global user.name 'Your Name' && git config --global user.email 'your_email@example.com'" -ForegroundColor White
+Write-Host "5. Sign in to 1Password, GitHub Copilot, and cloud CLIs" -ForegroundColor White
+Write-Host ""
+Write-Host "Quick Commands:" -ForegroundColor Cyan
+Write-Host "  Enter WSL Ubuntu: wsl" -ForegroundColor White
+Write-Host "  Open VS Code in WSL: code ." -ForegroundColor White
+Write-Host "  Open Git Bash: Start -> Git Bash" -ForegroundColor White
+Write-Host "  PowerShell Profile: notepad `$PROFILE" -ForegroundColor White
+Write-Host "  Windows Terminal Settings: Ctrl+," -ForegroundColor White
+Write-Host ""
+Write-Host "Documentation:" -ForegroundColor Cyan
+Write-Host "  Windows Setup: ~/.dotfiles/windows/README.md" -ForegroundColor White
+Write-Host "  Linux Setup: ~/.dotfiles/linux/README.md" -ForegroundColor White
+Write-Host "  Guides: ~/.dotfiles/docs/" -ForegroundColor White
