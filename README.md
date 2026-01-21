@@ -243,3 +243,4 @@ cd $HOME\.dotfiles\windows
 - [x] macOS support (Homebrew-based)
 - [x] Linux support (Ubuntu/Debian, apt-based)
 - [x] Windows support (WSL2 + Ubuntu)
+- [ ] Add support for other Linux distributions
