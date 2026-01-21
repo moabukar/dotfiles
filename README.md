@@ -1,6 +1,7 @@
 # Dotfiles
 
-[![Test Dotfiles Setup](https://github.com/moabukar/dotfiles/actions/workflows/test.yml/badge.svg)](https://github.com/moabukar/dotfiles/actions/workflows/test.yml)
+[![Test macOS Setup](https://github.com/moabukar/dotfiles/actions/workflows/test.yml/badge.svg)](https://github.com/moabukar/dotfiles/actions/workflows/test.yml)
+[![Test Linux Setup](https://github.com/moabukar/dotfiles/actions/workflows/test-linux.yml/badge.svg)](https://github.com/moabukar/dotfiles/actions/workflows/test-linux.yml)
 
 macOS dev env setup automation.
 
@@ -97,7 +98,21 @@ cd ~/.dotfiles
 pre-commit install
 ```
 
-Now git commits will automatically run shellcheck and file validation checks.
+### GPG for Signed Commits (Optional)
+
+```bash
+~/.dotfiles/scripts/gpg-setup.sh
+```
+
+### 1Password CLI
+
+```bash
+# Sign in
+op signin
+
+# Use in scripts/direnv
+export API_KEY=$(op read "op://vault/item/field")
+```
 
 ## Custom Functions
 
@@ -129,12 +144,46 @@ killport <port>     # kill process on port
 gcap <msg>          # git add, commit, push
 ```
 
-## Guides & Productivity Kit
+## Guides & Resources
 
-- `docs/VIM_GUIDE.md` - Complete Vim tutorial for DevOps engineers
-- `docs/TMUX_GUIDE.md` - Tmux from basics to advanced workflows
-- `docs/DEVOPS_PRODUCTIVITY.md` - Shell workflows, Git tricks, K8s productivity, AWS patterns, secrets management, browser extensions, and more
+### Learning Guides
+- `docs/VIM_GUIDE.md` - Complete Vim tutorial
+- `docs/TMUX_GUIDE.md` - Tmux from basics to advanced
+- `docs/DEVOPS_PRODUCTIVITY.md` - Shell workflows, Git tricks, K8s hacks
+- `docs/SHORTCUTS.md` - Keyboard shortcuts cheat sheet
 
+### Configuration Examples
+- `.envrc.example` - Direnv template for project env vars
+- `config/ssh_config.example` - SSH config patterns
+- `config/git/.gitmessage` - Git commit message template
+
+### Server Setup
+- `ansible/` - Ansible playbooks for automated server configuration
+  - Security hardening (SSH, UFW, fail2ban)
+  - Docker & Docker Compose
+  - Kubernetes tools (kubectl, helm, k9s)
+  - Monitoring (node_exporter, promtail)
+  - User management
+
+
+## Additional Tools
+
+### Configure Servers with Ansible
+
+```bash
+cd ~/.dotfiles/ansible
+
+# Edit inventory
+vi inventories/production.yml
+
+# Run playbook
+ansible-playbook -i inventories/production.yml playbook.yml
+
+# Or specific roles
+ansible-playbook -i inventories/production.yml playbook.yml --tags docker,k8s
+```
+
+See `ansible/README.md` for details.
 
 ## Run Scripts Individually
 
@@ -147,4 +196,23 @@ gcap <msg>          # git add, commit, push
 
 # Reinstall VS Code extensions
 ~/.dotfiles/scripts/code.sh
+
+# Setup GPG signing
+~/.dotfiles/scripts/gpg-setup.sh
 ```
+
+## Linux Version
+
+See `linux/` directory for Ubuntu/Debian setup:
+
+```bash
+cd ~/.dotfiles/linux
+./bootstrap.sh
+```
+
+Full DevOps environment for Linux servers and workstations.
+
+## Roadmap
+
+- [x] Add support for Linux (Ubuntu/Debian)
+- [ ] Add support for Windows (WSL2)

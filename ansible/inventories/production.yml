@@ -1,0 +1,28 @@
+---
+all:
+  children:
+    web:
+      hosts:
+        web1:
+          ansible_host: 192.168.1.10
+        web2:
+          ansible_host: 192.168.1.11
+
+    database:
+      hosts:
+        db1:
+          ansible_host: 192.168.1.20
+
+    kubernetes:
+      hosts:
+        k8s-master:
+          ansible_host: 192.168.1.30
+        k8s-worker1:
+          ansible_host: 192.168.1.31
+        k8s-worker2:
+          ansible_host: 192.168.1.32
+
+  vars:
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: ~/.ssh/id_ed25519
+    ansible_python_interpreter: /usr/bin/python3

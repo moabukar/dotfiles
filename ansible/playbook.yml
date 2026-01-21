@@ -1,0 +1,40 @@
+---
+- name: DevOps Server Setup
+  hosts: all
+  become: true
+
+  vars_files:
+    - group_vars/all.yml
+
+  pre_tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+      when: ansible_os_family == "Debian"
+      tags: always
+
+  roles:
+    - role: system
+      tags: [system, base]
+
+    - role: security
+      tags: [security, hardening]
+
+    - role: docker
+      tags: [docker, containers]
+
+    - role: kubernetes
+      tags: [k8s, kubernetes]
+
+    - role: monitoring
+      tags: [monitoring, observability]
+
+    - role: users
+      tags: [users, access]
+
+  post_tasks:
+    - name: Verify installation
+      debug:
+        msg: "Server setup complete. Reboot recommended."
+      tags: always

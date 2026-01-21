@@ -1,0 +1,73 @@
+# SSH Config Template
+# Copy useful patterns from here to ~/.ssh/config
+
+# Global settings
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+  ServerAliveInterval 60
+  ServerAliveCountMax 3
+  Compression yes
+
+# GitHub
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519
+
+# GitLab
+Host gitlab.com
+  HostName gitlab.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519
+
+# Bastion/Jump Host Pattern
+Host bastion
+  HostName bastion.example.com
+  User admin
+  IdentityFile ~/.ssh/bastion_key
+  Port 22
+
+# Private servers via bastion
+Host prod-*
+  ProxyJump bastion
+  User admin
+  IdentityFile ~/.ssh/prod_key
+
+# AWS EC2 instances
+Host ec2-*
+  User ec2-user
+  IdentityFile ~/.ssh/aws_key.pem
+  StrictHostKeyChecking no
+
+# Development servers
+Host dev-*
+  User developer
+  IdentityFile ~/.ssh/dev_key
+  ForwardAgent yes
+
+# Multiple GitHub accounts
+Host github-work
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_work
+
+Host github-personal
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_personal
+
+# Port forwarding example
+Host db-tunnel
+  HostName db.example.com
+  User admin
+  LocalForward 5432 localhost:5432
+  IdentityFile ~/.ssh/db_key
+
+# Dynamic SOCKS proxy
+Host socks-proxy
+  HostName proxy.example.com
+  User admin
+  DynamicForward 1080
+  IdentityFile ~/.ssh/proxy_key

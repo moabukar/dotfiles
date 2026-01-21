@@ -1,0 +1,59 @@
+---
+- name: Update and upgrade apt packages
+  apt:
+    upgrade: dist
+    update_cache: true
+    cache_valid_time: 3600
+  when: ansible_os_family == "Debian"
+
+- name: Install essential packages
+  apt:
+    name: "{{ essential_packages }}"
+    state: present
+
+- name: Set timezone
+  timezone:
+    name: "{{ timezone }}"
+
+- name: Configure swap
+  block:
+    - name: Check if swap exists
+      stat:
+        path: /swapfile
+      register: swap_file
+
+    - name: Create swap file
+      command: fallocate -l {{ swap_size }} /swapfile
+      when: not swap_file.stat.exists
+
+    - name: Set swap file permissions
+      file:
+        path: /swapfile
+        mode: '0600'
+      when: not swap_file.stat.exists
+
+    - name: Make swap
+      command: mkswap /swapfile
+      when: not swap_file.stat.exists
+
+    - name: Enable swap
+      command: swapon /swapfile
+      when: not swap_file.stat.exists
+
+    - name: Add swap to fstab
+      lineinfile:
+        path: /etc/fstab
+        line: '/swapfile none swap sw 0 0'
+        state: present
+      when: not swap_file.stat.exists
+
+- name: Install NTP
+  apt:
+    name: ntp
+    state: present
+
+- name: Ensure NTP is running
+  service:
+    name: ntp
+    state: started
+    enabled: true
