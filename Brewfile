@@ -53,6 +53,7 @@ brew "gotests"
 # Infrastructure as Code
 # ----------------------------------------------------------------------------
 brew "opentofu"             # Open source Terraform alternative
+brew "terraform"            # HashiCorp Terraform
 brew "terragrunt"
 brew "hashicorp/tap/vault"
 brew "hadolint"             # Dockerfile linter
