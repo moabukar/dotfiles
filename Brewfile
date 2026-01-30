@@ -9,6 +9,7 @@
 # Taps
 # ----------------------------------------------------------------------------
 tap "hashicorp/tap"
+tap "productdevbook/tap"
 
 # ----------------------------------------------------------------------------
 # Shell & Terminal
@@ -180,6 +181,7 @@ brew "openssl"
 brew "openssh"
 brew "protobuf"
 brew "dockutil"             # Manage macOS Dock
+cask "portkiller"           # Kill processes on specific ports
 
 # ----------------------------------------------------------------------------
 # Performance & Load Testing
