@@ -65,9 +65,19 @@ main() {
 
     # Clean up tfenv completely (conflicts with OpenTofu/Terraform)
     if brew list tfenv &>/dev/null 2>&1; then
-        info "Removing tfenv (conflicts with OpenTofu)..."
+        info "Removing tfenv (conflicts with Terraform/OpenTofu)..."
         brew unlink tfenv 2>/dev/null || true
         brew uninstall tfenv 2>/dev/null || true
+    fi
+
+    # Remove tfenv symlinks that might conflict with terraform
+    if [ -L "/opt/homebrew/bin/terraform" ] && readlink "/opt/homebrew/bin/terraform" | grep -q tfenv; then
+        info "Removing tfenv terraform symlink..."
+        rm -f "/opt/homebrew/bin/terraform" 2>/dev/null || true
+    fi
+    if [ -L "/usr/local/bin/terraform" ] && readlink "/usr/local/bin/terraform" | grep -q tfenv; then
+        info "Removing tfenv terraform symlink..."
+        rm -f "/usr/local/bin/terraform" 2>/dev/null || true
     fi
 
     # Remove tfenv directories and config
