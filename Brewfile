@@ -40,7 +40,7 @@ cask "cursor"               # AI-powered code editor
 # Version Managers
 # ----------------------------------------------------------------------------
 brew "pyenv"
-brew "tfenv"
+# tfenv removed - conflicts with terraform/opentofu, use terraform/opentofu directly
 
 # ----------------------------------------------------------------------------
 # Go Tools
