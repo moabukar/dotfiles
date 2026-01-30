@@ -81,6 +81,10 @@ main() {
     # Install packages
     info "Installing packages from Brewfile (this takes 10-30 min)..."
     if [ -f "$DOTFILES_DIR/Brewfile" ]; then
+        # Add taps explicitly before bundle (needed for some custom taps)
+        info "Adding required taps..."
+        brew tap productdevbook/tap 2>/dev/null || true
+
         info "Running: brew bundle --file=$DOTFILES_DIR/Brewfile"
         if brew bundle --file="$DOTFILES_DIR/Brewfile" --verbose; then
             success "All packages from Brewfile installed"
