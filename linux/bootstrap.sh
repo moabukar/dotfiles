@@ -122,6 +122,19 @@ info "Installing development tools..."
 info "Linking configuration files..."
 "$DOTFILES_DIR/scripts/link.sh"
 
+# Install bashrc (for bash users or fallback)
+info "Installing bash configuration..."
+if [ -f "$LINUX_DIR/.bashrc" ]; then
+    if [ -f "$HOME/.bashrc" ]; then
+        cp "$HOME/.bashrc" "$HOME/.bashrc.backup.$(date +%Y%m%d%H%M%S)"
+        info "Backed up existing .bashrc"
+    fi
+    cp "$LINUX_DIR/.bashrc" "$HOME/.bashrc"
+    success "Bash configuration installed (~/.bashrc)"
+else
+    warn "linux/.bashrc not found, skipping bash config"
+fi
+
 success "Setup complete!"
 echo ""
 warn "IMPORTANT: Logout and login again for all changes to take effect"
@@ -131,3 +144,4 @@ echo "  1. Configure your terminal to use MesloLGS NF font"
 echo "  2. Generate SSH key: ssh-keygen -t ed25519"
 echo "  3. Run 'gh auth login' for GitHub CLI"
 echo "  4. Start a new terminal session"
+echo "  5. Bash users: source ~/.bashrc (or open new terminal)"
