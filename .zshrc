@@ -90,7 +90,6 @@ plugins=(
   node
   npm
   yarn
-  z
   colored-man-pages
   command-not-found
   zsh-autosuggestions
@@ -199,7 +198,7 @@ setup_kubernetes() {
   # kubectl completion
   if command -v kubectl >/dev/null 2>&1; then
     source <(kubectl completion zsh)
-    complete -F __start_kubectl k
+    compdef k=kubectl
   fi
 
   # helm completion
@@ -1028,10 +1027,8 @@ alias top='btop'
 alias du='dust'
 alias ps='procs'
 alias dig='doggo'
-alias cd='z'                # Use zoxide for smarter cd
-
-# Initialize zoxide (smarter cd)
-eval "$(zoxide init zsh)"
+# Initialize zoxide (replaces cd with smarter z)
+eval "$(zoxide init zsh --cmd cd)"
 
 # ============================================================================
 # Git Enhancements
