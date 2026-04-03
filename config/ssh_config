@@ -8,16 +8,16 @@ IgnoreUnknown UseKeychain
 # 	UseKeychain yes
 
 
-<!-- Host gitlab.com *.gitlab.com
-	HostName gitlab.com
- 	User git
- 	IdentityFile ~/.ssh/gitlab_rsa
- 	UseKeychain yes -->
+# Host gitlab.com *.gitlab.com
+# 	HostName gitlab.com
+# 	User git
+# 	IdentityFile ~/.ssh/gitlab_rsa
+# 	UseKeychain yes
 
-<!-- Host *
-    User mabukar
-    IdentityFile ~/.ssh/id_rsa
-	ForwardAgent yes
-	AddKeysToAgent yes
-	StrictHostKeyChecking no
-	UserKnownHostsFile /dev/null -->
+# Host *
+#     User mabukar
+#     IdentityFile ~/.ssh/id_rsa
+# 	ForwardAgent yes
+# 	AddKeysToAgent yes
+# 	StrictHostKeyChecking no
+# 	UserKnownHostsFile /dev/null
