@@ -214,4 +214,14 @@ rm /tmp/lazygit.tar.gz /tmp/lazygit
 # btop
 sudo apt install -y btop
 
+# AI coding agents (Claude Code + Codex via npm; cmux is a macOS-only Ghostty app)
+info "Installing AI coding agents (Claude Code, Codex)..."
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+if command -v npm >/dev/null 2>&1; then
+    npm install -g @anthropic-ai/claude-code @openai/codex
+else
+    warn "npm not on PATH — skipping Claude Code / Codex install"
+fi
+
 success "All tools installed!"

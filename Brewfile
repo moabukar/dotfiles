@@ -37,6 +37,13 @@ cask "visual-studio-code"
 cask "cursor"               # AI-powered code editor
 
 # ----------------------------------------------------------------------------
+# AI Coding Agents
+# ----------------------------------------------------------------------------
+cask "claude-code"          # Anthropic's terminal-based coding agent
+cask "codex"                # OpenAI's terminal-based coding agent
+cask "cmux"                 # Ghostty-based terminal with vertical tabs for AI agents
+
+# ----------------------------------------------------------------------------
 # Version Managers
 # ----------------------------------------------------------------------------
 brew "pyenv"
