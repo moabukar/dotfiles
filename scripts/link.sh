@@ -95,6 +95,18 @@ function link_to_homedir() {
         ln -sf "$dotfiles_dir/config/ssh_config" "$HOME/.ssh/config"
         print_success "SSH config linked"
     fi
+
+    if [ -f "$dotfiles_dir/config/cmux/cmux.json" ]; then
+        mkdir -p "$HOME/.config/cmux"
+        backup_and_link "$dotfiles_dir/config/cmux/cmux.json" "$HOME/.config/cmux" "$backupdir"
+        print_success "cmux config linked"
+    fi
+
+    if [ -f "$dotfiles_dir/config/ghostty/config" ]; then
+        mkdir -p "$HOME/.config/ghostty"
+        backup_and_link "$dotfiles_dir/config/ghostty/config" "$HOME/.config/ghostty" "$backupdir"
+        print_success "Ghostty config linked"
+    fi
 }
 
 link_to_homedir
