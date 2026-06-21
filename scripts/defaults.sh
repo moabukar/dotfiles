@@ -110,7 +110,7 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode -
 
 # ====================
 #
-# Security — Application Firewall (needs sudo; bootstrap runs in a real terminal)
+# Security (Application Firewall)
 #
 # ====================
 
@@ -122,11 +122,7 @@ fi
 
 # ====================
 #
-# Rectangle (window management) — custom half/center shortcuts
-#   left half  = Cmd+Shift+L   (keyCode 37)
-#   right half = Cmd+Shift+R   (keyCode 15)
-#   center     = Cmd+Shift+Return (keyCode 36)
-#   modifierFlags 1179648 = Cmd+Shift
+# Rectangle (window shortcuts)
 #
 # ====================
 

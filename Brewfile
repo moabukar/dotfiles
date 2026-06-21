@@ -220,7 +220,7 @@ brew "gpg"
 # Desktop Applications
 # ----------------------------------------------------------------------------
 cask "rectangle"            # Window management
-cask "malwarebytes"         # Antivirus / anti-malware (Pkg — needs admin to install)
+cask "malwarebytes"         # Antivirus (pkg install needs admin)
 cask "google-chrome"
 cask "firefox"
 cask "slack"

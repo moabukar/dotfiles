@@ -91,12 +91,7 @@ main() {
     # Install packages
     info "Installing packages from Brewfile (this takes 10-30 min)..."
     if [ -f "$DOTFILES_DIR/Brewfile" ]; then
-        # Add and trust taps before bundle. Homebrew 6.x refuses to load
-        # formulae from untrusted third-party taps, which aborts the whole
-        # bundle (installing nothing), so tap and trust each one first.
-        # Trust every tap declared in the Brewfile. Homebrew 6.x refuses to load
-        # formulae from untrusted third-party taps, which aborts the whole bundle,
-        # so this reads the Brewfile and stays in step as taps are added.
+        # Trust every Brewfile tap; Homebrew 6.x aborts the bundle on untrusted taps.
         info "Adding and trusting taps from the Brewfile..."
         grep -E '^[[:space:]]*tap "' "$DOTFILES_DIR/Brewfile" \
             | sed -E 's/^[[:space:]]*tap "([^"]+)".*/\1/' \
