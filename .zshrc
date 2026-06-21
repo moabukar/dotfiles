@@ -140,6 +140,30 @@ zstyle ':completion:*' list-colors ''
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
 # =================================================
+# REAL-TIME AUTOCOMPLETE + SUGGESTIONS
+# =================================================
+
+# Inline grey suggestions (zsh-autosuggestions, loaded via the plugins list):
+# draw from history first, fall back to live completion.
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+
+# Live completion menu that appears as you type (zsh-autocomplete via Homebrew).
+for _ac in /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh \
+           /usr/local/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh; do
+  if [[ -r "$_ac" ]]; then
+    source "$_ac"
+    zstyle ':autocomplete:*' min-input 1   # start after the first character
+    zstyle ':autocomplete:*' delay 0.05    # short pause before the menu shows
+    # Keep Up and Down as plain history search, not the live history menu.
+    bindkey -M main "$terminfo[kcuu1]" up-line-or-search
+    bindkey -M main "$terminfo[kcud1]" down-line-or-search
+    break
+  fi
+done
+unset _ac
+
+# =================================================
 # HISTORY CONFIGURATION
 # =================================================
 

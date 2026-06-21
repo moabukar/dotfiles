@@ -22,6 +22,7 @@ brew "bash-completion"
 brew "zsh-syntax-highlighting"
 brew "zsh-autosuggestions"
 brew "zsh-completions"
+brew "zsh-autocomplete"      # Real-time completion menu as you type
 brew "tmux"
 brew "screen"
 cask "iterm2"
