@@ -512,7 +512,20 @@ alias nowdate='date +"%d-%m-%Y"'
 alias reload='source ~/.zshrc'
 
 # AI coding agents
-alias ccd='claude --dangerously-skip-permissions'   # Claude Code, skip permission prompts
+# Claude Code
+alias ccd='claude --dangerously-skip-permissions'              # skip all permission prompts
+alias yolo='claude --dangerously-skip-permissions'             # same as ccd
+alias ccc='claude --continue'                                  # continue the most recent conversation
+alias ccr='claude --resume'                                    # pick a past session to resume
+alias ccp='claude -p'                                          # print mode, pipe-friendly
+alias ccdc='claude --continue --dangerously-skip-permissions'  # continue last and skip prompts
+# Codex
+alias cx='codex'                                               # interactive Codex
+alias cxr='codex resume --last'                                # resume the last Codex session
+alias cxe='codex exec'                                         # run Codex non-interactively
+alias cxd='codex --dangerously-bypass-approvals-and-sandbox'   # skip approvals and sandbox
+# Cursor
+alias cur='cursor'                                             # open Cursor (cur . for current folder)
 
 # Enhanced ls (use eza if available, otherwise ls)
 if command -v eza >/dev/null 2>&1; then
