@@ -12,6 +12,7 @@ tap "hashicorp/tap"
 tap "productdevbook/tap"
 tap "fluxcd/tap"
 tap "terraform-linters/tap"
+tap "spacelift-io/spacelift"
 
 # ----------------------------------------------------------------------------
 # Shell & Terminal
@@ -50,6 +51,7 @@ cask "cmux"                 # Ghostty-based terminal with vertical tabs for AI a
 # Version Managers
 # ----------------------------------------------------------------------------
 brew "pyenv"
+brew "uv"                    # Fast Python package/project manager
 # tfenv removed - conflicts with terraform/opentofu, use terraform/opentofu directly
 
 # ----------------------------------------------------------------------------
@@ -98,6 +100,7 @@ brew "crane"                # Container registry tool
 # Cloud & Virtualization Tools
 # ----------------------------------------------------------------------------
 brew "awscli"               # AWS CLI
+cask "session-manager-plugin"  # AWS SSM Session Manager (ssm start-session onto EC2/NATS/bastion). NB: pkg install needs sudo
 brew "azure-cli"            # Azure CLI
 brew "doctl"                # DigitalOcean CLI
 cask "1password-cli"        # 1Password CLI
@@ -245,6 +248,7 @@ brew "terraform-linters/tap/tflint"  # Terraform linter
 brew "terraform-docs"       # Generate docs from Terraform modules
 brew "granted"              # AWS multi-account/role switcher (provides 'assume')
 brew "aws-vault"            # Store/assume AWS creds via macOS keychain
+cask "spacelift-io/spacelift/spacectl"  # Spacelift CLI (stack ops; what fp-actions/spacelift-deploy wraps)
 
 # ----------------------------------------------------------------------------
 # Extra dev productivity CLIs
