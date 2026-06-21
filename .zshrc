@@ -511,6 +511,9 @@ alias nowtime=now
 alias nowdate='date +"%d-%m-%Y"'
 alias reload='source ~/.zshrc'
 
+# AI coding agents
+alias ccd='claude --dangerously-skip-permissions'   # Claude Code, skip permission prompts
+
 # Enhanced ls (use eza if available, otherwise ls)
 if command -v eza >/dev/null 2>&1; then
   alias ls='eza --color=always --group-directories-first'
