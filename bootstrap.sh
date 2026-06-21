@@ -91,9 +91,14 @@ main() {
     # Install packages
     info "Installing packages from Brewfile (this takes 10-30 min)..."
     if [ -f "$DOTFILES_DIR/Brewfile" ]; then
-        # Add taps explicitly before bundle (needed for some custom taps)
-        info "Adding required taps..."
-        brew tap productdevbook/tap 2>/dev/null || true
+        # Add and trust taps before bundle. Homebrew 6.x refuses to load
+        # formulae from untrusted third-party taps, which aborts the whole
+        # bundle (installing nothing), so tap and trust each one first.
+        info "Adding and trusting required taps..."
+        for t in hashicorp/tap productdevbook/tap fluxcd/tap terraform-linters/tap; do
+            brew tap "$t" 2>/dev/null || true
+            brew trust "$t" 2>/dev/null || true
+        done
 
         info "Running: brew bundle --file=$DOTFILES_DIR/Brewfile"
         if brew bundle --file="$DOTFILES_DIR/Brewfile" --verbose; then
