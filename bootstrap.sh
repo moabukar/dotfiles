@@ -94,11 +94,17 @@ main() {
         # Add and trust taps before bundle. Homebrew 6.x refuses to load
         # formulae from untrusted third-party taps, which aborts the whole
         # bundle (installing nothing), so tap and trust each one first.
-        info "Adding and trusting required taps..."
-        for t in hashicorp/tap productdevbook/tap fluxcd/tap terraform-linters/tap; do
-            brew tap "$t" 2>/dev/null || true
-            brew trust "$t" 2>/dev/null || true
-        done
+        # Trust every tap declared in the Brewfile. Homebrew 6.x refuses to load
+        # formulae from untrusted third-party taps, which aborts the whole bundle,
+        # so this reads the Brewfile and stays in step as taps are added.
+        info "Adding and trusting taps from the Brewfile..."
+        grep -E '^[[:space:]]*tap "' "$DOTFILES_DIR/Brewfile" \
+            | sed -E 's/^[[:space:]]*tap "([^"]+)".*/\1/' \
+            | while read -r t; do
+                [ -n "$t" ] || continue
+                brew tap "$t" 2>/dev/null || true
+                brew trust "$t" 2>/dev/null || true
+            done
 
         info "Running: brew bundle --file=$DOTFILES_DIR/Brewfile"
         if brew bundle --file="$DOTFILES_DIR/Brewfile" --verbose; then
