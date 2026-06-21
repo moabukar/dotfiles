@@ -13,6 +13,7 @@ tap "productdevbook/tap"
 tap "fluxcd/tap"
 tap "terraform-linters/tap"
 tap "spacelift-io/spacelift"
+tap "nats-io/nats-tools"
 
 # ----------------------------------------------------------------------------
 # Shell & Terminal
@@ -69,6 +70,8 @@ brew "terraform"            # HashiCorp Terraform
 brew "terragrunt"
 brew "hashicorp/tap/vault"
 brew "hadolint"             # Dockerfile linter
+brew "hashicorp/tap/packer" # Build golden AMIs
+brew "ansible"              # Provision golden AMIs (Packer + Ansible)
 
 # ----------------------------------------------------------------------------
 # Kubernetes Tools
@@ -181,6 +184,8 @@ brew "pre-commit"           # Git pre-commit hooks framework
 # Database Tools
 # ----------------------------------------------------------------------------
 brew "postgresql"
+brew "libpq"                # psql/pg_dump client (force-linked) for remote RDS, no local server
+brew "nats-io/nats-tools/nats"  # NATS CLI
 brew "mysql-client"
 brew "redis"
 brew "telnet"
