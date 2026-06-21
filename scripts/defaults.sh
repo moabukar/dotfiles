@@ -108,11 +108,40 @@ defaults write NSGlobalDomain com.apple.mouse.scaling -float 2.5
 # Enable secondary click (right-click) for mouse
 defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode -string "TwoButton"
 
+# ====================
+#
+# Security — Application Firewall (needs sudo; bootstrap runs in a real terminal)
+#
+# ====================
+
+if command -v sudo >/dev/null 2>&1; then
+	sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on >/dev/null 2>&1 || true
+	sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on >/dev/null 2>&1 || true
+	sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsigned on --setallowsignedapp on >/dev/null 2>&1 || true
+fi
+
+# ====================
+#
+# Rectangle (window management) — custom half/center shortcuts
+#   left half  = Cmd+Shift+L   (keyCode 37)
+#   right half = Cmd+Shift+R   (keyCode 15)
+#   center     = Cmd+Shift+Return (keyCode 36)
+#   modifierFlags 1179648 = Cmd+Shift
+#
+# ====================
+
+defaults write com.knollsoft.Rectangle leftHalf  -dict keyCode -int 37 modifierFlags -int 1179648
+defaults write com.knollsoft.Rectangle rightHalf -dict keyCode -int 15 modifierFlags -int 1179648
+defaults write com.knollsoft.Rectangle center    -dict keyCode -int 36 modifierFlags -int 1179648
+
 for app in "Dock" \
 	"Finder" \
-	"SystemUIServer"; do
+	"SystemUIServer" \
+	"Rectangle"; do
 	killall "${app}" &> /dev/null
 done
+# Relaunch Rectangle so the new shortcuts take effect
+open -a Rectangle &> /dev/null || true
 
 print_info ""
 print_info "#####################################################"

@@ -10,6 +10,8 @@
 # ----------------------------------------------------------------------------
 tap "hashicorp/tap"
 tap "productdevbook/tap"
+tap "fluxcd/tap"
+tap "terraform-linters/tap"
 
 # ----------------------------------------------------------------------------
 # Shell & Terminal
@@ -209,6 +211,7 @@ brew "gpg"
 # Desktop Applications
 # ----------------------------------------------------------------------------
 cask "rectangle"            # Window management
+cask "malwarebytes"         # Antivirus / anti-malware (Pkg — needs admin to install)
 cask "google-chrome"
 cask "firefox"
 cask "slack"
@@ -219,6 +222,43 @@ cask "zoom"                 # Video conferencing
 cask "microsoft-teams"      # Team collaboration
 cask "orbstack"             # Fast Docker & Linux on macOS
 cask "google-cloud-sdk"     # Google Cloud SDK
+cask "stats"                # Menu bar system monitor (CPU/GPU/RAM/temp)
+
+# ----------------------------------------------------------------------------
+# GitOps & extra Kubernetes tools
+# ----------------------------------------------------------------------------
+brew "argocd"               # ArgoCD GitOps CLI
+brew "fluxcd/tap/flux"      # Flux CD GitOps CLI (NB: core 'flux' is InfluxDB's, not this)
+brew "helmfile"             # Declarative Helm release management
+brew "kubeseal"             # Sealed Secrets (encrypt secrets for git)
+brew "k8sgpt"               # AI-powered Kubernetes diagnostics
+brew "kubecolor"            # Colorized kubectl output
+brew "velero"              # Cluster backup & restore
+brew "cilium-cli"           # Cilium eBPF networking CLI (binary: cilium)
+
+# ----------------------------------------------------------------------------
+# IaC quality, cost & AWS access
+# ----------------------------------------------------------------------------
+brew "infracost"            # Cost estimates for Terraform changes
+brew "terraform-linters/tap/tflint"  # Terraform linter
+brew "terraform-docs"       # Generate docs from Terraform modules
+brew "granted"              # AWS multi-account/role switcher (provides 'assume')
+brew "aws-vault"            # Store/assume AWS creds via macOS keychain
+
+# ----------------------------------------------------------------------------
+# Extra dev productivity CLIs
+# ----------------------------------------------------------------------------
+brew "mise"                 # Polyglot runtime version manager (node/go/python/...)
+brew "gitleaks"             # Scan for committed secrets
+brew "lazydocker"           # Terminal UI for Docker
+brew "watchexec"            # Run commands on file change
+brew "entr"                 # Run commands when files change (alt to watchexec)
+
+# ----------------------------------------------------------------------------
+# Extra desktop apps
+# ----------------------------------------------------------------------------
+cask "tableplus"            # Native database GUI (Postgres/MySQL/Redis)
+cask "bruno"                # Offline, git-friendly API client
 
 # ----------------------------------------------------------------------------
 # Fonts (for Powerlevel10k)
