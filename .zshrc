@@ -512,16 +512,16 @@ alias nowdate='date +"%d-%m-%Y"'
 alias reload='source ~/.zshrc'
 
 # AI coding agents
-# Claude Code
-alias ccd='claude --dangerously-skip-permissions'              # skip all permission prompts
-alias yolo='claude --dangerously-skip-permissions'             # same as ccd
-alias ccc='claude --continue'                                  # continue the most recent conversation
-alias ccr='claude --resume'                                    # pick a past session to resume
-alias ccp='claude -p'                                          # print mode, pipe-friendly
-alias ccdc='claude --continue --dangerously-skip-permissions'  # continue last and skip prompts
-# Claude routed through Headroom context compression (opt-in trial; default claude untouched)
-alias cch='headroom wrap claude'
-alias ccdh='headroom wrap claude -- --dangerously-skip-permissions'
+# Claude Code (routed through Headroom compression by default; *-raw bypasses it)
+alias claude='headroom wrap claude'
+alias ccd='headroom wrap claude -- --dangerously-skip-permissions'
+alias yolo='headroom wrap claude -- --dangerously-skip-permissions'
+alias ccc='headroom wrap claude -- --continue'
+alias ccr='headroom wrap claude -- --resume'
+alias ccdc='headroom wrap claude -- --continue --dangerously-skip-permissions'
+alias ccp='command claude -p'
+alias claude-raw='command claude'
+alias ccd-raw='command claude --dangerously-skip-permissions'
 # Codex
 alias cx='codex'                                               # interactive Codex
 alias cxr='codex resume --last'                                # resume the last Codex session
