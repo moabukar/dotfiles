@@ -519,6 +519,9 @@ alias ccc='claude --continue'                                  # continue the mo
 alias ccr='claude --resume'                                    # pick a past session to resume
 alias ccp='claude -p'                                          # print mode, pipe-friendly
 alias ccdc='claude --continue --dangerously-skip-permissions'  # continue last and skip prompts
+# Claude routed through Headroom context compression (opt-in trial; default claude untouched)
+alias cch='headroom wrap claude'
+alias ccdh='headroom wrap claude -- --dangerously-skip-permissions'
 # Codex
 alias cx='codex'                                               # interactive Codex
 alias cxr='codex resume --last'                                # resume the last Codex session
