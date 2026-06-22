@@ -1015,6 +1015,7 @@ alias learn='cd $LEARNING_DIR'
 alias platform='cd $PLATFORM_DIR'
 alias downloads='cd ~/Downloads'
 alias documents='cd ~/Documents'
+alias coderco='cd ~/coderco'
 alias desktop='cd ~/Desktop'
 
 # Quick editing
