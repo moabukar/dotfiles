@@ -126,9 +126,14 @@ fi
 #
 # ====================
 
-defaults write com.knollsoft.Rectangle leftHalf  -dict keyCode -int 37 modifierFlags -int 1179648
-defaults write com.knollsoft.Rectangle rightHalf -dict keyCode -int 15 modifierFlags -int 1179648
-defaults write com.knollsoft.Rectangle center    -dict keyCode -int 36 modifierFlags -int 1179648
+# Halves: Cmd+Shift+L / Cmd+Shift+R
+defaults write com.knollsoft.Rectangle leftHalf    -dict keyCode -int 37  modifierFlags -int 1179648
+defaults write com.knollsoft.Rectangle rightHalf   -dict keyCode -int 15  modifierFlags -int 1179648
+# Thirds: Cmd+Shift+Left / Cmd+Shift+Return / Cmd+Shift+Right
+defaults write com.knollsoft.Rectangle firstThird  -dict keyCode -int 123 modifierFlags -int 1179648
+defaults write com.knollsoft.Rectangle centerThird -dict keyCode -int 36  modifierFlags -int 1179648
+defaults write com.knollsoft.Rectangle lastThird   -dict keyCode -int 124 modifierFlags -int 1179648
+defaults delete com.knollsoft.Rectangle center 2>/dev/null || true
 
 for app in "Dock" \
 	"Finder" \
